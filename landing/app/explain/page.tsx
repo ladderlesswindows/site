@@ -59,6 +59,21 @@ function ExplainContent() {
             </p>
           </div>
 
+          <div className="text-[15px] leading-relaxed text-neutral-700 mb-8">
+            <p className="text-center text-base font-semibold leading-snug text-neutral-900">
+              What about my weird windows, over part of the roof, and over 25&apos; off the ground?
+            </p>
+            <p className="mt-4">
+              We ARE a full-service window cleaning service, and the only difference with us is that those windows may take a second visit with a more-skilled technician and higher rate per window. If you are trying us out but will still be doing the rest of the exterior (and interior) just let the technician know when they arrive and they will do the free estimate for that.
+            </p>
+            <p className="mt-6 text-center text-base font-semibold leading-snug text-neutral-900">
+              I do not believe it is as good as my squeegee guy, what if I decide I hate it and stop your technician after the first window, will I get a full refund?
+            </p>
+            <p className="mt-4">
+              Yes, all of our work is 100% satisfaction guaranteed. Water fed pole window cleaning seems too good to be true, but with proper technique, it is perfect every time. Our tech will even wait for most of the droplets to dry so that you can see they leave no spots, and you have 24hours to submit a Quality Control request after any cleaning.
+            </p>
+          </div>
+
           {/* Buttons */}
           <div className="flex flex-col gap-3">
             <Link
