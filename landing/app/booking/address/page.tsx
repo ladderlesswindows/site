@@ -1,17 +1,21 @@
 "use client";
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, useCallback, Suspense } from 'react';
 import { FlowBrandingHeader } from '@/components/FlowBrandingHeader';
 import { FlowPageLayout } from '@/components/FlowPageLayout';
 import { BookingSubtotalPanel } from '@/components/BookingSubtotalPanel';
+import { CustomerSlotPicker } from '@/components/CustomerSlotPicker';
 import Link from 'next/link';
 import {
   buildBookingSearchParams,
-  buildSlotSearchParams,
   parseScreenReinstall,
   type ScreensChoice,
 } from '@/components/bookingFlowParams';
+import { supabase } from '@/lib/supabase';
+import { reserveBookingSlot } from '@/lib/bookingSlots';
+import { getQualifier, DEFAULT_WINDOW_PRICE } from '@/components/qualifiers';
+import { calculateWindowBase } from '@/components/windowPricing';
 
 function AddressContent() {
   const searchParams = useSearchParams();
@@ -40,6 +44,10 @@ function AddressContent() {
   const [stateAbbr] = useState('CA');
   const [zipCode] = useState(zip);
   const [isSpecialAddress, setIsSpecialAddress] = useState(false);
+
+  const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
+  const [slotNotes, setSlotNotes] = useState({ arrivalNotes: '', goalsChoice: '' });
+  const [reserving, setReserving] = useState(false);
 
   useEffect(() => {
     setWindows(paramWindows);
@@ -95,19 +103,62 @@ function AddressContent() {
     fullName.trim().length > 1 &&
     email.trim().includes('@');
 
-  const goToSlotPicker = () => {
-    if (!canProceed) return;
-    const query = buildSlotSearchParams({
+  const qualifier = getQualifier(qualifierCode);
+  const basePrice = qualifier ? qualifier.pricePerWindow : DEFAULT_WINDOW_PRICE;
+  const base = calculateWindowBase(windows, basePrice);
+  const screenFee = screenReinstall ? windows * 2 : 0;
+  const total = base + screenFee;
+
+  const handleSlotChange = useCallback((slot: string | null) => {
+    setSelectedSlot(slot);
+  }, []);
+
+  const handleNotesChange = useCallback(
+    (notes: { arrivalNotes: string; goalsChoice: string }) => {
+      setSlotNotes(notes);
+    },
+    []
+  );
+
+  const handleReserve = async () => {
+    if (!canProceed || !selectedSlot || !supabase) return;
+
+    setReserving(true);
+    const { data, error } = await reserveBookingSlot({
+      zip,
+      windowCount: windows,
+      screenReinstall,
+      qualifierCode,
+      name: fullName.trim(),
+      email: email.trim(),
+      address: addressSummary,
+      scheduledStart: selectedSlot,
+      estimatedPrice: total,
+      arrivalNotes: slotNotes.arrivalNotes || undefined,
+      goals: slotNotes.goalsChoice || undefined,
+    });
+    setReserving(false);
+
+    if (error) {
+      alert('Error reserving slot: ' + error.message);
+      return;
+    }
+
+    const params = buildBookingSearchParams({
       zip,
       windows,
       screenReinstall,
       screensChoice: screensChoice || undefined,
       qualifier: qualifierCode,
+      flow: '30s',
       name: fullName.trim(),
       address: addressSummary,
       email: email.trim(),
     });
-    router.push(`/booking/slot?${query}`);
+    const successParams = new URLSearchParams(params);
+    successParams.set('slot', selectedSlot);
+    if (data?.id) successParams.set('booking_id', data.id);
+    router.push(`/booking/success?${successParams.toString()}`);
   };
 
   const handleSpecialSchedule = () => {
@@ -137,13 +188,29 @@ function AddressContent() {
 
         <FlowPageLayout
           rightPanel={
-            <BookingSubtotalPanel
-              windowCount={windows}
-              screenReinstall={screenReinstall}
-              variant="address"
-              onWindowCountChange={updateWindows}
-              onScreenReinstallChange={toggleScreenFee}
-            />
+            <div className="space-y-2">
+              <BookingSubtotalPanel
+                windowCount={windows}
+                screenReinstall={screenReinstall}
+                variant="address"
+                onWindowCountChange={updateWindows}
+                onScreenReinstallChange={toggleScreenFee}
+              />
+              {selectedSlot && (
+                <div className="p-2 border border-emerald-200 bg-emerald-50 rounded-xl text-xs">
+                  <div className="font-medium text-emerald-700">Selected time:</div>
+                  <div>
+                    {new Date(selectedSlot).toLocaleString(undefined, {
+                      weekday: 'long',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: '2-digit',
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
           }
           main={
             <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
@@ -228,31 +295,47 @@ function AddressContent() {
                     Hi John and Deb, Please Book your ideal monthly cleaning day!
                   </div>
                   <button
+                    type="button"
                     onClick={handleSpecialSchedule}
                     className="block w-full py-4 text-lg font-semibold text-center rounded-3xl bg-[#0f766e] text-white active:bg-[#0c5f58]"
                   >
                     Schedule
                   </button>
                 </>
+              ) : !supabase ? (
+                <div className="mt-4 p-3 border border-amber-200 bg-amber-50 rounded-xl text-xs text-amber-900">
+                  Supabase is not configured. Add credentials to repo-root <code>.env.local</code> and restart{' '}
+                  <code>npm run dev</code>.
+                </div>
               ) : (
                 <>
                   {!canProceed && (
                     <p className="text-center text-[11px] text-red-600 mt-3">
-                      Enter name, email, street, and city to continue
+                      Enter name, email, street, and city to unlock the calendar
                     </p>
                   )}
+
+                  <CustomerSlotPicker
+                    disabled={!canProceed}
+                    onSlotChange={handleSlotChange}
+                    onNotesChange={handleNotesChange}
+                  />
+
                   <button
                     type="button"
-                    onClick={goToSlotPicker}
-                    disabled={!canProceed}
+                    onClick={handleReserve}
+                    disabled={!canProceed || !selectedSlot || reserving}
                     className={`block w-full py-4 text-lg font-semibold text-center rounded-3xl mt-3 transition ${
-                      canProceed
+                      canProceed && selectedSlot && !reserving
                         ? 'bg-[#0f766e] text-white active:bg-[#0c5f58]'
                         : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
                     }`}
                   >
-                    Choose Time Slot
+                    {reserving ? 'Reserving…' : 'Reserve Slot & Proceed'}
                   </button>
+                  <p className="text-[10px] text-neutral-500 mt-2 text-center">
+                    Creates a tentative hold (expires in 15 min if not completed).
+                  </p>
                 </>
               )}
 
