@@ -69,6 +69,7 @@ function BookingContent() {
             <BookingSubtotalPanel
               windowCount={windowCount}
               minWindows={getMinWindows(zip)}
+              onWindowCountChange={updateWindowCount}
             />
           }
           main={
@@ -78,8 +79,6 @@ function BookingContent() {
               {!showQualifier ? (
                 <BookingZipSuccess
                   zip={zip}
-                  windowCount={windowCount}
-                  onWindowCountChange={updateWindowCount}
                   onStartBooking={() => setShowQualifier(true)}
                   explainHref={`/explain?${bookingQuery()}`}
                 />

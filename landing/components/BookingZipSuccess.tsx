@@ -1,31 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { getZipInfo, isPartialCoverage, getMinWindows, getSuccessHeadline } from "./zipRegistry";
-import { calculateWindowBase, formatPriceAmount, formatWindowPrice } from "./windowPricing";
+import { getZipInfo, isPartialCoverage, getSuccessHeadline } from "./zipRegistry";
+import { formatWindowPrice } from "./windowPricing";
 import { WindowQualifierDisclaimer } from "./WindowQualifierDisclaimer";
 
 type BookingZipSuccessProps = {
   zip: string;
-  windowCount: number;
-  onWindowCountChange: (count: number) => void;
   onStartBooking: () => void;
   explainHref: string;
 };
 
 export function BookingZipSuccess({
   zip,
-  windowCount,
-  onWindowCountChange,
   onStartBooking,
   explainHref,
 }: BookingZipSuccessProps) {
   const zipInfo = getZipInfo(zip);
   const isPartial = isPartialCoverage(zip);
   const explanation = zipInfo?.explanation ?? "";
-  const minWindows = getMinWindows(zip);
-  const subtotal = calculateWindowBase(windowCount);
-
   if (!zipInfo) {
     return (
       <div className="space-y-4 text-center">
@@ -66,27 +59,8 @@ export function BookingZipSuccess({
         <p className="text-sm text-neutral-700 text-left">{explanation}</p>
       )}
 
-      <div className="text-center">
-        <div className="text-sm text-neutral-600 mb-1">Number of standard windows</div>
-        <div className="flex items-center justify-center gap-3">
-          <button
-            onClick={() => onWindowCountChange(Math.max(minWindows, windowCount - 1))}
-            className="w-8 h-8 rounded-full border text-lg font-bold active:bg-neutral-100"
-            type="button"
-          >
-            −
-          </button>
-          <div className="text-2xl font-semibold w-10 text-center">{windowCount}</div>
-          <button
-            onClick={() => onWindowCountChange(windowCount + 1)}
-            className="w-8 h-8 rounded-full border text-lg font-bold active:bg-neutral-100"
-            type="button"
-          >
-            +
-          </button>
-        </div>
-        <div className="text-lg font-semibold text-neutral-900 mt-2">{formatPriceAmount(subtotal)}</div>
-        <div className="text-sm text-neutral-600 mt-1">{formatWindowPrice()}</div>
+      <div className="text-center text-sm text-neutral-600">
+        {formatWindowPrice()}
       </div>
 
       <div className="flex gap-3">
