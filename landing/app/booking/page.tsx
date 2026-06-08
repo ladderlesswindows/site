@@ -24,7 +24,6 @@ function BookingContent() {
   const [windowCount, setWindowCount] = useState(initialWindows);
   const [qualifierCode, setQualifierCode] = useState("");
   const [showQualifier, setShowQualifier] = useState(false);
-  const [showNoPath, setShowNoPath] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showScreens, setShowScreens] = useState(false);
   const [screensChoice, setScreensChoice] = useState<"outside" | "fee" | "decide" | "">("");
@@ -32,7 +31,6 @@ function BookingContent() {
   useEffect(() => {
     setWindowCount(initialWindows);
     setShowQualifier(false);
-    setShowNoPath(false);
   }, [zip, initialWindows]);
 
   const updateWindowCount = (count: number) => {
@@ -85,7 +83,7 @@ function BookingContent() {
                   onStartBooking={() => setShowQualifier(true)}
                   explainHref={`/explain?${bookingQuery()}`}
                 />
-              ) : !showNoPath ? (
+              ) : (
                 <div className="space-y-4">
                   <div className="space-y-3 text-center">
                     <div className="text-base font-semibold tracking-tight">
@@ -115,20 +113,13 @@ function BookingContent() {
                     >
                       Yes, lets see the schedule!
                     </button>
-                    <button
-                      onClick={() => setShowNoPath(true)}
-                      className="flex-1 py-4 text-lg font-semibold text-center rounded-3xl border-2 border-neutral-950 active:bg-neutral-100"
+                    <Link
+                      href={`/explain?${bookingQuery()}`}
+                      className="flex-1 py-4 px-2 text-sm font-medium leading-snug text-center rounded-3xl border-2 border-[#0f766e] text-[#0f766e] active:bg-emerald-50 flex items-center justify-center"
                     >
-                      No
-                    </button>
+                      Please explain more first ..
+                    </Link>
                   </div>
-
-                  <Link
-                    href={`/explain?${bookingQuery()}`}
-                    className="block w-full py-3 text-base font-medium text-center rounded-3xl border border-[#0f766e] text-[#0f766e] active:bg-emerald-50"
-                  >
-                    Please explain more first ..
-                  </Link>
 
                   <WindowQualifierDisclaimer />
 
@@ -137,24 +128,6 @@ function BookingContent() {
                     className="w-full text-sm text-neutral-500 py-2"
                   >
                     ← Back
-                  </button>
-                </div>
-              ) : (
-                <div className="space-y-4 text-center">
-                  <p className="text-sm text-neutral-700">
-                    Thank you. Your situation requires a few more details for the best service or a custom quote.
-                  </p>
-                  <Link
-                    href={`/location?zip=${zip}&windows=${windowCount}&qualifier=${encodeURIComponent(qualifierCode)}&flow=custom`}
-                    className="block w-full py-4 text-lg font-semibold text-center rounded-3xl bg-[#0f766e] text-white active:bg-[#0c5f58]"
-                  >
-                    Continue to Address for Custom Quote
-                  </Link>
-                  <button
-                    onClick={() => setShowNoPath(false)}
-                    className="w-full text-sm text-neutral-500 py-2"
-                  >
-                    ← Back to question
                   </button>
                 </div>
               )}
