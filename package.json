@@ -1,0 +1,10 @@
+{
+  "name": "ladderless-landing-monorepo",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix landing",
+    "build": "npm run build --prefix landing",
+    "start": "npm run start --prefix landing",
+    "lint": "npm run lint --prefix landing"
+  }
+}
