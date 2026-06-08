@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { getZipInfo, isPartialCoverage, getExampleZip } from "./zipRegistry";
-import { formatWindowPrice } from "./windowPricing";
+import { getZipInfo, isPartialCoverage, getExampleZip, getMinWindows, getSuccessHeadline } from "./zipRegistry";
+import { calculateWindowBase, formatPriceAmount, formatWindowPrice } from "./windowPricing";
 import { WindowQualifierDisclaimer } from "./WindowQualifierDisclaimer";
 
 export function ZipChecker({ 
@@ -31,6 +31,7 @@ export function ZipChecker({
       setZipCode(forcedSuccess);
       setIsSuccess(true);
       onZipChange?.(forcedSuccess);
+      onSetWindowCount?.(getMinWindows(forcedSuccess));
     }
   }, [forcedSuccess]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -51,8 +52,12 @@ export function ZipChecker({
     setIsChecking(true);
 
     // Brief delay, then go straight to the single-module booking page
+    const min = getMinWindows(zipCode.trim());
+    onSetWindowCount?.(Math.max(windowCount, min));
+
     setTimeout(() => {
-      router.push(`/booking?zip=${zipCode.trim()}&windows=${windowCount}`);
+      const count = Math.max(windowCount, min);
+      router.push(`/booking?zip=${zipCode.trim()}&windows=${count}`);
     }, 180);
   };
 
@@ -64,18 +69,24 @@ export function ZipChecker({
   };
 
   const SuccessView = ({
+    zip,
     isPartial,
     explanation,
     onReset,
     windowCount = 1,
     onSetWindowCount,
   }: {
+    zip: string;
     isPartial: boolean;
     explanation?: string;
     onReset: () => void;
     windowCount?: number;
     onSetWindowCount?: (n: number) => void;
-  }) => (
+  }) => {
+    const minWindows = getMinWindows(zip);
+    const subtotal = calculateWindowBase(windowCount);
+
+    return (
     <div className="space-y-5 text-center pt-1">
       <div className={`flex gap-2 ${isPartial ? "flex-col items-stretch" : "items-center justify-start"}`}>
         <div className={`flex gap-2.5 rounded-2xl bg-emerald-50 px-5 py-3 border border-emerald-100 ${isPartial ? "items-start text-left w-full" : "inline-flex items-center"}`}>
@@ -92,7 +103,7 @@ export function ZipChecker({
             />
           </svg>
           <p className={`font-semibold text-emerald-800 ${isPartial ? "text-sm leading-snug" : "tracking-tight"}`}>
-            {isPartial ? "Your neighborhood is PARTIALLY covered. Please read details below to confirm you are within the covered area before continuing." : "Great news! We serve your area."}
+            {getSuccessHeadline(zip)}
           </p>
         </div>
         <button
@@ -110,7 +121,7 @@ export function ZipChecker({
           <div className="text-sm text-neutral-600 mb-1">Number of standard windows</div>
           <div className="flex items-center justify-center gap-3">
             <button 
-              onClick={() => onSetWindowCount(Math.max(1, windowCount - 1))} 
+              onClick={() => onSetWindowCount(Math.max(minWindows, windowCount - 1))} 
               className="w-8 h-8 rounded-full border text-lg font-bold active:bg-neutral-100"
             >
               −
@@ -123,6 +134,7 @@ export function ZipChecker({
               +
             </button>
           </div>
+          <div className="text-lg font-semibold text-neutral-900 mt-2">{formatPriceAmount(subtotal)}</div>
           <div className="text-sm text-neutral-600 mt-1">{formatWindowPrice()}</div>
           <WindowQualifierDisclaimer className="mt-2" />
         </div>
@@ -140,6 +152,7 @@ export function ZipChecker({
       </p>
     </div>
   );
+  };
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -173,6 +186,7 @@ export function ZipChecker({
         </form>
       ) : zipInfo ? (
         <SuccessView
+          zip={zipCode}
           isPartial={isPartial}
           explanation={partialExplanation}
           onReset={() => {

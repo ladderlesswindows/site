@@ -4,6 +4,7 @@ const SCREEN_REINSTALL_FEE_PER_WINDOW = 2;
 
 type BookingSubtotalPanelProps = {
   windowCount: number;
+  minWindows?: number;
   screenReinstall?: boolean;
   /** booking = pre-screen-choice note; address = fee applied / calendar note */
   variant?: "booking" | "address";
@@ -13,6 +14,7 @@ type BookingSubtotalPanelProps = {
 
 export function BookingSubtotalPanel({
   windowCount,
+  minWindows = 1,
   screenReinstall = false,
   variant = "booking",
   onWindowCountChange,
@@ -44,7 +46,7 @@ export function BookingSubtotalPanel({
           <div className="flex items-center justify-center gap-2">
             <button
               type="button"
-              onClick={() => onWindowCountChange(Math.max(1, windowCount - 1))}
+              onClick={() => onWindowCountChange(Math.max(minWindows, windowCount - 1))}
               className="w-7 h-7 rounded-full border text-base font-bold active:bg-neutral-100"
             >
               −

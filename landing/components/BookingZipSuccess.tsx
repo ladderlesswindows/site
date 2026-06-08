@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { getZipInfo, isPartialCoverage } from "./zipRegistry";
-import { formatWindowPrice } from "./windowPricing";
+import { getZipInfo, isPartialCoverage, getMinWindows, getSuccessHeadline } from "./zipRegistry";
+import { calculateWindowBase, formatPriceAmount, formatWindowPrice } from "./windowPricing";
 import { WindowQualifierDisclaimer } from "./WindowQualifierDisclaimer";
 
 type BookingZipSuccessProps = {
@@ -23,6 +23,8 @@ export function BookingZipSuccess({
   const zipInfo = getZipInfo(zip);
   const isPartial = isPartialCoverage(zip);
   const explanation = zipInfo?.explanation ?? "";
+  const minWindows = getMinWindows(zip);
+  const subtotal = calculateWindowBase(windowCount);
 
   if (!zipInfo) {
     return (
@@ -56,7 +58,7 @@ export function BookingZipSuccess({
           />
         </svg>
         <p className={`font-semibold text-emerald-800 ${isPartial ? "text-sm leading-snug" : "tracking-tight"}`}>
-          {isPartial ? "Your neighborhood is PARTIALLY covered. Please read details below to confirm you are within the covered area before continuing." : "Great news! We serve your area."}
+          {getSuccessHeadline(zip)}
         </p>
       </div>
 
@@ -68,7 +70,7 @@ export function BookingZipSuccess({
         <div className="text-sm text-neutral-600 mb-1">Number of standard windows</div>
         <div className="flex items-center justify-center gap-3">
           <button
-            onClick={() => onWindowCountChange(Math.max(1, windowCount - 1))}
+            onClick={() => onWindowCountChange(Math.max(minWindows, windowCount - 1))}
             className="w-8 h-8 rounded-full border text-lg font-bold active:bg-neutral-100"
             type="button"
           >
@@ -83,6 +85,7 @@ export function BookingZipSuccess({
             +
           </button>
         </div>
+        <div className="text-lg font-semibold text-neutral-900 mt-2">{formatPriceAmount(subtotal)}</div>
         <div className="text-sm text-neutral-600 mt-1">{formatWindowPrice()}</div>
         <WindowQualifierDisclaimer className="mt-2" />
       </div>

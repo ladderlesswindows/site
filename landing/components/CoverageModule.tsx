@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ZipChecker } from "./ZipChecker";
+import { getMinWindows } from "./zipRegistry";
 
 type CoverageModuleProps = {
   forcedSuccess?: string | null;
@@ -13,6 +14,12 @@ export default function CoverageModule({
   onClearForced,
 }: CoverageModuleProps) {
   const [windowCount, setWindowCount] = useState(1);
+
+  useEffect(() => {
+    if (forcedSuccess) {
+      setWindowCount(getMinWindows(forcedSuccess));
+    }
+  }, [forcedSuccess]);
 
   return (
     <div className="border border-neutral-200 rounded-3xl bg-cream p-2">

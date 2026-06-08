@@ -11,13 +11,14 @@ import {
   buildBookingSearchParams,
   screensChoiceToReinstallFee,
 } from '@/components/bookingFlowParams';
+import { clampWindowCount, getMinWindows } from '@/components/zipRegistry';
 
 function BookingContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const zip = searchParams.get('zip') || '95060';
-  const windowsParam = searchParams.get('windows') || '1';
-  const initialWindows = parseInt(windowsParam, 10);
+  const windowsParam = searchParams.get('windows') || String(getMinWindows(zip));
+  const initialWindows = clampWindowCount(zip, parseInt(windowsParam, 10) || getMinWindows(zip));
 
   const [windowCount, setWindowCount] = useState(initialWindows);
   const [qualifierCode, setQualifierCode] = useState("");
@@ -37,10 +38,11 @@ function BookingContent() {
 Please Read Carefully and confirm below: I have windows under 25' (2 stories) without too much tree/bushes below them, that are ready now for a 30 Second Booking! I understand that your professional water fed pole exterior window cleaning technicians are so good, despite using only purified water, that the perfection is GUARANTEED and includes a free screen washing. These are pretty much standard residential windows so your pro should have no problem!`;
 
   const updateWindowCount = (count: number) => {
-    setWindowCount(count);
+    const next = clampWindowCount(zip, count);
+    setWindowCount(next);
     const params = buildBookingSearchParams({
       zip,
-      windows: count,
+      windows: next,
       qualifier: qualifierCode,
       flow: '30s',
     });
@@ -67,7 +69,12 @@ Please Read Carefully and confirm below: I have windows under 25' (2 stories) wi
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 px-5 pt-12 pb-12">
         <FlowPageLayout
-          rightPanel={<BookingSubtotalPanel windowCount={windowCount} />}
+          rightPanel={
+            <BookingSubtotalPanel
+              windowCount={windowCount}
+              minWindows={getMinWindows(zip)}
+            />
+          }
           main={
             <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
               <FlowBrandingHeader currentZip={zip} windows={windowCount} />

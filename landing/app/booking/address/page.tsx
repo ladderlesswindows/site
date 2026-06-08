@@ -16,6 +16,7 @@ import { supabase } from '@/lib/supabase';
 import { reserveBookingSlot } from '@/lib/bookingSlots';
 import { getQualifier, DEFAULT_WINDOW_PRICE } from '@/components/qualifiers';
 import { calculateWindowBase } from '@/components/windowPricing';
+import { clampWindowCount, getMinWindows } from '@/components/zipRegistry';
 
 function AddressContent() {
   const searchParams = useSearchParams();
@@ -23,7 +24,7 @@ function AddressContent() {
 
   const zip = searchParams.get('zip') || '95060';
   const windowsParam = searchParams.get('windows') || '1';
-  const paramWindows = parseInt(windowsParam, 10) || 1;
+  const paramWindows = clampWindowCount(zip, parseInt(windowsParam, 10) || getMinWindows(zip));
   const screenParam = searchParams.get('screenReinstall');
   const screensChoiceParam = searchParams.get('screensChoice');
   const paramScreenReinstall = parseScreenReinstall(screenParam, screensChoiceParam);
@@ -83,7 +84,7 @@ function AddressContent() {
   };
 
   const updateWindows = (count: number) => {
-    const next = Math.max(1, count);
+    const next = clampWindowCount(zip, count);
     setWindows(next);
     syncBookingParams({ windows: next });
   };
@@ -191,6 +192,7 @@ function AddressContent() {
             <div className="space-y-2">
               <BookingSubtotalPanel
                 windowCount={windows}
+                minWindows={getMinWindows(zip)}
                 screenReinstall={screenReinstall}
                 variant="address"
                 onWindowCountChange={updateWindows}
