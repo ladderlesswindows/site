@@ -2,7 +2,9 @@
 
 The 30-second booking flow is wired to Supabase for real availability and 15-minute tentative holds.
 
-## Required env (.env.local)
+## Required env (repo-root `.env.local`)
+
+The Next app lives in `landing/` but loads env from the **repository root** (see `landing/next.config.ts`).
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=ey...
 NEXT_PUBLIC_PROVIDER_ID=your-provider-uuid

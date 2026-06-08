@@ -159,12 +159,19 @@ export default function AdminBookings() {
   };
 
   const handleSelect = async (selectInfo: any) => {
+    if (!supabase) {
+      alert(
+        'Supabase is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to the repo-root .env.local, then restart npm run dev.'
+      );
+      return;
+    }
+
     const date = selectInfo.startStr.split('T')[0];
     const scheduled_start = `${date}T09:00:00`;
     const duration_minutes = 480; // entire day
 
     // Insert as 'tentative' first to satisfy RLS, then update to 'confirmed'
-    const { data, error: insertError } = await (supabase!).from('bookings').insert({
+    const { data, error: insertError } = await supabase.from('bookings').insert({
       provider_id: PROVIDER_ID,
       customer_name: 'John and Deb',
       scheduled_start,
@@ -179,7 +186,7 @@ export default function AdminBookings() {
       return;
     }
 
-    const { error: updateError } = await (supabase!)
+    const { error: updateError } = await supabase
       .from('bookings')
       .update({ status: 'confirmed' })
       .eq('id', data.id);

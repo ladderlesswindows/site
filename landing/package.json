@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "import:personal-calendar": "npx tsx --env-file=.env.local import-personal-calendar.ts"
+    "import:personal-calendar": "npx tsx --env-file=../.env.local import-personal-calendar.ts"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.20",

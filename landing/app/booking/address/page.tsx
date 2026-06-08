@@ -95,18 +95,20 @@ function AddressContent() {
     fullName.trim().length > 1 &&
     email.trim().includes('@');
 
-  const slotHref = canProceed
-    ? `/booking/slot?${buildSlotSearchParams({
-        zip,
-        windows,
-        screenReinstall,
-        screensChoice: screensChoice || undefined,
-        qualifier: qualifierCode,
-        name: fullName.trim(),
-        address: addressSummary,
-        email: email.trim(),
-      })}`
-    : '#';
+  const goToSlotPicker = () => {
+    if (!canProceed) return;
+    const query = buildSlotSearchParams({
+      zip,
+      windows,
+      screenReinstall,
+      screensChoice: screensChoice || undefined,
+      qualifier: qualifierCode,
+      name: fullName.trim(),
+      address: addressSummary,
+      email: email.trim(),
+    });
+    router.push(`/booking/slot?${query}`);
+  };
 
   const handleSpecialSchedule = () => {
     const pw = prompt('Enter password');
@@ -239,19 +241,18 @@ function AddressContent() {
                       Enter name, email, street, and city to continue
                     </p>
                   )}
-                  <Link
-                    href={slotHref}
-                    onClick={(e) => {
-                      if (!canProceed) e.preventDefault();
-                    }}
+                  <button
+                    type="button"
+                    onClick={goToSlotPicker}
+                    disabled={!canProceed}
                     className={`block w-full py-4 text-lg font-semibold text-center rounded-3xl mt-3 transition ${
                       canProceed
                         ? 'bg-[#0f766e] text-white active:bg-[#0c5f58]'
-                        : 'bg-neutral-200 text-neutral-400 pointer-events-none'
+                        : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
                     }`}
                   >
                     Choose Time Slot
-                  </Link>
+                  </button>
                 </>
               )}
 

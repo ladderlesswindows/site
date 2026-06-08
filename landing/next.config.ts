@@ -1,8 +1,11 @@
 import type { NextConfig } from "next";
 import path from "path";
+import { loadEnvConfig } from "@next/env";
+
+// Monorepo layout: secrets live in repo-root .env.local, app runs from landing/
+loadEnvConfig(path.resolve(__dirname, ".."));
 
 const nextConfig: NextConfig = {
-  /* config options here */
   turbopack: {
     root: path.resolve(__dirname),
   },
