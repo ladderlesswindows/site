@@ -4,7 +4,7 @@ import { Footer } from "@/components/Footer";
 
 export default function BookPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col">
       {/* Consistent top bar with compact logo */}
       <div className="pt-6 pb-4 px-6 border-b border-neutral-100">
         <div className="mx-auto max-w-2xl flex justify-center">

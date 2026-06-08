@@ -14,7 +14,7 @@ function ExplainContent() {
   const continueHref = `/booking/address?zip=${zip}&windows=${windowsParam}&screenReinstall=${screenReinstall}&qualifier=${encodeURIComponent(qualifierCode)}&flow=30s`;
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col">
       <main className="flex-1 px-5 pt-8 pb-12">
         <div className="mx-auto max-w-xl">
           {/* same branding header */}

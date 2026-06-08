@@ -82,7 +82,7 @@ function PostJobContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
+      <div className="min-h-screen flex items-center justify-center">
         <p>Loading job details...</p>
       </div>
     );
@@ -90,7 +90,7 @@ function PostJobContent() {
 
   if (!booking) {
     return (
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col">
         <main className="flex-1 px-5 pt-12 pb-12">
           <div className="mx-auto max-w-md">
             <div className="border border-neutral-200 rounded-3xl p-2 mb-6">
@@ -115,7 +115,7 @@ function PostJobContent() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col">
         <main className="flex-1 px-5 pt-12 pb-12">
           <div className="mx-auto max-w-md text-center">
             <div className="border border-neutral-200 rounded-3xl p-2 mb-6">
@@ -142,7 +142,7 @@ function PostJobContent() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col">
       <main className="flex-1 px-5 pt-12 pb-12">
         <div className="mx-auto max-w-md">
           {/* branding */}

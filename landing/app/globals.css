@@ -5,7 +5,7 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-/* Premium landing base styles - white background, dark text, mobile-first */
+/* Premium landing base styles - medium grey background, dark text, mobile-first */
 :root {
   --primary-green: #0f766e; /* Deep emerald for CTAs - trustworthy */
   --primary-green-hover: #0c5f58;
