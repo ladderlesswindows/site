@@ -34,9 +34,6 @@ function BookingContent() {
     setShowNoPath(false);
   }, [zip, initialWindows]);
 
-  const questionText = `POWER USER 30 Second Booking!
-Please Read Carefully and confirm below: I have windows under 25' (2 stories) without too much tree/bushes below them, that are ready now for a 30 Second Booking! I understand that your professional water fed pole exterior window cleaning technicians are so good, despite using only purified water, that the perfection is GUARANTEED and includes a free screen washing. These are pretty much standard residential windows so your pro should have no problem!`;
-
   const updateWindowCount = (count: number) => {
     const next = clampWindowCount(zip, count);
     setWindowCount(next);
@@ -89,8 +86,24 @@ Please Read Carefully and confirm below: I have windows under 25' (2 stories) wi
                 />
               ) : !showNoPath ? (
                 <div className="space-y-4">
-                  <div className="text-base font-medium leading-snug whitespace-pre-line text-center">
-                    {questionText}
+                  <div className="space-y-3 text-center">
+                    <div className="text-base font-semibold tracking-tight">
+                      POWER USER 30 Second Booking!
+                    </div>
+                    <p className="text-[11px] leading-snug text-neutral-500">
+                      Please Read Carefully and confirm below:
+                    </p>
+                    <p className="text-base font-medium leading-snug text-left">
+                      I am booking now for some standard style 1st or 2nd story windows that are ready now for a 30 Second Booking! I understand that your professional water fed pole EXTERIOR window cleaning technicians are so good, despite using only purified water, that the perfection is GUARANTEED.
+                    </p>
+                    <p className="text-base font-medium leading-snug">
+                      These are pretty much standard residential windows so your pro should have no problem!
+                    </p>
+                    <ul className="text-[11px] leading-snug text-neutral-500 text-left list-disc pl-4 space-y-1">
+                      <li>Free screen cleaning, optional screen reinstallation fee of $2/window</li>
+                      <li>Interiors may be added if time permits</li>
+                      <li>full house free-estimates given while on site</li>
+                    </ul>
                   </div>
 
                   <div className="flex gap-3">
