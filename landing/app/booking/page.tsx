@@ -2,8 +2,9 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useState, Suspense } from 'react';
-import BookingSummary from '@/components/BookingSummary';
+import { useState, useEffect, Suspense } from 'react';
+import { FlowBrandingHeader } from '@/components/FlowBrandingHeader';
+import { BookingZipSuccess } from '@/components/BookingZipSuccess';
 
 function BookingContent() {
   const searchParams = useSearchParams();
@@ -15,12 +16,18 @@ function BookingContent() {
   const [windowCount, setWindowCount] = useState(initialWindows);
   const [screenReinstall, setScreenReinstall] = useState(true);
   const [qualifierCode, setQualifierCode] = useState("");
+  const [showQualifier, setShowQualifier] = useState(false);
   const [showNoPath, setShowNoPath] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showScreens, setShowScreens] = useState(false);
   const [screensChoice, setScreensChoice] = useState<"outside" | "fee" | "decide" | "">("");
 
-  // POWER USER 30 Second Booking question text (exact per user)
+  useEffect(() => {
+    setWindowCount(initialWindows);
+    setShowQualifier(false);
+    setShowNoPath(false);
+  }, [zip, initialWindows]);
+
   const questionText = `POWER USER 30 Second Booking!
 Please Read Carefully and confirm below: I have windows under 25' (2 stories) without too much tree/bushes below them, that are ready now for a 30 Second Booking! I understand that your professional water fed pole exterior window cleaning technicians are so good, despite using only purified water, that the perfection is GUARANTEED and includes a free screen washing. These are pretty much standard residential windows so your pro should have no problem!`;
 
@@ -34,48 +41,20 @@ Please Read Carefully and confirm below: I have windows under 25' (2 stories) wi
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 px-5 pt-12 pb-12">
         <div className="mx-auto max-w-md">
-          {/* same branding section above */}
-          <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
-            {/* quick zip success buttons (desktop) + marketing (but on this page the top is for nav) */}
-            <div className="mb-2">
-              <div className="hidden md:block">
-                <div className="flex justify-between">
-                  {/* Simplified top buttons for this module - just show current or key ones for look */}
-                  <div className="text-[9px] px-1 py-0.5 border border-emerald-100 rounded bg-emerald-50 text-emerald-700" style={{minWidth: '28px'}}>{zip}</div>
-                </div>
-              </div>
-            </div>
-            {/* only the logo */}
-            <div className="flex justify-center mb-4">
-              <img
-                src="/ll.jpg"
-                alt="Ladderless Windows"
-                className="w-full h-auto object-contain rounded-3xl"
-              />
-            </div>
-          </div>
-
-          {/* Interactive summary box (with qualifier support for special pricing like STACEY at $12/window).
-             User can still adjust window count, screen reinstall, and qualifier code here (example placeholder: Ladderless5).
-             The Yes link carries live values + flow=30s so the following page shows the same box. */}
-          <div className="mb-6">
-            <BookingSummary
-              zip={zip}
-              windows={windowCount}
-              screenReinstall={screenReinstall}
-              onWindowsChange={setWindowCount}
-              onScreenReinstallChange={setScreenReinstall}
-              qualifierCode={qualifierCode}
-              onQualifierChange={setQualifierCode}
-              specialZeroPrice={false}
-            />
-          </div>
-
-          {/* 30 second path qualifier box */}
           <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
-            {!showNoPath ? (
-              <>
-                <div className="text-base font-medium leading-snug mb-4 whitespace-pre-line">
+            <FlowBrandingHeader currentZip={zip} windows={windowCount} />
+
+            {!showQualifier ? (
+              <BookingZipSuccess
+                zip={zip}
+                windowCount={windowCount}
+                onWindowCountChange={setWindowCount}
+                onStartBooking={() => setShowQualifier(true)}
+                explainHref={`/explain?zip=${zip}&windows=${windowCount}&screenReinstall=${screenReinstall}&qualifier=${encodeURIComponent(qualifierCode)}&flow=30s`}
+              />
+            ) : !showNoPath ? (
+              <div className="space-y-4">
+                <div className="text-base font-medium leading-snug whitespace-pre-line text-center">
                   {questionText}
                 </div>
 
@@ -96,17 +75,21 @@ Please Read Carefully and confirm below: I have windows under 25' (2 stories) wi
 
                 <Link
                   href={`/explain?zip=${zip}&windows=${windowCount}&screenReinstall=${screenReinstall}&qualifier=${encodeURIComponent(qualifierCode)}&flow=30s`}
-                  className="mt-2 block w-full py-3 text-base font-medium text-center rounded-3xl border border-[#0f766e] text-[#0f766e] active:bg-emerald-50"
+                  className="block w-full py-3 text-base font-medium text-center rounded-3xl border border-[#0f766e] text-[#0f766e] active:bg-emerald-50"
                 >
                   Please explain more first ..
                 </Link>
-              </>
+
+                <button
+                  onClick={() => setShowQualifier(false)}
+                  className="w-full text-sm text-neutral-500 py-2"
+                >
+                  ← Back
+                </button>
+              </div>
             ) : (
-              <div>
-                <div className="text-sm text-neutral-600 mb-2">
-                  For ZIP <span className="font-semibold">{zip}</span> • {windowCount} window{windowCount > 1 ? 's' : ''} (see summary above for options)
-                </div>
-                <p className="text-sm text-neutral-700 mb-4">
+              <div className="space-y-4 text-center">
+                <p className="text-sm text-neutral-700">
                   Thank you. Your situation requires a few more details for the best service or a custom quote.
                 </p>
                 <Link
@@ -115,9 +98,9 @@ Please Read Carefully and confirm below: I have windows under 25' (2 stories) wi
                 >
                   Continue to Address for Custom Quote
                 </Link>
-                <button 
-                  onClick={() => setShowNoPath(false)} 
-                  className="w-full text-sm text-neutral-500 py-2 mt-2"
+                <button
+                  onClick={() => setShowNoPath(false)}
+                  className="w-full text-sm text-neutral-500 py-2"
                 >
                   ← Back to question
                 </button>
@@ -125,8 +108,6 @@ Please Read Carefully and confirm below: I have windows under 25' (2 stories) wi
             )}
           </div>
 
-          {/* Confirmation popup after Yes on the PowerUser 30s page.
-              Uses exact statement text provided. On confirm, goes to /booking/address (preserves 30s + special address flow). */}
           {showConfirm && (
             <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 pt-8 px-4" onClick={() => { setShowConfirm(false); setShowScreens(false); setScreensChoice(""); }}>
               <div

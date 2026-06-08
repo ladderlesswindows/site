@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { getZipInfo, isPartialCoverage, getExampleZip } from "./zipRegistry";
 
 export function ZipChecker({ 
@@ -17,6 +18,7 @@ export function ZipChecker({
   windowCount?: number;
   onSetWindowCount?: (n: number) => void;
 } = {}) {
+  const router = useRouter();
   const exampleZip = getExampleZip();
   const [zipCode, setZipCode] = useState(exampleZip);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -46,10 +48,9 @@ export function ZipChecker({
 
     setIsChecking(true);
 
-    // Small artificial delay for premium "processing" feel (realistic demo)
+    // Brief delay, then go straight to the single-module booking page
     setTimeout(() => {
-      setIsChecking(false);
-      setIsSuccess(true);
+      router.push(`/booking?zip=${zipCode.trim()}&windows=${windowCount}`);
     }, 180);
   };
 
@@ -146,12 +147,6 @@ export function ZipChecker({
       {!isSuccess ? (
         <form onSubmit={handleCheck} className="space-y-4">
           <div>
-            <label
-              htmlFor="zip"
-              className="block text-sm font-semibold tracking-wide text-neutral-700 mb-2"
-            >
-              Check if we serve your area
-            </label>
             <input
               id="zip"
               type="text"
@@ -160,6 +155,7 @@ export function ZipChecker({
               value={zipCode}
               onChange={handleZipChange}
               placeholder={exampleZip}
+              aria-label="ZIP code"
               className="w-full px-5 py-4 text-2xl font-semibold tracking-[2px] text-center border-2 border-neutral-300 rounded-2xl bg-white placeholder:text-neutral-400 focus:border-[#0f766e] focus:ring-0 transition-all"
               aria-describedby="zip-help"
             />
