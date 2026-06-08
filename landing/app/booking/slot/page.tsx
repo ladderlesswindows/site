@@ -126,7 +126,7 @@ function SlotContent() {
         <main className="flex-1 px-5 pt-12 pb-12">
           <div className="mx-auto max-w-md">
             {/* same branding section above for seamlessness */}
-            <div className="border border-neutral-200 rounded-3xl p-2 mb-6">
+            <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
               <div className="mb-2">
                 <div className="hidden md:block">
                   <div className="flex justify-between">
@@ -144,7 +144,7 @@ function SlotContent() {
               </div>
             </div>
 
-            <div className="border border-neutral-200 rounded-3xl p-6 text-center">
+            <div className="border border-neutral-200 rounded-3xl bg-cream p-6 text-center">
               <h1 className="text-xl font-semibold mb-3">Supabase not configured yet</h1>
               <p className="text-sm text-neutral-600 mb-4">
                 The calendar requires Supabase to query real availability and create tentative slot holds.
@@ -182,7 +182,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key`}
       <main className="flex-1 px-5 pt-12 pb-12">
         <div className="mx-auto max-w-md">
           {/* same branding section above for seamlessness */}
-          <div className="border border-neutral-200 rounded-3xl p-2 mb-6">
+          <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
             <div className="mb-2">
               <div className="hidden md:block">
                 <div className="flex justify-between">
@@ -201,14 +201,14 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key`}
           </div>
 
           {/* Compact job summary (info already entered in previous step) */}
-          <div className="border border-neutral-200 rounded-3xl p-2 mb-4 text-sm">
+          <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-4 text-sm">
             <div className="font-medium">Your {windowCount}-window job for ZIP {zip}</div>
             <div className="text-xs text-neutral-600">Est. ${total} {qualifier ? `(${qualifier.displayName} rate)` : ''}</div>
             {addressSummary && <div className="text-xs text-neutral-500 mt-1 truncate">{addressSummary}</div>}
           </div>
 
           {/* Real-time slot picker with Supabase + hold logic */}
-          <div className="border border-neutral-200 rounded-3xl p-2 mb-4">
+          <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-4">
             <div className="text-sm font-medium mb-2">Choose your time slot</div>
             <p className="text-[10px] text-neutral-500 mb-3">Slots are held for 15 minutes while you complete checkout (or released automatically if you don't).</p>
 

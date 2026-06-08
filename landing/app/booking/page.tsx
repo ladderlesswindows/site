@@ -35,7 +35,7 @@ Please Read Carefully and confirm below: I have windows under 25' (2 stories) wi
       <main className="flex-1 px-5 pt-12 pb-12">
         <div className="mx-auto max-w-md">
           {/* same branding section above */}
-          <div className="border border-neutral-200 rounded-3xl p-2 mb-6">
+          <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
             {/* quick zip success buttons (desktop) + marketing (but on this page the top is for nav) */}
             <div className="mb-2">
               <div className="hidden md:block">
@@ -72,7 +72,7 @@ Please Read Carefully and confirm below: I have windows under 25' (2 stories) wi
           </div>
 
           {/* 30 second path qualifier box */}
-          <div className="border border-neutral-200 rounded-3xl p-2">
+          <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
             {!showNoPath ? (
               <>
                 <div className="text-base font-medium leading-snug mb-4 whitespace-pre-line">
@@ -130,7 +130,7 @@ Please Read Carefully and confirm below: I have windows under 25' (2 stories) wi
           {showConfirm && (
             <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 pt-8 px-4" onClick={() => { setShowConfirm(false); setShowScreens(false); setScreensChoice(""); }}>
               <div
-                className="w-full max-w-md bg-white rounded-3xl border border-neutral-200 shadow-2xl p-5"
+                className="w-full max-w-md bg-cream rounded-3xl border border-neutral-200 shadow-2xl p-5"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-between items-start mb-3">

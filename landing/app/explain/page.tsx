@@ -18,7 +18,7 @@ function ExplainContent() {
       <main className="flex-1 px-5 pt-8 pb-12">
         <div className="mx-auto max-w-xl">
           {/* same branding header */}
-          <div className="border border-neutral-200 rounded-3xl p-2 mb-6">
+          <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
             <div className="flex justify-center mb-4">
               <img
                 src="/ll.jpg"

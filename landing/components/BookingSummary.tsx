@@ -66,7 +66,7 @@ export default function BookingSummary({
 
   return (
     <div>
-      <div className="border border-neutral-200 rounded-3xl p-2">
+      <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
         <div className="text-sm text-neutral-600 mb-2 px-1">
           For ZIP <span className="font-semibold">{zip}</span>
         </div>
@@ -146,7 +146,7 @@ export default function BookingSummary({
         </div>
 
         {!screenReinstall && (
-          <div className="text-[11px] leading-tight text-neutral-600 bg-neutral-50 border border-neutral-200 rounded-xl p-3">
+          <div className="text-[11px] leading-tight text-neutral-600 bg-cream border border-neutral-200 rounded-xl p-3">
             I will remove the screens myself and have them ready for the cleaner outside, then I will replace them after the free cleaning. (Also, please note, our tech can give you a free lesson to remove them yourself next time, to save this handling fee, <span className="text-red-600">most screens have hiddens springs that need to be compressed before attempting to remove them or they will be damaged</span>)
           </div>
         )}

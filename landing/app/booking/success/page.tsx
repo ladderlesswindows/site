@@ -38,7 +38,7 @@ function SuccessContent() {
       <main className="flex-1 px-5 pt-12 pb-12">
         <div className="mx-auto max-w-md">
           {/* same branding section above for seamlessness */}
-          <div className="border border-neutral-200 rounded-3xl p-2 mb-6">
+          <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
             <div className="mb-2">
               <div className="hidden md:block">
                 <div className="flex justify-between">
@@ -57,7 +57,7 @@ function SuccessContent() {
           </div>
 
           {/* Success confirmation - completes the 30 second booking process */}
-          <div className="border border-neutral-200 rounded-3xl p-2">
+          <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
             <div className="text-center py-2">
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-100 mb-3">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -70,7 +70,7 @@ function SuccessContent() {
               <p className="text-sm text-neutral-600 mb-4">Thank you, {name.split(' ')[0] || 'friend'}. Your pro is on the way.</p>
 
               {/* Quick summary carried from the path */}
-              <div className="bg-neutral-50 border border-neutral-200 rounded-2xl p-3 mb-4 text-left text-sm">
+              <div className="bg-cream border border-neutral-200 rounded-2xl p-3 mb-4 text-left text-sm">
                 <div className="flex justify-between mb-1">
                   <span className="text-neutral-600">ZIP</span>
                   <span className="font-semibold">{zip}</span>
@@ -109,7 +109,7 @@ function SuccessContent() {
               </div>
 
               {/* Address summary */}
-              <div className="text-left text-sm mb-4 bg-white border border-neutral-200 rounded-2xl p-3">
+              <div className="text-left text-sm mb-4 bg-cream border border-neutral-200 rounded-2xl p-3">
                 <div className="text-xs text-neutral-500 mb-0.5">Service Address</div>
                 <div className="font-medium">{address}</div>
                 {email && <div className="text-xs text-neutral-500 mt-1">{email}</div>}

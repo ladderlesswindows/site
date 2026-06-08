@@ -18,7 +18,7 @@ export function Logo({ className = "", variant = "default" }: LogoProps) {
 
   return (
     <div
-      className={`bg-white ${borderClasses} ${className}`}
+      className={`bg-cream ${borderClasses} ${className}`}
       role="img"
       aria-label="Ladderless Windows logo"
     >

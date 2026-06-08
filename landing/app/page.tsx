@@ -4,9 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import CoverageModule from "@/components/CoverageModule";
+import { getSuccessZips, coverage } from "@/components/zipRegistry";
 
 export default function LadderlessLanding() {
   const [showVideo, setShowVideo] = useState(false);
+  const [forcedZip, setForcedZip] = useState<string | null>(null);
+  const successZips = getSuccessZips();
 
   const openVideo = () => setShowVideo(true);
   const closeVideo = () => setShowVideo(false);
@@ -16,14 +19,25 @@ export default function LadderlessLanding() {
       <main className="flex-1 px-5 pt-12 pb-12">
         <div className="mx-auto max-w-md">
           {/* branding module: logo + "How?" marketing button (generic, not coverage-specific) */}
-          <div className="border border-neutral-200 rounded-3xl p-2 mb-6">
-            {/* only the logo */}
-            <div className="relative flex justify-center mb-4">
+          <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
+            {/* logo with quick ZIP row overlaid inside the frame */}
+            <div className="relative mb-4">
               <img
                 src="/ll.jpg"
                 alt="Ladderless Windows"
                 className="w-full h-auto object-contain rounded-3xl"
               />
+              <div className="absolute top-1.5 left-1.5 right-1.5 z-10 flex flex-nowrap gap-0.5">
+                {successZips.map((zip) => (
+                  <button
+                    key={zip}
+                    onClick={() => setForcedZip(zip)}
+                    className="flex-1 min-w-0 text-[8px] leading-none px-0.5 py-0.5 border border-emerald-100 rounded bg-emerald-50/95 active:bg-emerald-100 text-emerald-700 backdrop-blur-[1px]"
+                  >
+                    {zip}
+                  </button>
+                ))}
+              </div>
               {/* Floating circular "How?" button on left of logo (desktop only) */}
               <button
                 onClick={openVideo}
@@ -48,18 +62,27 @@ export default function LadderlessLanding() {
           </div>
 
           {/* coverage module — the swappable part for different locations (e.g. Gilroy) */}
-          <CoverageModule />
+          <CoverageModule
+            forcedSuccess={forcedZip}
+            onClearForced={() => setForcedZip(null)}
+          />
 
           {/* Subtle trust line - floating, no box */}
           <p className="mt-8 text-center text-xs uppercase tracking-[2.5px] text-neutral-400 font-medium">
             Fully Insured • Vetted Technicians • Satisfaction Guaranteed
           </p>
 
-          {/* Very tiny admin link at the bottom of the home page */}
-          <div className="mt-6 text-center">
-            <Link href="/admin/bookings" className="text-[9px] text-neutral-400 hover:text-neutral-600 tracking-wide">
+          {/* Very tiny admin + contact links at the bottom of the home page */}
+          <div className="mt-6 text-center space-y-1">
+            <Link href="/admin/bookings" className="block text-[9px] text-neutral-400 hover:text-neutral-600 tracking-wide">
               admin
             </Link>
+            <a
+              href={`mailto:${coverage.contactEmail}`}
+              className="block text-[9px] text-neutral-400 hover:text-neutral-600 tracking-wide"
+            >
+              send email to admin
+            </a>
           </div>
 
           {/* Video modal for "But how?!" */}
@@ -69,7 +92,7 @@ export default function LadderlessLanding() {
               onClick={closeVideo}
             >
               <div
-                className="relative w-full max-w-2xl rounded-xl bg-white overflow-hidden"
+                className="relative w-full max-w-2xl rounded-xl bg-cream overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button

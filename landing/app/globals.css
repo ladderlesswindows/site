@@ -3,6 +3,7 @@
 @theme inline {
   --font-sans: var(--font-satoshi);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --color-cream: #f9f0e4;
 }
 
 /* Premium landing base styles - medium grey background, dark text, mobile-first */

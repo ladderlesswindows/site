@@ -187,7 +187,7 @@ function AddressContent() {
       <main className="flex-1 px-5 pt-12 pb-12">
         <div className="mx-auto max-w-md">
           {/* branding header - reused */}
-          <div className="border border-neutral-200 rounded-3xl p-2 mb-6">
+          <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
             <div className="mb-2">
               <div className="hidden md:block">
                 <div className="flex justify-between">
@@ -213,7 +213,7 @@ function AddressContent() {
           <div className="flex gap-2">
             {/* Left: simplified address fields for 30s */}
             <div className="flex-1 space-y-3">
-              <div className="border border-neutral-200 rounded-3xl p-2">
+              <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
                 <div className="space-y-1.5">
                   <div>
                     <div className="text-[10px] text-neutral-500 mb-0.5">Street Address *</div>

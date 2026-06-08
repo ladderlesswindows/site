@@ -66,7 +66,7 @@ function LocationContent() {
       <main className="flex-1 px-5 pt-12 pb-12">
         <div className="mx-auto max-w-md">
           {/* same branding section above */}
-          <div className="border border-neutral-200 rounded-3xl p-2 mb-6">
+          <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
             <div className="mb-2">
               <div className="hidden md:block">
                 <div className="flex justify-between">
@@ -94,7 +94,7 @@ function LocationContent() {
               <div className="flex gap-2">
                 {/* Left: expanded address form + disclaimers box */}
                 <div className="flex-1 space-y-3">
-                  <div className="border border-neutral-200 rounded-3xl p-2">
+                  <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
                     <h3 className="font-semibold mb-2 text-sm">Your Details &amp; Address</h3>
                     <div className="space-y-1.5">
                       <div>
@@ -192,7 +192,7 @@ function LocationContent() {
                   </div>
 
                   {/* New disclaimers box for deeper understanding */}
-                  <div className="border border-neutral-200 rounded-3xl p-2">
+                  <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
                     <h3 className="font-semibold mb-1 text-xs">Disclaimers (for deeper understanding of the visit)</h3>
                     <p className="text-[10px] text-neutral-500">
                       [Placeholder: Your disclaimers and additional details will be added here for those who want a more thorough understanding of the visit.]
@@ -249,7 +249,7 @@ function LocationContent() {
               />
 
               {/* address / location module (kept for custom/No path) */}
-              <div className="border border-neutral-200 rounded-3xl p-2">
+              <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
                 <div className="mb-4">
                   <div className="text-sm text-neutral-600 mb-2">
                     For ZIP <span className="font-semibold">{zip}</span> • {paramWindows} window{paramWindows > 1 ? 's' : ''} at ${paramWindows * 20} each

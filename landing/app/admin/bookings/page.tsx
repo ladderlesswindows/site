@@ -259,7 +259,7 @@ export default function AdminBookings() {
 
           {loading && <div className="mb-4 text-sm text-neutral-500">Loading calendar...</div>}
 
-          <div className="bg-white rounded-2xl shadow p-4">
+          <div className="bg-cream rounded-2xl shadow p-4">
             <FullCalendar
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
               initialView="timeGridWeek"

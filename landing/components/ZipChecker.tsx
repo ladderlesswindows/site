@@ -131,7 +131,7 @@ export function ZipChecker({
         Start 30 Second Booking
       </Link>
 
-      <div className="text-left text-[10px] leading-snug text-neutral-500 border border-neutral-200 rounded-xl p-3 bg-neutral-50">
+      <div className="text-left text-[10px] leading-snug text-neutral-500 border border-neutral-200 rounded-xl p-3 bg-cream">
         Any single exterior window up to approx. 5 ft x 5 ft under 2 stories (25'). Most standard residential windows qualify. Decorative and specialty shapes/grids also currently qualify! Screens washed free with every window. Interior Window cleaning may be added as well for less than exterior, once exterior is done. Entire homes can be done if time allows. Custom/3+ level can get free estimates.
       </div>
 
