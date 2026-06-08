@@ -103,6 +103,7 @@ function BookingContent() {
                       <li>Free screen cleaning, optional screen reinstallation fee of $2/window</li>
                       <li>Interiors may be added if time permits</li>
                       <li>full house free-estimates given while on site</li>
+                      <li>I promise to be home &amp; understand 2 windows free if worker 15m late</li>
                     </ul>
                   </div>
 
