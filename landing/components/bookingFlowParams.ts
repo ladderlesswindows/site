@@ -20,6 +20,9 @@ export function buildBookingSearchParams(input: {
   screensChoice?: ScreensChoice;
   qualifier?: string;
   flow?: string;
+  name?: string;
+  address?: string;
+  email?: string;
 }): string {
   const params = new URLSearchParams();
   params.set("zip", input.zip);
@@ -28,5 +31,22 @@ export function buildBookingSearchParams(input: {
   if (input.screensChoice) params.set("screensChoice", input.screensChoice);
   if (input.qualifier) params.set("qualifier", input.qualifier);
   if (input.flow) params.set("flow", input.flow);
+  if (input.name) params.set("name", input.name);
+  if (input.address) params.set("address", input.address);
+  if (input.email) params.set("email", input.email);
   return params.toString();
+}
+
+/** Query string for `/booking/slot` after address step. */
+export function buildSlotSearchParams(input: {
+  zip: string;
+  windows: number;
+  screenReinstall?: boolean;
+  screensChoice?: ScreensChoice;
+  qualifier?: string;
+  name: string;
+  address: string;
+  email: string;
+}): string {
+  return buildBookingSearchParams({ ...input, flow: "30s" });
 }

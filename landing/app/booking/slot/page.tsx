@@ -5,11 +5,10 @@ import Link from 'next/link';
 import { useState, useMemo, useEffect, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import { PROVIDER_ID } from '@/lib/bookingConstants';
 import { getQualifier, DEFAULT_WINDOW_PRICE } from '@/components/qualifiers';
 import { calculateWindowBase } from '@/components/windowPricing';
-import { parseScreenReinstall } from '@/components/bookingFlowParams';
-
-const PROVIDER_ID = process.env.NEXT_PUBLIC_PROVIDER_ID || '00000000-0000-0000-0000-000000000001';
+import { buildBookingSearchParams, parseScreenReinstall } from '@/components/bookingFlowParams';
 
 function SlotContent() {
   const searchParams = useSearchParams();
@@ -306,7 +305,22 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key`}
           </div>
 
           <div className="text-center">
-            <Link href="/" className="text-xs text-neutral-500">← Back to Coverage</Link>
+            <Link
+              href={`/booking/address?${buildBookingSearchParams({
+                zip,
+                windows: windowCount,
+                screenReinstall,
+                screensChoice: (searchParams.get('screensChoice') as 'outside' | 'fee' | 'decide' | '') || undefined,
+                qualifier: qualifierCode,
+                flow: '30s',
+                name,
+                address: addressSummary,
+                email,
+              })}`}
+              className="text-xs text-neutral-500"
+            >
+              ← Back to Address
+            </Link>
           </div>
         </div>
       </main>

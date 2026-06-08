@@ -7,8 +7,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { supabase } from '@/lib/supabase';
-
-const MY_PROVIDER_ID = 'cc79bb27-5b21-4c56-aaae-7da80d38fa9f'; // your owner provider
+import { PROVIDER_ID } from '@/lib/bookingConstants';
 
 type Booking = {
   id: string;
@@ -35,7 +34,7 @@ export default function AdminBookings() {
     const { data, error } = await supabase
       .from('bookings')
       .select('*')
-      .eq('provider_id', MY_PROVIDER_ID)
+      .eq('provider_id', PROVIDER_ID)
       .order('scheduled_start', { ascending: true });
 
     if (error) {
@@ -166,7 +165,7 @@ export default function AdminBookings() {
 
     // Insert as 'tentative' first to satisfy RLS, then update to 'confirmed'
     const { data, error: insertError } = await (supabase!).from('bookings').insert({
-      provider_id: MY_PROVIDER_ID,
+      provider_id: PROVIDER_ID,
       customer_name: 'John and Deb',
       scheduled_start,
       duration_minutes,
