@@ -36,6 +36,16 @@ function ExplainContent() {
             />
           </div>
 
+          {/* About intro */}
+          <div className="text-[15px] leading-relaxed text-neutral-700 mb-8">
+            <p>
+              Ladderless is a pop-up brand experiment in Santa Cruz, Ca built by Tradesman for Tradesman. We are bringing no-minimum, instant booking to window cleaning. If your 1st or 2nd floor windows qualify as ladderless then try us out.
+            </p>
+            <p className="mt-4 text-center text-base font-semibold leading-snug text-neutral-900">
+              And YES, if you are in Santa Cruz city limits, we will do ONLY your dirtiest 2nd story window for ONLY $20 flat, with a 30 second online booking process.
+            </p>
+          </div>
+
           {/* Entertaining explanation text - timed to ~44s video for slow reader */}
           <div className="text-[15px] leading-relaxed text-neutral-700 mb-8">
             <p>

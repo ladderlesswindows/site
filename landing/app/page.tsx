@@ -46,10 +46,16 @@ export default function LadderlessLanding() {
               >
                 How?
               </button>
-              {/* Future: interior offer callout */}
+              <Link
+                href="/explain"
+                title="About Ladderless"
+                className="hidden md:flex absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-neutral-950 text-white text-[10px] font-bold items-center justify-center shadow-sm active:scale-95 transition"
+              >
+                about
+              </Link>
             </div>
-            {/* Mobile: marketing button in the top area */}
-            <div className="md:hidden flex justify-start mb-2">
+            {/* Mobile: How + About buttons */}
+            <div className="md:hidden flex justify-between items-center mb-2">
               <button
                 onClick={openVideo}
                 title="But how?!"
@@ -57,7 +63,13 @@ export default function LadderlessLanding() {
               >
                 How?
               </button>
-              {/* TODO: later "Now offering interior too!" on right */}
+              <Link
+                href="/explain"
+                title="About Ladderless"
+                className="w-8 h-8 rounded-full bg-neutral-950 text-white text-[10px] font-bold flex items-center justify-center border border-neutral-800 active:bg-black active:scale-95 transition"
+              >
+                about
+              </Link>
             </div>
           </div>
 
