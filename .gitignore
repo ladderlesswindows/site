@@ -1,0 +1,48 @@
+# Dependencies
+/node_modules
+/.pnp
+.pnp.*
+landing/node_modules/
+ladderless-provider-app/node_modules/
+
+# Next.js
+.next/
+out/
+
+# Build outputs
+build/
+dist/
+.output/
+
+# Environment
+.env
+.env*.local
+!.env.example
+
+# Mac OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# LARGE FILES - NEVER COMMIT
+assets/
+landing/public/*.jpg
+landing/public/*.png
+landing/public/*.mp4
+landing/public/*.mov
+
+# Next.js huge binaries
+**/next-swc*
+**/*.node

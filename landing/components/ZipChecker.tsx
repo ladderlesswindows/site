@@ -1,0 +1,213 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { getZipInfo, isPartialCoverage, getExampleZip } from "./zipRegistry";
+
+export function ZipChecker({ 
+  onZipChange, 
+  forcedSuccess, 
+  onClearForced,
+  windowCount = 1,
+  onSetWindowCount
+}: { 
+  onZipChange?: (zip: string) => void; 
+  forcedSuccess?: string | null; 
+  onClearForced?: () => void;
+  windowCount?: number;
+  onSetWindowCount?: (n: number) => void;
+} = {}) {
+  const exampleZip = getExampleZip();
+  const [zipCode, setZipCode] = useState(exampleZip);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isChecking, setIsChecking] = useState(false);
+
+  useEffect(() => {
+    if (forcedSuccess) {
+      setZipCode(forcedSuccess);
+      setIsSuccess(true);
+      onZipChange?.(forcedSuccess);
+    }
+  }, [forcedSuccess]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const isValidZip = /^\d{5}$/.test(zipCode.trim());
+
+  const zipInfo = getZipInfo(zipCode);
+  const isPartial = isPartialCoverage(zipCode);
+  const partialExplanation = zipInfo?.explanation ?? "";
+
+  const handleCheck = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    onZipChange?.(zipCode);
+    onClearForced?.();
+
+    if (!isValidZip) return;
+
+    setIsChecking(true);
+
+    // Small artificial delay for premium "processing" feel (realistic demo)
+    setTimeout(() => {
+      setIsChecking(false);
+      setIsSuccess(true);
+    }, 180);
+  };
+
+  const handleZipChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, "").slice(0, 5);
+    setZipCode(value);
+    onZipChange?.(value);
+    onClearForced?.();
+  };
+
+  const SuccessView = ({
+    isPartial,
+    explanation,
+    onReset,
+    windowCount = 1,
+    onSetWindowCount,
+  }: {
+    isPartial: boolean;
+    explanation?: string;
+    onReset: () => void;
+    windowCount?: number;
+    onSetWindowCount?: (n: number) => void;
+  }) => (
+    <div className="space-y-5 text-center pt-1">
+      <div className="flex items-center justify-start gap-2">
+        <div className="inline-flex items-center gap-2.5 rounded-2xl bg-emerald-50 px-5 py-3 border border-emerald-100">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 text-emerald-700"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clipRule="evenodd"
+            />
+          </svg>
+          <p className="font-semibold text-emerald-800 tracking-tight">
+            {isPartial ? "You are Partially covered." : "Great news! We serve your area."}
+          </p>
+        </div>
+        <button
+          onClick={onReset}
+          className="text-xs font-medium tracking-wide text-emerald-700 bg-emerald-50 hover:bg-emerald-100 active:bg-emerald-100 border border-emerald-100 px-3 py-1 rounded-xl transition-all flex-shrink-0"
+        >
+          Check different ZIP
+        </button>
+      </div>
+      {isPartial && explanation && <p className="text-sm text-neutral-700">{explanation}</p>}
+
+      {/* Window count selector + price info (for passing to next module) */}
+      {onSetWindowCount && (
+        <div className="text-center">
+          <div className="text-sm text-neutral-600 mb-1">Number of standard windows</div>
+          <div className="flex items-center justify-center gap-3">
+            <button 
+              onClick={() => onSetWindowCount(Math.max(1, windowCount - 1))} 
+              className="w-8 h-8 rounded-full border text-lg font-bold active:bg-neutral-100"
+            >
+              −
+            </button>
+            <div className="text-2xl font-semibold w-10 text-center">{windowCount}</div>
+            <button 
+              onClick={() => onSetWindowCount(windowCount + 1)} 
+              className="w-8 h-8 rounded-full border text-lg font-bold active:bg-neutral-100"
+            >
+              +
+            </button>
+          </div>
+          <div className="text-sm text-neutral-600 mt-1">Est. ${windowCount * 20} (demo pricing)</div>
+        </div>
+      )}
+
+      <Link
+        href={`/booking?zip=${zipCode}&windows=${windowCount}`}
+        className="block w-full py-5 text-xl font-semibold tracking-wide rounded-3xl bg-[#0f766e] text-white hover:bg-[#0c5f58] active:bg-[#0a524c] shadow-lg shadow-emerald-900/20 transition-all text-center"
+      >
+        Start 30 Second Booking
+      </Link>
+
+      <div className="text-left text-[10px] leading-snug text-neutral-500 border border-neutral-200 rounded-xl p-3 bg-neutral-50">
+        Any single exterior window up to approx. 5 ft x 5 ft under 2 stories (25'). Most standard residential windows qualify. Decorative and specialty shapes/grids also currently qualify! Screens washed free with every window. Interior Window cleaning may be added as well for less than exterior, once exterior is done. Entire homes can be done if time allows. Custom/3+ level can get free estimates.
+      </div>
+
+      <p className="text-sm text-neutral-600 pt-1">
+        30 Second Booking!
+      </p>
+    </div>
+  );
+
+  return (
+    <div className="w-full max-w-md mx-auto">
+      {!isSuccess ? (
+        <form onSubmit={handleCheck} className="space-y-4">
+          <div>
+            <label
+              htmlFor="zip"
+              className="block text-sm font-semibold tracking-wide text-neutral-700 mb-2"
+            >
+              Check if we serve your area
+            </label>
+            <input
+              id="zip"
+              type="text"
+              inputMode="numeric"
+              maxLength={5}
+              value={zipCode}
+              onChange={handleZipChange}
+              placeholder={exampleZip}
+              className="w-full px-5 py-4 text-2xl font-semibold tracking-[2px] text-center border-2 border-neutral-300 rounded-2xl bg-white placeholder:text-neutral-400 focus:border-[#0f766e] focus:ring-0 transition-all"
+              aria-describedby="zip-help"
+            />
+            <p id="zip-help" className="mt-1.5 text-xs text-neutral-500 text-center tracking-wide">
+              Enter your 5-digit ZIP code
+            </p>
+          </div>
+
+          <button
+            type="submit"
+            disabled={!isValidZip || isChecking}
+            className="w-full py-4 text-lg font-semibold tracking-wide rounded-2xl bg-neutral-950 text-white disabled:bg-neutral-300 disabled:text-neutral-500 hover:bg-black active:bg-neutral-900 disabled:cursor-not-allowed shadow-sm"
+          >
+            {isChecking ? "Checking..." : "Check Availability"}
+          </button>
+        </form>
+      ) : zipInfo ? (
+        <SuccessView
+          isPartial={isPartial}
+          explanation={partialExplanation}
+          onReset={() => {
+            setIsSuccess(false);
+            setZipCode("");
+            onZipChange?.("");
+            onClearForced?.();
+          }}
+          windowCount={windowCount}
+          onSetWindowCount={onSetWindowCount}
+        />
+      ) : (
+        <div className="space-y-5 text-center pt-1">
+          <div className="inline-flex items-center gap-2.5 rounded-2xl bg-amber-50 px-5 py-3 border border-amber-100 text-amber-800">
+            Not yet covered in your area. Coming soon!
+          </div>
+
+          <button
+            onClick={() => {
+              setIsSuccess(false);
+              setZipCode("");
+              onZipChange?.("");
+              onClearForced?.();
+            }}
+            className="block w-full py-5 text-xl font-semibold tracking-wide rounded-3xl border-2 border-neutral-950 text-neutral-950 hover:bg-neutral-950 hover:text-white active:bg-neutral-900 transition-all text-center"
+          >
+            Back to home
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}

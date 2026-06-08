@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-satoshi);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Premium landing base styles - white background, dark text, mobile-first */
+:root {
+  --primary-green: #0f766e; /* Deep emerald for CTAs - trustworthy */
+  --primary-green-hover: #0c5f58;
+}
+
+body {
+  font-family: var(--font-satoshi);
+}
+
+/* Form and button polish for excellent mobile experience */
+input[type="text"] {
+  font-family: var(--font-satoshi);
+}
+
+button {
+  font-family: var(--font-satoshi);
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:active {
+  transform: scale(0.985);
+}
+
+/* Strong focus rings for accessibility */
+input:focus-visible,
+button:focus-visible {
+  outline: 2px solid #0f766e;
+  outline-offset: 2px;
+}
+
+/* Success state green accent */
+.text-success {
+  color: #0f766e;
+}
+
