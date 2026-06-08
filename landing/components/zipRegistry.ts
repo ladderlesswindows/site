@@ -55,7 +55,7 @@ export const zipRegistry: ZipInfo[] = [
   },
   { zip: '95010', city: 'Capitola', coverage: 'full', minWindows: 2 },
   { zip: '95062', city: 'Live Oak', coverage: 'full' },
-  { zip: '95064', city: 'Pogonip', coverage: 'full' },
+  { zip: '95064', city: 'Pogonip', coverage: 'full', minWindows: 2 },
   { zip: '95066', city: 'Scotts Valley', coverage: 'full', minWindows: 3 },
   { zip: '95018', city: 'Felton', coverage: 'full', minWindows: 3 },
 ];
