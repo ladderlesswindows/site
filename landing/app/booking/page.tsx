@@ -12,6 +12,7 @@ import {
   screensChoiceToReinstallFee,
 } from '@/components/bookingFlowParams';
 import { clampWindowCount, getMinWindows } from '@/components/zipRegistry';
+import { WindowQualifierDisclaimer } from '@/components/WindowQualifierDisclaimer';
 
 function BookingContent() {
   const searchParams = useSearchParams();
@@ -110,9 +111,9 @@ function BookingContent() {
                   <div className="flex gap-3">
                     <button
                       onClick={() => setShowConfirm(true)}
-                      className="flex-1 py-4 text-lg font-semibold text-center rounded-3xl bg-[#0f766e] text-white active:bg-[#0c5f58]"
+                      className="flex-1 py-4 px-2 text-sm font-semibold leading-snug text-center rounded-3xl bg-[#0f766e] text-white active:bg-[#0c5f58]"
                     >
-                      Yes
+                      Yes, lets see the schedule!
                     </button>
                     <button
                       onClick={() => setShowNoPath(true)}
@@ -128,6 +129,8 @@ function BookingContent() {
                   >
                     Please explain more first ..
                   </Link>
+
+                  <WindowQualifierDisclaimer />
 
                   <button
                     onClick={() => setShowQualifier(false)}
