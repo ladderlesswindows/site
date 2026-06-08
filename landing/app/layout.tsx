@@ -23,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${satoshi.variable} h-full antialiased bg-neutral-400`}>
-      <body className="min-h-full flex flex-col bg-neutral-400 text-neutral-950 font-sans">
+    <html lang="en" className={`${satoshi.variable} h-full antialiased bg-[#c3c3c3]`}>
+      <body className="min-h-full flex flex-col bg-[#c3c3c3] text-neutral-950 font-sans">
         {children}
       </body>
     </html>
