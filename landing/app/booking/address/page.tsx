@@ -97,11 +97,11 @@ function AddressContent() {
 
   const addressSummary = `${street.trim()}${apt ? ' ' + apt.trim() : ''}, ${city.trim()}, ${stateAbbr} ${zipCode}`;
 
-  const canProceed =
-    street.trim().length > 4 &&
-    city.trim().length > 1 &&
-    fullName.trim().length > 1 &&
-    email.trim().includes('@');
+  const hasName = fullName.trim().length >= 2;
+  const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const hasStreet = street.trim().length >= 3;
+  const hasCity = city.trim().length >= 2;
+  const canProceed = hasName && hasEmail && hasStreet && hasCity;
 
   const qualifier = getQualifier(qualifierCode);
   const basePrice = qualifier ? qualifier.pricePerWindow : DEFAULT_WINDOW_PRICE;
@@ -309,17 +309,28 @@ function AddressContent() {
                 </div>
               ) : (
                 <>
-                  {!canProceed && (
-                    <p className="text-center text-[11px] text-red-600 mt-3">
-                      Enter name, email, street, and city to unlock the calendar
-                    </p>
-                  )}
-
                   <CustomerSlotPicker
-                    disabled={!canProceed}
                     onSlotChange={handleSlotChange}
                     onNotesChange={handleNotesChange}
                   />
+
+                  {!canProceed && (
+                    <div className="mt-3 p-2 rounded-xl border border-neutral-200 bg-white text-[11px] space-y-0.5">
+                      <div className="font-medium text-neutral-600 mb-1">To reserve, complete:</div>
+                      <div className={hasName ? 'text-emerald-700' : 'text-red-600'}>
+                        {hasName ? '✓' : '○'} Full name (2+ characters)
+                      </div>
+                      <div className={hasEmail ? 'text-emerald-700' : 'text-red-600'}>
+                        {hasEmail ? '✓' : '○'} Valid email
+                      </div>
+                      <div className={hasStreet ? 'text-emerald-700' : 'text-red-600'}>
+                        {hasStreet ? '✓' : '○'} Street address
+                      </div>
+                      <div className={hasCity ? 'text-emerald-700' : 'text-red-600'}>
+                        {hasCity ? '✓' : '○'} City
+                      </div>
+                    </div>
+                  )}
 
                   <button
                     type="button"
@@ -334,7 +345,7 @@ function AddressContent() {
                     {reserving ? 'Reserving…' : 'Reserve Slot & Proceed'}
                   </button>
                   <p className="text-[10px] text-neutral-500 mt-2 text-center">
-                    Creates a tentative hold (expires in 15 min if not completed).
+                    Pick a time above anytime — reserve unlocks once your details are complete.
                   </p>
                 </>
               )}

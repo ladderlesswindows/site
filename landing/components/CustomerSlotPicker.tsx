@@ -9,13 +9,11 @@ import {
 } from '@/lib/bookingSlots';
 
 type CustomerSlotPickerProps = {
-  disabled?: boolean;
   onSlotChange?: (slot: string | null) => void;
   onNotesChange?: (notes: { arrivalNotes: string; goalsChoice: string }) => void;
 };
 
 export function CustomerSlotPicker({
-  disabled = false,
   onSlotChange,
   onNotesChange,
 }: CustomerSlotPickerProps) {
@@ -55,7 +53,7 @@ export function CustomerSlotPicker({
   const isBooked = (date: string, time: string) => bookedSet.has(buildSelectedSlot(date, time));
 
   return (
-    <div className={`space-y-3 pt-3 border-t border-neutral-200 ${disabled ? 'opacity-50 pointer-events-none' : ''}`}>
+    <div className="space-y-3 pt-3 border-t border-neutral-200">
       <div>
         <div className="text-sm font-medium mb-1">Choose your time slot</div>
         <p className="text-[10px] text-neutral-500">
