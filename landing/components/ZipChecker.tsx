@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getZipInfo, isPartialCoverage, getExampleZip } from "./zipRegistry";
+import { formatWindowPrice } from "./windowPricing";
+import { WindowQualifierDisclaimer } from "./WindowQualifierDisclaimer";
 
 export function ZipChecker({ 
   onZipChange, 
@@ -75,11 +77,11 @@ export function ZipChecker({
     onSetWindowCount?: (n: number) => void;
   }) => (
     <div className="space-y-5 text-center pt-1">
-      <div className="flex items-center justify-start gap-2">
-        <div className="inline-flex items-center gap-2.5 rounded-2xl bg-emerald-50 px-5 py-3 border border-emerald-100">
+      <div className={`flex gap-2 ${isPartial ? "flex-col items-stretch" : "items-center justify-start"}`}>
+        <div className={`flex gap-2.5 rounded-2xl bg-emerald-50 px-5 py-3 border border-emerald-100 ${isPartial ? "items-start text-left w-full" : "inline-flex items-center"}`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-emerald-700"
+            className="h-5 w-5 text-emerald-700 flex-shrink-0"
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -89,13 +91,13 @@ export function ZipChecker({
               clipRule="evenodd"
             />
           </svg>
-          <p className="font-semibold text-emerald-800 tracking-tight">
-            {isPartial ? "You are Partially covered." : "Great news! We serve your area."}
+          <p className={`font-semibold text-emerald-800 ${isPartial ? "text-sm leading-snug" : "tracking-tight"}`}>
+            {isPartial ? "Your neighborhood is PARTIALLY covered. Please read details below to confirm you are within the covered area before continuing." : "Great news! We serve your area."}
           </p>
         </div>
         <button
           onClick={onReset}
-          className="text-xs font-medium tracking-wide text-emerald-700 bg-emerald-50 hover:bg-emerald-100 active:bg-emerald-100 border border-emerald-100 px-3 py-1 rounded-xl transition-all flex-shrink-0"
+          className="text-xs font-medium tracking-wide text-emerald-700 bg-emerald-50 hover:bg-emerald-100 active:bg-emerald-100 border border-emerald-100 px-3 py-1 rounded-xl transition-all flex-shrink-0 self-start"
         >
           Check different ZIP
         </button>
@@ -121,7 +123,8 @@ export function ZipChecker({
               +
             </button>
           </div>
-          <div className="text-sm text-neutral-600 mt-1">Est. ${windowCount * 20} (demo pricing)</div>
+          <div className="text-sm text-neutral-600 mt-1">{formatWindowPrice()}</div>
+          <WindowQualifierDisclaimer className="mt-2" />
         </div>
       )}
 
@@ -131,10 +134,6 @@ export function ZipChecker({
       >
         Start 30 Second Booking
       </Link>
-
-      <div className="text-left text-[10px] leading-snug text-neutral-500 border border-neutral-200 rounded-xl p-3 bg-cream">
-        Any single exterior window up to approx. 5 ft x 5 ft under 2 stories (25'). Most standard residential windows qualify. Decorative and specialty shapes/grids also currently qualify! Screens washed free with every window. Interior Window cleaning may be added as well for less than exterior, once exterior is done. Entire homes can be done if time allows. Custom/3+ level can get free estimates.
-      </div>
 
       <p className="text-sm text-neutral-600 pt-1">
         30 Second Booking!

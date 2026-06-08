@@ -6,6 +6,8 @@ import { useState, useMemo, useEffect, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { getQualifier, DEFAULT_WINDOW_PRICE } from '@/components/qualifiers';
+import { calculateWindowBase } from '@/components/windowPricing';
+import { parseScreenReinstall } from '@/components/bookingFlowParams';
 
 const PROVIDER_ID = process.env.NEXT_PUBLIC_PROVIDER_ID || '00000000-0000-0000-0000-000000000001';
 
@@ -15,7 +17,10 @@ function SlotContent() {
 
   const zip = searchParams.get('zip') || '95060';
   const windowsParam = searchParams.get('windows') || '1';
-  const screenReinstall = searchParams.get('screenReinstall') === 'true' || searchParams.get('screenReinstall') === '1';
+  const screenReinstall = parseScreenReinstall(
+    searchParams.get('screenReinstall'),
+    searchParams.get('screensChoice')
+  );
   const qualifierCode = searchParams.get('qualifier') || '';
   const name = searchParams.get('name') || '';
   const addressSummary = searchParams.get('address') || '';
@@ -25,7 +30,7 @@ function SlotContent() {
   const basePrice = qualifier ? qualifier.pricePerWindow : DEFAULT_WINDOW_PRICE;
 
   const windowCount = parseInt(windowsParam, 10);
-  const base = windowCount * basePrice;
+  const base = calculateWindowBase(windowCount, basePrice);
   const screenFee = screenReinstall ? windowCount * 2 : 0;
   const total = base + screenFee;
 

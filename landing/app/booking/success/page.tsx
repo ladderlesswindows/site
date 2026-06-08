@@ -5,12 +5,17 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 
 import { getQualifier, DEFAULT_WINDOW_PRICE } from '@/components/qualifiers';
+import { calculateWindowBase, FIRST_WINDOW_ONLY_PRICE } from '@/components/windowPricing';
+import { parseScreenReinstall } from '@/components/bookingFlowParams';
 
 function SuccessContent() {
   const searchParams = useSearchParams();
   const zip = searchParams.get('zip') || '95060';
   const windowsParam = searchParams.get('windows') || '1';
-  const screenReinstall = searchParams.get('screenReinstall') === 'true' || searchParams.get('screenReinstall') === '1';
+  const screenReinstall = parseScreenReinstall(
+    searchParams.get('screenReinstall'),
+    searchParams.get('screensChoice')
+  );
   const qualifierCode = searchParams.get('qualifier') || '';
   const slot = searchParams.get('slot') || '';
   const name = searchParams.get('name') || 'Valued Customer';
@@ -21,7 +26,7 @@ function SuccessContent() {
   const basePrice = qualifier ? qualifier.pricePerWindow : DEFAULT_WINDOW_PRICE;
 
   const windowCount = parseInt(windowsParam, 10);
-  const base = windowCount * basePrice;
+  const base = calculateWindowBase(windowCount, basePrice);
   const screenFee = screenReinstall ? windowCount * 2 : 0;
   const total = base + screenFee;
 
@@ -103,7 +108,10 @@ function SuccessContent() {
                   <span>${total}</span>
                 </div>
                 <div className="text-[10px] text-neutral-500 mt-1">
-                  Base ${basePrice}/window + screen if selected. Screens washed free.
+                  {windowCount <= 1
+                    ? `First window $${FIRST_WINDOW_ONLY_PRICE}`
+                    : `${basePrice}/window × ${windowCount}`}{' '}
+                  + screen if selected. Screens washed free.
                   {qualifier && ` ${qualifier.displayName || qualifier.code} rate applied.`}
                 </div>
               </div>

@@ -1,9 +1,16 @@
 "use client";
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useState, useMemo, Suspense } from 'react';
+import { useState, useMemo, useEffect, Suspense } from 'react';
+import { FlowBrandingHeader } from '@/components/FlowBrandingHeader';
+import { FlowPageLayout } from '@/components/FlowPageLayout';
+import { BookingSubtotalPanel } from '@/components/BookingSubtotalPanel';
 import Link from 'next/link';
-import BookingSummary from '@/components/BookingSummary';
+import {
+  buildBookingSearchParams,
+  parseScreenReinstall,
+  type ScreensChoice,
+} from '@/components/bookingFlowParams';
 import { supabase } from '@/lib/supabase';
 
 function AddressContent() {
@@ -12,14 +19,54 @@ function AddressContent() {
 
   const zip = searchParams.get('zip') || '95060';
   const windowsParam = searchParams.get('windows') || '1';
-  const paramWindows = parseInt(windowsParam, 10);
+  const paramWindows = parseInt(windowsParam, 10) || 1;
   const screenParam = searchParams.get('screenReinstall');
-  const paramScreenReinstall = screenParam === 'true' || screenParam === '1';
+  const screensChoiceParam = searchParams.get('screensChoice');
+  const paramScreenReinstall = parseScreenReinstall(screenParam, screensChoiceParam);
   const qualifierParam = searchParams.get('qualifier') || '';
 
   const [windows, setWindows] = useState(paramWindows);
   const [screenReinstall, setScreenReinstall] = useState(paramScreenReinstall);
+  const [screensChoice, setScreensChoice] = useState<ScreensChoice>(
+    (screensChoiceParam as ScreensChoice) || ''
+  );
   const [qualifierCode, setQualifierCode] = useState(qualifierParam);
+
+  useEffect(() => {
+    setWindows(paramWindows);
+    setScreenReinstall(parseScreenReinstall(screenParam, screensChoiceParam));
+    setScreensChoice((screensChoiceParam as ScreensChoice) || '');
+    setQualifierCode(qualifierParam);
+  }, [paramWindows, screenParam, screensChoiceParam, qualifierParam]);
+
+  const syncBookingParams = (next: {
+    windows?: number;
+    screenReinstall?: boolean;
+    screensChoice?: ScreensChoice;
+  }) => {
+    const params = buildBookingSearchParams({
+      zip,
+      windows: next.windows ?? windows,
+      screenReinstall: next.screenReinstall ?? screenReinstall,
+      screensChoice: (next.screensChoice ?? screensChoice) || undefined,
+      qualifier: qualifierCode,
+      flow: '30s',
+    });
+    router.replace(`/booking/address?${params}`, { scroll: false });
+  };
+
+  const updateWindows = (count: number) => {
+    const next = Math.max(1, count);
+    setWindows(next);
+    syncBookingParams({ windows: next });
+  };
+
+  const toggleScreenFee = (checked: boolean) => {
+    const choice: ScreensChoice = checked ? 'fee' : 'outside';
+    setScreenReinstall(checked);
+    setScreensChoice(choice);
+    syncBookingParams({ screenReinstall: checked, screensChoice: choice });
+  };
 
   const [street, setStreet] = useState('');
   const [apt, setApt] = useState('');
@@ -136,6 +183,15 @@ function AddressContent() {
     setShowPaymentModal(true);
   };
 
+  const backHref = `/booking?${buildBookingSearchParams({
+    zip,
+    windows,
+    screenReinstall,
+    screensChoice: screensChoice || undefined,
+    qualifier: qualifierCode,
+    flow: '30s',
+  })}`;
+
   const handleCompletePayment = async () => {
     if (!paymentName || !paymentEmail) {
       alert('Please enter your name and email to complete.');
@@ -185,115 +241,99 @@ function AddressContent() {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 px-5 pt-12 pb-12">
-        <div className="mx-auto max-w-md">
-          {/* branding header - reused */}
-          <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
-            <div className="mb-2">
-              <div className="hidden md:block">
-                <div className="flex justify-between">
-                  <div className="text-[9px] px-1 py-0.5 border border-emerald-100 rounded bg-emerald-50 text-emerald-700" style={{minWidth: '28px'}}>{zip}</div>
-                </div>
-              </div>
-            </div>
-            {/* only the logo */}
-            <div className="flex justify-center mb-4">
-              <img
-                src="/ll.jpg"
-                alt="Ladderless Windows"
-                className="w-full h-auto object-contain rounded-3xl"
-              />
-            </div>
-          </div>
+        <div className="mb-4 text-sm font-medium text-center text-emerald-700">
+          Awesome! Now, BOOK your ideal time in our real-time booking calendar.
+        </div>
 
-          {/* Awesome statement above the fields */}
-          <div className="mb-3 text-sm font-medium text-center text-emerald-700">
-            Awesome! Now, BOOK your ideal time in our real-time booking calendar.
-          </div>
-
-          <div className="flex gap-2">
-            {/* Left: simplified address fields for 30s */}
-            <div className="flex-1 space-y-3">
-              <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
-                <div className="space-y-1.5">
-                  <div>
-                    <div className="text-[10px] text-neutral-500 mb-0.5">Street Address *</div>
-                    <input
-                      type="text"
-                      value={street}
-                      onChange={(e) => setStreet(e.target.value)}
-                      placeholder="123 Main St"
-                      className="w-full border rounded p-1.5 text-sm"
-                    />
-                  </div>
-                  <div>
-                    <div className="text-[10px] text-neutral-500 mb-0.5">Apt / Unit (optional)</div>
-                    <input
-                      type="text"
-                      value={apt}
-                      onChange={(e) => setApt(e.target.value)}
-                      placeholder="Apt 2B"
-                      className="w-full border rounded p-1.5 text-sm"
-                    />
-                  </div>
-                  <div>
-                    <div className="text-[10px] text-neutral-500 mb-0.5">City *</div>
-                    <input
-                      type="text"
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                      placeholder="City"
-                      className="w-full border rounded p-1.5 text-sm"
-                    />
-                  </div>
-                  {/* Pre-propagated CA and Zip from previous entry */}
-                  <div className="flex gap-1.5">
-                    <div className="flex-1">
-                      <div className="text-[10px] text-neutral-500 mb-0.5">State</div>
-                      <input
-                        type="text"
-                        value={stateAbbr}
-                        readOnly
-                        className="w-full border rounded p-1.5 text-sm bg-neutral-50"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-[10px] text-neutral-500 mb-0.5">ZIP (pre-filled)</div>
-                      <input
-                        type="text"
-                        value={zipCode}
-                        readOnly
-                        className="w-full border rounded p-1.5 text-sm bg-neutral-50"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right: subtotals - reused exactly */}
-            <div className="w-40 flex-shrink-0">
-              <BookingSummary
-                zip={zip}
-                windows={windows}
+        <FlowPageLayout
+          rightPanel={
+            <div className="space-y-2">
+              <BookingSubtotalPanel
+                windowCount={windows}
                 screenReinstall={screenReinstall}
-                onWindowsChange={setWindows}
-                onScreenReinstallChange={setScreenReinstall}
-                qualifierCode={qualifierCode}
-                onQualifierChange={setQualifierCode}
-                specialZeroPrice={false}
+                variant="address"
+                onWindowCountChange={updateWindows}
+                onScreenReinstallChange={toggleScreenFee}
               />
-              {/* Published booking time under the subtotal window */}
               {selectedSlot && (
-                <div className="mt-2 p-2 border border-emerald-200 bg-emerald-50 rounded text-xs">
+                <div className="p-2 border border-emerald-200 bg-emerald-50 rounded-xl text-xs">
                   <div className="font-medium text-emerald-700">Booked time:</div>
-                  <div>{new Date(selectedSlot).toLocaleString(undefined, { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit' })}</div>
-                  <div className="text-emerald-600">You can still adjust windows above.</div>
+                  <div>
+                    {new Date(selectedSlot).toLocaleString(undefined, {
+                      weekday: 'long',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: '2-digit',
+                    })}
+                  </div>
                 </div>
               )}
             </div>
-          </div>
+          }
+          main={
+            <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
+              <FlowBrandingHeader currentZip={zip} windows={windows} showZipButtons={false} />
 
-        </div>
+              <div className="space-y-1.5">
+                <div>
+                  <div className="text-[10px] text-neutral-500 mb-0.5">Street Address *</div>
+                  <input
+                    type="text"
+                    value={street}
+                    onChange={(e) => setStreet(e.target.value)}
+                    placeholder="123 Main St"
+                    className="w-full border rounded p-1.5 text-sm bg-white"
+                  />
+                </div>
+                <div>
+                  <div className="text-[10px] text-neutral-500 mb-0.5">Apt / Unit (optional)</div>
+                  <input
+                    type="text"
+                    value={apt}
+                    onChange={(e) => setApt(e.target.value)}
+                    placeholder="Apt 2B"
+                    className="w-full border rounded p-1.5 text-sm bg-white"
+                  />
+                </div>
+                <div>
+                  <div className="text-[10px] text-neutral-500 mb-0.5">City *</div>
+                  <input
+                    type="text"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    placeholder="City"
+                    className="w-full border rounded p-1.5 text-sm bg-white"
+                  />
+                </div>
+                <div className="flex gap-1.5">
+                  <div className="flex-1">
+                    <div className="text-[10px] text-neutral-500 mb-0.5">State</div>
+                    <input
+                      type="text"
+                      value={stateAbbr}
+                      readOnly
+                      className="w-full border rounded p-1.5 text-sm bg-neutral-50"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-[10px] text-neutral-500 mb-0.5">ZIP (pre-filled)</div>
+                    <input
+                      type="text"
+                      value={zipCode}
+                      readOnly
+                      className="w-full border rounded p-1.5 text-sm bg-neutral-50"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <Link href={backHref} className="block w-full text-sm text-neutral-500 py-2 mt-4 text-center">
+                ← Back
+              </Link>
+            </div>
+          }
+        />
       </main>
 
       <footer className="pb-8">

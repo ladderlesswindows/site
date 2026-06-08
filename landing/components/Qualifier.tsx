@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { calculateWindowBase } from "./windowPricing";
+import { DEFAULT_WINDOW_PRICE } from "./qualifiers";
 
 interface QualifierProps {
   zip: string;
@@ -18,7 +20,7 @@ export function Qualifier({ zip, windowCount, onComplete }: QualifierProps) {
     return (
       <div className="space-y-4">
         <div className="text-sm text-neutral-600">
-          For ZIP <span className="font-semibold">{zip}</span> • {windowCount} window{windowCount > 1 ? 's' : ''} (est. ${windowCount * 20})
+          For ZIP <span className="font-semibold">{zip}</span> • {windowCount} window{windowCount > 1 ? 's' : ''} (est. ${calculateWindowBase(windowCount, DEFAULT_WINDOW_PRICE)})
         </div>
 
         <div className="text-base font-medium leading-snug">
@@ -51,7 +53,7 @@ export function Qualifier({ zip, windowCount, onComplete }: QualifierProps) {
   return (
     <div className="space-y-4">
       <div className="text-sm text-neutral-600">
-        For ZIP <span className="font-semibold">{zip}</span> • {windowCount} window{windowCount > 1 ? 's' : ''} (est. ${windowCount * 20})
+        For ZIP <span className="font-semibold">{zip}</span> • {windowCount} window{windowCount > 1 ? 's' : ''} (est. ${calculateWindowBase(windowCount, DEFAULT_WINDOW_PRICE)})
       </div>
 
       <div>

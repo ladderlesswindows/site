@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { getZipInfo, isPartialCoverage } from "./zipRegistry";
+import { formatWindowPrice } from "./windowPricing";
+import { WindowQualifierDisclaimer } from "./WindowQualifierDisclaimer";
 
 type BookingZipSuccessProps = {
   zip: string;
@@ -40,7 +42,7 @@ export function BookingZipSuccess({
 
   return (
     <div className="space-y-5 text-center">
-      <div className="inline-flex items-center gap-2.5 rounded-2xl bg-emerald-50 px-5 py-3 border border-emerald-100">
+      <div className={`flex gap-2.5 rounded-2xl bg-emerald-50 px-5 py-3 border border-emerald-100 ${isPartial ? "items-start text-left w-full" : "inline-flex items-center"}`}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5 text-emerald-700 flex-shrink-0"
@@ -53,8 +55,8 @@ export function BookingZipSuccess({
             clipRule="evenodd"
           />
         </svg>
-        <p className="font-semibold text-emerald-800 tracking-tight">
-          {isPartial ? "You are Partially covered." : "Great news! We serve your area."}
+        <p className={`font-semibold text-emerald-800 ${isPartial ? "text-sm leading-snug" : "tracking-tight"}`}>
+          {isPartial ? "Your neighborhood is PARTIALLY covered. Please read details below to confirm you are within the covered area before continuing." : "Great news! We serve your area."}
         </p>
       </div>
 
@@ -81,7 +83,8 @@ export function BookingZipSuccess({
             +
           </button>
         </div>
-        <div className="text-sm text-neutral-600 mt-1">Est. ${windowCount * 20} (demo pricing)</div>
+        <div className="text-sm text-neutral-600 mt-1">{formatWindowPrice()}</div>
+        <WindowQualifierDisclaimer className="mt-2" />
       </div>
 
       <button

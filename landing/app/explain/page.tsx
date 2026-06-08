@@ -7,11 +7,7 @@ import { Suspense } from 'react';
 function ExplainContent() {
   const searchParams = useSearchParams();
   const zip = searchParams.get('zip') || '95060';
-  const windowsParam = searchParams.get('windows') || '1';
-  const screenReinstall = searchParams.get('screenReinstall') || 'true';
-  const qualifierCode = searchParams.get('qualifier') || '';
-
-  const continueHref = `/booking/address?zip=${zip}&windows=${windowsParam}&screenReinstall=${screenReinstall}&qualifier=${encodeURIComponent(qualifierCode)}&flow=30s`;
+  const continueHref = `/booking/address?${searchParams.toString() || 'zip=95060&windows=1&flow=30s'}`;
 
   return (
     <div className="min-h-screen flex flex-col">

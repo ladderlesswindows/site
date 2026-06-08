@@ -4,6 +4,8 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useState, useEffect, Suspense } from 'react';
 import BookingSummary from '@/components/BookingSummary';
+import { DEFAULT_WINDOW_PRICE } from '@/components/qualifiers';
+import { calculateWindowBase } from '@/components/windowPricing';
 
 function LocationContent() {
   const searchParams = useSearchParams();
@@ -252,7 +254,7 @@ function LocationContent() {
               <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
                 <div className="mb-4">
                   <div className="text-sm text-neutral-600 mb-2">
-                    For ZIP <span className="font-semibold">{zip}</span> • {paramWindows} window{paramWindows > 1 ? 's' : ''} at ${paramWindows * 20} each
+                    For ZIP <span className="font-semibold">{zip}</span> • {paramWindows} window{paramWindows > 1 ? 's' : ''} (est. ${calculateWindowBase(paramWindows, DEFAULT_WINDOW_PRICE)})
                   </div>
                   <h3 className="font-semibold mb-3">Your Location</h3>
                   <p className="text-sm text-neutral-600 mb-4">Please provide your service address and any access notes.</p>

@@ -19,4 +19,4 @@ export function getQualifier(code: string | null | undefined): Qualifier | null 
   return qualifiers[key] ?? null;
 }
 
-export const DEFAULT_WINDOW_PRICE = 20;
+export const DEFAULT_WINDOW_PRICE = 12.5;

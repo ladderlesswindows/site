@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 
 import { getQualifier, DEFAULT_WINDOW_PRICE } from "./qualifiers";
+import { calculateWindowBase, formatWindowPrice, formatWindowBaseSummary } from "./windowPricing";
+import { WindowQualifierDisclaimer } from "./WindowQualifierDisclaimer";
 
 interface BookingSummaryProps {
   zip: string;
@@ -35,6 +37,14 @@ export default function BookingSummary({
   // Local input for typing the qualifier code (e.g. Ladderless5)
   const [inputCode, setInputCode] = useState(qualifierCode || "");
 
+  useEffect(() => {
+    setWindows(windowsProp);
+  }, [windowsProp]);
+
+  useEffect(() => {
+    setScreenReinstall(screenProp);
+  }, [screenProp]);
+
   // Sync input when parent provides qualifierCode (e.g. from URL on /location)
   useEffect(() => {
     setInputCode(qualifierCode || "");
@@ -49,7 +59,7 @@ export default function BookingSummary({
     basePricePerWindow = 0;
   }
 
-  const base = windows * basePricePerWindow;
+  const base = specialZeroPrice ? 0 : calculateWindowBase(windows, basePricePerWindow);
   const screenFeeTotal = (specialZeroPrice ? false : screenReinstall) ? windows * SCREEN_REINSTALL_FEE_PER_WINDOW : 0;
   const subtotal = base + screenFeeTotal;
 
@@ -89,9 +99,13 @@ export default function BookingSummary({
               +
             </button>
           </div>
+          <div className="text-sm text-neutral-600 mt-1">{formatWindowPrice(basePricePerWindow)}</div>
+          <WindowQualifierDisclaimer className="mt-2" />
         </div>
 
-        <div className="text-sm mb-1">Base: {base} (${basePricePerWindow} × {windows})</div>
+        <div className="text-sm mb-1">
+          {specialZeroPrice ? `Base: ${base}` : formatWindowBaseSummary(windows, basePricePerWindow)}
+        </div>
 
         <label className="flex items-center gap-2 text-sm mb-2 cursor-pointer select-none">
           <input

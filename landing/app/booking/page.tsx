@@ -4,7 +4,13 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useState, useEffect, Suspense } from 'react';
 import { FlowBrandingHeader } from '@/components/FlowBrandingHeader';
+import { FlowPageLayout } from '@/components/FlowPageLayout';
+import { BookingSubtotalPanel } from '@/components/BookingSubtotalPanel';
 import { BookingZipSuccess } from '@/components/BookingZipSuccess';
+import {
+  buildBookingSearchParams,
+  screensChoiceToReinstallFee,
+} from '@/components/bookingFlowParams';
 
 function BookingContent() {
   const searchParams = useSearchParams();
@@ -14,7 +20,6 @@ function BookingContent() {
   const initialWindows = parseInt(windowsParam, 10);
 
   const [windowCount, setWindowCount] = useState(initialWindows);
-  const [screenReinstall, setScreenReinstall] = useState(true);
   const [qualifierCode, setQualifierCode] = useState("");
   const [showQualifier, setShowQualifier] = useState(false);
   const [showNoPath, setShowNoPath] = useState(false);
@@ -31,84 +36,109 @@ function BookingContent() {
   const questionText = `POWER USER 30 Second Booking!
 Please Read Carefully and confirm below: I have windows under 25' (2 stories) without too much tree/bushes below them, that are ready now for a 30 Second Booking! I understand that your professional water fed pole exterior window cleaning technicians are so good, despite using only purified water, that the perfection is GUARANTEED and includes a free screen washing. These are pretty much standard residential windows so your pro should have no problem!`;
 
+  const updateWindowCount = (count: number) => {
+    setWindowCount(count);
+    const params = buildBookingSearchParams({
+      zip,
+      windows: count,
+      qualifier: qualifierCode,
+      flow: '30s',
+    });
+    router.replace(`/booking?${params}`, { scroll: false });
+  };
+
+  const bookingQuery = (extra?: { screenReinstall?: boolean; screensChoice?: typeof screensChoice }) =>
+    buildBookingSearchParams({
+      zip,
+      windows: windowCount,
+      screenReinstall: extra?.screenReinstall,
+      screensChoice: extra?.screensChoice,
+      qualifier: qualifierCode,
+      flow: '30s',
+    });
+
   const handleConfirm = () => {
     if (!screensChoice) return;
-    const href = `/booking/address?zip=${zip}&windows=${windowCount}&screenReinstall=${screenReinstall}&qualifier=${encodeURIComponent(qualifierCode)}&flow=30s`;
-    router.push(href);
+    const screenReinstall = screensChoiceToReinstallFee(screensChoice);
+    router.push(`/booking/address?${bookingQuery({ screenReinstall, screensChoice })}`);
   };
 
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 px-5 pt-12 pb-12">
-        <div className="mx-auto max-w-md">
-          <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
-            <FlowBrandingHeader currentZip={zip} windows={windowCount} />
+        <FlowPageLayout
+          rightPanel={<BookingSubtotalPanel windowCount={windowCount} />}
+          main={
+            <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
+              <FlowBrandingHeader currentZip={zip} windows={windowCount} />
 
-            {!showQualifier ? (
-              <BookingZipSuccess
-                zip={zip}
-                windowCount={windowCount}
-                onWindowCountChange={setWindowCount}
-                onStartBooking={() => setShowQualifier(true)}
-                explainHref={`/explain?zip=${zip}&windows=${windowCount}&screenReinstall=${screenReinstall}&qualifier=${encodeURIComponent(qualifierCode)}&flow=30s`}
-              />
-            ) : !showNoPath ? (
-              <div className="space-y-4">
-                <div className="text-base font-medium leading-snug whitespace-pre-line text-center">
-                  {questionText}
-                </div>
+              {!showQualifier ? (
+                <BookingZipSuccess
+                  zip={zip}
+                  windowCount={windowCount}
+                  onWindowCountChange={updateWindowCount}
+                  onStartBooking={() => setShowQualifier(true)}
+                  explainHref={`/explain?${bookingQuery()}`}
+                />
+              ) : !showNoPath ? (
+                <div className="space-y-4">
+                  <div className="text-base font-medium leading-snug whitespace-pre-line text-center">
+                    {questionText}
+                  </div>
 
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => setShowConfirm(true)}
-                    className="flex-1 py-4 text-lg font-semibold text-center rounded-3xl bg-[#0f766e] text-white active:bg-[#0c5f58]"
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => setShowConfirm(true)}
+                      className="flex-1 py-4 text-lg font-semibold text-center rounded-3xl bg-[#0f766e] text-white active:bg-[#0c5f58]"
+                    >
+                      Yes
+                    </button>
+                    <button
+                      onClick={() => setShowNoPath(true)}
+                      className="flex-1 py-4 text-lg font-semibold text-center rounded-3xl border-2 border-neutral-950 active:bg-neutral-100"
+                    >
+                      No
+                    </button>
+                  </div>
+
+                  <Link
+                    href={`/explain?${bookingQuery()}`}
+                    className="block w-full py-3 text-base font-medium text-center rounded-3xl border border-[#0f766e] text-[#0f766e] active:bg-emerald-50"
                   >
-                    Yes
-                  </button>
+                    Please explain more first ..
+                  </Link>
+
                   <button
-                    onClick={() => setShowNoPath(true)}
-                    className="flex-1 py-4 text-lg font-semibold text-center rounded-3xl border-2 border-neutral-950 active:bg-neutral-100"
+                    onClick={() => setShowQualifier(false)}
+                    className="w-full text-sm text-neutral-500 py-2"
                   >
-                    No
+                    ← Back
                   </button>
                 </div>
+              ) : (
+                <div className="space-y-4 text-center">
+                  <p className="text-sm text-neutral-700">
+                    Thank you. Your situation requires a few more details for the best service or a custom quote.
+                  </p>
+                  <Link
+                    href={`/location?zip=${zip}&windows=${windowCount}&qualifier=${encodeURIComponent(qualifierCode)}&flow=custom`}
+                    className="block w-full py-4 text-lg font-semibold text-center rounded-3xl bg-[#0f766e] text-white active:bg-[#0c5f58]"
+                  >
+                    Continue to Address for Custom Quote
+                  </Link>
+                  <button
+                    onClick={() => setShowNoPath(false)}
+                    className="w-full text-sm text-neutral-500 py-2"
+                  >
+                    ← Back to question
+                  </button>
+                </div>
+              )}
+            </div>
+          }
+        />
 
-                <Link
-                  href={`/explain?zip=${zip}&windows=${windowCount}&screenReinstall=${screenReinstall}&qualifier=${encodeURIComponent(qualifierCode)}&flow=30s`}
-                  className="block w-full py-3 text-base font-medium text-center rounded-3xl border border-[#0f766e] text-[#0f766e] active:bg-emerald-50"
-                >
-                  Please explain more first ..
-                </Link>
-
-                <button
-                  onClick={() => setShowQualifier(false)}
-                  className="w-full text-sm text-neutral-500 py-2"
-                >
-                  ← Back
-                </button>
-              </div>
-            ) : (
-              <div className="space-y-4 text-center">
-                <p className="text-sm text-neutral-700">
-                  Thank you. Your situation requires a few more details for the best service or a custom quote.
-                </p>
-                <Link
-                  href={`/location?zip=${zip}&windows=${windowCount}&qualifier=${encodeURIComponent(qualifierCode)}&flow=custom`}
-                  className="block w-full py-4 text-lg font-semibold text-center rounded-3xl bg-[#0f766e] text-white active:bg-[#0c5f58]"
-                >
-                  Continue to Address for Custom Quote
-                </Link>
-                <button
-                  onClick={() => setShowNoPath(false)}
-                  className="w-full text-sm text-neutral-500 py-2"
-                >
-                  ← Back to question
-                </button>
-              </div>
-            )}
-          </div>
-
-          {showConfirm && (
+        {showConfirm && (
             <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 pt-8 px-4" onClick={() => { setShowConfirm(false); setShowScreens(false); setScreensChoice(""); }}>
               <div
                 className="w-full max-w-md bg-cream rounded-3xl border border-neutral-200 shadow-2xl p-5"
@@ -244,7 +274,6 @@ Please Read Carefully and confirm below: I have windows under 25' (2 stories) wi
               </div>
             </div>
           )}
-        </div>
       </main>
 
       <footer className="pb-8">
