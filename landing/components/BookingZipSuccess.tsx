@@ -87,23 +87,26 @@ export function BookingZipSuccess({
         </div>
         <div className="text-lg font-semibold text-neutral-900 mt-2">{formatPriceAmount(subtotal)}</div>
         <div className="text-sm text-neutral-600 mt-1">{formatWindowPrice()}</div>
-        <WindowQualifierDisclaimer className="mt-2" />
       </div>
 
-      <button
-        onClick={onStartBooking}
-        type="button"
-        className="block w-full py-5 text-xl font-semibold tracking-wide rounded-3xl bg-[#0f766e] text-white hover:bg-[#0c5f58] active:bg-[#0a524c] shadow-lg shadow-emerald-900/20 transition-all text-center"
-      >
-        Start 30 Second Booking
-      </button>
+      <div className="flex gap-3">
+        <button
+          onClick={onStartBooking}
+          type="button"
+          className="flex-1 py-4 px-2 text-sm font-semibold leading-snug text-center rounded-3xl bg-[#0f766e] text-white hover:bg-[#0c5f58] active:bg-[#0a524c] shadow-lg shadow-emerald-900/20 transition-all"
+        >
+          Start 30 Second Booking
+        </button>
 
-      <Link
-        href={explainHref}
-        className="block w-full py-3 text-base font-medium text-center rounded-3xl border border-[#0f766e] text-[#0f766e] active:bg-emerald-50"
-      >
-        Please explain more first ..
-      </Link>
+        <Link
+          href={explainHref}
+          className="flex-1 py-4 px-2 text-sm font-medium leading-snug text-center rounded-3xl border-2 border-[#0f766e] text-[#0f766e] active:bg-emerald-50 flex items-center justify-center"
+        >
+          Please explain more first ..
+        </Link>
+      </div>
+
+      <WindowQualifierDisclaimer />
 
       <Link href="/" className="block w-full text-sm text-neutral-500 py-2">
         ← Back
