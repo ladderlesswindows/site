@@ -84,9 +84,12 @@ export function BookingZipSuccess({
         <button
           onClick={onStartBooking}
           type="button"
-          className="flex-1 py-4 px-2 text-sm font-semibold leading-snug text-center rounded-3xl bg-[#0f766e] text-white hover:bg-[#0c5f58] active:bg-[#0a524c] shadow-lg shadow-emerald-900/20 transition-all"
+          className="flex-1 flex flex-col items-center justify-center py-4 px-2 text-center rounded-3xl bg-[#0f766e] text-white hover:bg-[#0c5f58] active:bg-[#0a524c] shadow-lg shadow-emerald-900/20 transition-all"
         >
-          Start 30 Second Booking
+          <span className="text-sm font-semibold leading-tight">Book Window Cleaning</span>
+          <span className="text-[11px] font-medium leading-tight mt-0.5 text-white/90">
+            in only 30 seconds
+          </span>
         </button>
 
         <Link
