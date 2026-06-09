@@ -22,11 +22,17 @@ export async function POST(request: Request) {
     if (!supabaseAdmin) {
       const hasUrl = Boolean(serverEnv('NEXT_PUBLIC_SUPABASE_URL'));
       const hasKey = Boolean(serverEnv('SUPABASE_SERVICE_ROLE_KEY'));
+      const vercelEnv = process.env.VERCEL_ENV;
       return NextResponse.json(
         {
           error: hasUrl && !hasKey
-            ? 'Missing Supabase service role key. Add SUPABASE_SERVICE_ROLE_KEY to repo-root .env.local (local) or Vercel Environment Variables (production), then redeploy.'
+            ? 'Missing Supabase service role key. Local: add SUPABASE_SERVICE_ROLE_KEY to repo-root .env.local. Vercel: Project → Settings → Environment Variables → add SUPABASE_SERVICE_ROLE_KEY (Supabase Dashboard → API → service_role), enable Production and Preview, then redeploy.'
             : 'Supabase admin client is not configured.',
+          vercelEnv: vercelEnv ?? null,
+          hint:
+            hasUrl && !hasKey && vercelEnv
+              ? `Running on Vercel (${vercelEnv}). The service role key must be set in the Vercel dashboard for this environment — .env.local is not deployed.`
+              : undefined,
         },
         { status: 500 }
       );

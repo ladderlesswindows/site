@@ -23,6 +23,8 @@ export function buildBookingSearchParams(input: {
   name?: string;
   address?: string;
   email?: string;
+  /** ISO-like local slot key from CustomerSlotPicker, e.g. 2026-06-10T08:00 */
+  slot?: string;
 }): string {
   const params = new URLSearchParams();
   params.set("zip", input.zip);
@@ -34,6 +36,7 @@ export function buildBookingSearchParams(input: {
   if (input.name) params.set("name", input.name);
   if (input.address) params.set("address", input.address);
   if (input.email) params.set("email", input.email);
+  if (input.slot) params.set("slot", input.slot);
   return params.toString();
 }
 

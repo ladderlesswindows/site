@@ -1,36 +1,44 @@
 "use client";
 
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { CustomerSlotPicker } from '@/components/CustomerSlotPicker';
+import { CustomerSlotPicker, type SlotPickerMode } from '@/components/CustomerSlotPicker';
 import { formatSlotTimeLabel, parseLocalDate } from '@/lib/bookingSlots';
 
 type BookingSchedulePanelProps = {
-  supabase: SupabaseClient;
+  supabase: SupabaseClient | null;
   providerId: string;
   supabaseReady: boolean;
+  mode?: SlotPickerMode;
+  initialSlot?: string | null;
   selectedSlot: string | null;
   onSlotChange: (slot: string | null) => void;
-  onNotesChange: (notes: { arrivalNotes: string; goalsChoice: string }) => void;
+  onNotesChange?: (notes: { arrivalNotes: string; goalsChoice: string }) => void;
 };
 
 export function BookingSchedulePanel({
   supabase,
   providerId,
   supabaseReady,
+  mode = 'live',
+  initialSlot = null,
   selectedSlot,
   onSlotChange,
   onNotesChange,
 }: BookingSchedulePanelProps) {
+  const isPreview = mode === 'preview';
+
   return (
     <div className="border border-neutral-200 rounded-3xl bg-cream p-3">
       <div className="text-[10px] uppercase tracking-wide text-neutral-500 text-center mb-2">
-        Schedule
+        {isPreview ? 'Live schedule' : 'Schedule'}
       </div>
 
       <CustomerSlotPicker
         supabase={supabase}
         providerId={providerId}
-        supabaseReady={supabaseReady}
+        supabaseReady={isPreview ? true : supabaseReady}
+        mode={mode}
+        initialSlot={initialSlot}
         onSlotChange={onSlotChange}
         onNotesChange={onNotesChange}
       />

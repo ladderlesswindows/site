@@ -10,6 +10,7 @@ import { HOW_VIDEO_SRC } from "@/lib/mediaUrls";
 export default function LadderlessLanding() {
   const [showVideo, setShowVideo] = useState(false);
   const [forcedZip, setForcedZip] = useState<string | null>(null);
+  const [coverageSuccess, setCoverageSuccess] = useState(false);
   const successZips = getSuccessZips();
 
   const openVideo = () => setShowVideo(true);
@@ -18,7 +19,7 @@ export default function LadderlessLanding() {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 px-5 pt-12 pb-12">
-        <div className="mx-auto max-w-md">
+        <div className={`mx-auto w-full ${coverageSuccess ? "max-w-5xl" : "max-w-md"}`}>
           {/* branding module: logo + "How?" marketing button (generic, not coverage-specific) */}
           <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
             {/* logo with quick ZIP row overlaid inside the frame */}
@@ -77,7 +78,11 @@ export default function LadderlessLanding() {
           {/* coverage module — the swappable part for different locations (e.g. Gilroy) */}
           <CoverageModule
             forcedSuccess={forcedZip}
-            onClearForced={() => setForcedZip(null)}
+            onClearForced={() => {
+              setForcedZip(null);
+              setCoverageSuccess(false);
+            }}
+            onSuccessChange={setCoverageSuccess}
           />
 
           {/* Subtle trust line - floating, no box */}

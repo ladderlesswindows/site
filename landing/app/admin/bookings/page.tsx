@@ -165,7 +165,8 @@ export default function AdminBookings() {
         );
         fetchBookings();
       } else {
-        alert('Nuclear clean failed: ' + (result.error || 'Unknown error'));
+        const hint = typeof result.hint === 'string' ? '\n\n' + result.hint : '';
+        alert('Nuclear clean failed: ' + (result.error || 'Unknown error') + hint);
       }
     } catch {
       alert('Nuclear clean request failed.');

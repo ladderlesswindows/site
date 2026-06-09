@@ -150,6 +150,13 @@ export function buildSelectedSlot(date: string, time: string): string {
   return `${date}T${time}`;
 }
 
+/** Parse slot key from URL / picker into date + 24h time */
+export function parseSelectedSlot(slot: string): { date: string; time: string } | null {
+  const match = slot.match(/^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})/);
+  if (!match) return null;
+  return { date: match[1], time: match[2] };
+}
+
 export async function fetchBookedSlotKeys(
   client: SupabaseClient | null,
   providerId: string = PROVIDER_ID

@@ -14,37 +14,69 @@ import {
   getMonthCalendarDays,
   getWeekdayDatesInWeek,
   parseLocalDate,
+  parseSelectedSlot,
 } from '@/lib/bookingSlots';
 
 type DateViewMode = 'week' | 'month';
+export type SlotPickerMode = 'preview' | 'live';
 
 type CustomerSlotPickerProps = {
   supabase: SupabaseClient | null;
   providerId: string;
   supabaseReady: boolean;
+  mode?: SlotPickerMode;
+  initialSlot?: string | null;
   onSlotChange?: (slot: string | null) => void;
   onNotesChange?: (notes: { arrivalNotes: string; goalsChoice: string }) => void;
 };
+
+function initialPickerState(
+  bookableDatesList: string[],
+  initialSlot?: string | null
+): { weekAnchor: string; selectedDate: string; selectedTime: string | null } {
+  const defaultDate = bookableDatesList[0] || '';
+  const defaultWeek = getMondayOfWeek(defaultDate || formatLocalDate(new Date()));
+
+  if (initialSlot) {
+    const parsed = parseSelectedSlot(initialSlot);
+    if (parsed) {
+      return {
+        weekAnchor: getMondayOfWeek(parsed.date),
+        selectedDate: parsed.date,
+        selectedTime: parsed.time,
+      };
+    }
+  }
+
+  return { weekAnchor: defaultWeek, selectedDate: defaultDate, selectedTime: null };
+}
 
 export function CustomerSlotPicker({
   supabase,
   providerId,
   supabaseReady,
+  mode = 'live',
+  initialSlot = null,
   onSlotChange,
   onNotesChange,
 }: CustomerSlotPickerProps) {
+  const isPreview = mode === 'preview';
   const bookableDatesList = useMemo(() => getBookableWeekdayDates(30), []);
   const bookableDatesSet = useMemo(() => new Set(bookableDatesList), [bookableDatesList]);
   const monthCells = useMemo(() => getMonthCalendarDays(30), []);
 
   const [viewMode, setViewMode] = useState<DateViewMode>('week');
-  const [weekAnchor, setWeekAnchor] = useState(() =>
-    getMondayOfWeek(bookableDatesList[0] || formatLocalDate(new Date()))
+  const [weekAnchor, setWeekAnchor] = useState(
+    () => initialPickerState(bookableDatesList, initialSlot).weekAnchor
   );
-  const [selectedDate, setSelectedDate] = useState(bookableDatesList[0] || '');
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState(
+    () => initialPickerState(bookableDatesList, initialSlot).selectedDate
+  );
+  const [selectedTime, setSelectedTime] = useState<string | null>(
+    () => initialPickerState(bookableDatesList, initialSlot).selectedTime
+  );
   const [bookedSet, setBookedSet] = useState<Set<string>>(new Set());
-  const [loadingAvailability, setLoadingAvailability] = useState(true);
+  const [loadingAvailability, setLoadingAvailability] = useState(!isPreview);
   const [arrivalNotes, setArrivalNotes] = useState('');
   const [goalsChoice, setGoalsChoice] = useState('');
 
@@ -65,6 +97,21 @@ export function CustomerSlotPicker({
   }, [arrivalNotes, goalsChoice, onNotesChange]);
 
   useEffect(() => {
+    if (!initialSlot) return;
+    const parsed = parseSelectedSlot(initialSlot);
+    if (!parsed) return;
+    setWeekAnchor(getMondayOfWeek(parsed.date));
+    setSelectedDate(parsed.date);
+    setSelectedTime(parsed.time);
+  }, [initialSlot]);
+
+  useEffect(() => {
+    if (isPreview) {
+      setLoadingAvailability(false);
+      setBookedSet(new Set());
+      return;
+    }
+
     if (!supabaseReady) return;
 
     let cancelled = false;
@@ -73,20 +120,37 @@ export function CustomerSlotPicker({
       if (!cancelled) {
         setBookedSet(set);
         setLoadingAvailability(false);
-        const firstOpenWeek = findFirstWeekWithOpenSlot(bookableDatesList, set);
-        setWeekAnchor(firstOpenWeek);
-        const weekDays = getWeekdayDatesInWeek(firstOpenWeek, bookableDatesSet);
-        if (weekDays.length > 0) {
-          setSelectedDate((prev) => (weekDays.includes(prev) ? prev : weekDays[0]));
+
+        if (initialSlot) {
+          const parsed = parseSelectedSlot(initialSlot);
+          if (parsed && set.has(buildSelectedSlot(parsed.date, parsed.time))) {
+            setSelectedTime(null);
+          }
+        } else {
+          const firstOpenWeek = findFirstWeekWithOpenSlot(bookableDatesList, set);
+          setWeekAnchor(firstOpenWeek);
+          const weekDays = getWeekdayDatesInWeek(firstOpenWeek, bookableDatesSet);
+          if (weekDays.length > 0) {
+            setSelectedDate((prev) => (weekDays.includes(prev) ? prev : weekDays[0]));
+          }
         }
       }
     });
     return () => {
       cancelled = true;
     };
-  }, [supabase, providerId, supabaseReady, bookableDatesList, bookableDatesSet]);
+  }, [
+    supabase,
+    providerId,
+    supabaseReady,
+    bookableDatesList,
+    bookableDatesSet,
+    isPreview,
+    initialSlot,
+  ]);
 
-  const isBooked = (date: string, time: string) => bookedSet.has(buildSelectedSlot(date, time));
+  const isBooked = (date: string, time: string) =>
+    isPreview ? false : bookedSet.has(buildSelectedSlot(date, time));
 
   const selectDate = (date: string) => {
     setSelectedDate(date);
@@ -114,9 +178,13 @@ export function CustomerSlotPicker({
   return (
     <div className="space-y-3">
       <div>
-        <div className="text-sm font-medium mb-1">Choose your time slot</div>
+        <div className="text-sm font-medium mb-1">
+          {isPreview ? 'Upcoming openings' : 'Choose your time slot'}
+        </div>
         <p className="text-[10px] text-neutral-500">
-          Live availability from Supabase — 15-minute hold while you finish.
+          {isPreview
+            ? 'Real-time calendar preview — confirm screens to see booked times & reserve.'
+            : 'Live availability — 15-minute hold while you finish.'}
         </p>
       </div>
 
@@ -249,44 +317,52 @@ export function CustomerSlotPicker({
         </div>
       )}
 
-      <div>
-        <div className="text-[10px] text-neutral-500 mb-0.5">
-          Arrival notes (gate code, parking, etc.)
-        </div>
-        <textarea
-          value={arrivalNotes}
-          onChange={(e) => setArrivalNotes(e.target.value)}
-          className="w-full border rounded p-1.5 text-sm h-14 bg-white"
-          placeholder="Gate code, parking, dog notes..."
-        />
-      </div>
+      {!isPreview && (
+        <>
+          <div>
+            <div className="text-[10px] text-neutral-500 mb-0.5">
+              Arrival notes (gate code, parking, etc.)
+            </div>
+            <textarea
+              value={arrivalNotes}
+              onChange={(e) => setArrivalNotes(e.target.value)}
+              className="w-full border rounded p-1.5 text-sm h-14 bg-white"
+              placeholder="Gate code, parking, dog notes..."
+            />
+          </div>
 
-      <div>
-        <div className="text-[10px] text-neutral-500 mb-0.5">Goals for this visit *</div>
-        <select
-          value={goalsChoice}
-          onChange={(e) => setGoalsChoice(e.target.value)}
-          className="w-full border rounded p-1.5 text-sm bg-white"
-        >
-          <option value="">Select an option...</option>
-          <option value="I'll add every window, and the insides too, if they look perfect and your tech has the time!">
-            1. Add every window (+ insides if time allows)
-          </option>
-          <option value="Just the number I booked, guaranteed no add-ons.">
-            2. Just the number I booked, no add-ons
-          </option>
-          <option value="I booked the ones I believe will be easy for them, but if they qualify I hope to add a few more.">
-            3. Maybe add a few more if they qualify
-          </option>
-          <option value="Too many questions, just get here and we'll chat.">
-            4. We&apos;ll chat when you arrive
-          </option>
-        </select>
-      </div>
+          <div>
+            <div className="text-[10px] text-neutral-500 mb-0.5">Goals for this visit *</div>
+            <select
+              value={goalsChoice}
+              onChange={(e) => setGoalsChoice(e.target.value)}
+              className="w-full border rounded p-1.5 text-sm bg-white"
+            >
+              <option value="">Select an option...</option>
+              <option value="I'll add every window, and the insides too, if they look perfect and your tech has the time!">
+                1. Add every window (+ insides if time allows)
+              </option>
+              <option value="Just the number I booked, guaranteed no add-ons.">
+                2. Just the number I booked, no add-ons
+              </option>
+              <option value="I booked the ones I believe will be easy for them, but if they qualify I hope to add a few more.">
+                3. Maybe add a few more if they qualify
+              </option>
+              <option value="Too many questions, just get here and we'll chat.">
+                4. We&apos;ll chat when you arrive
+              </option>
+            </select>
+          </div>
+        </>
+      )}
 
       {selectedSlot && selectedTime && (
-        <div className="text-sm text-emerald-700 font-medium">
-          Selected:{' '}
+        <div
+          className={`text-sm font-medium ${
+            isPreview ? 'text-neutral-600' : 'text-emerald-700'
+          }`}
+        >
+          {isPreview ? 'Tentative pick: ' : 'Selected: '}
           {parseLocalDate(selectedDate).toLocaleDateString(undefined, {
             weekday: 'short',
             month: 'short',

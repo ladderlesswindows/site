@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { MOM_EASTER_EGG_PATH, MOM_EASTER_EGG_ZIP } from '@/lib/easterEggZips';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname, searchParams } = request.nextUrl;
 
   if (pathname.startsWith(MOM_EASTER_EGG_PATH)) {

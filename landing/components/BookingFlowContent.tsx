@@ -4,9 +4,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { FlowBrandingHeader } from '@/components/FlowBrandingHeader';
-import { FlowPageLayout } from '@/components/FlowPageLayout';
-import { BookingSubtotalPanel } from '@/components/BookingSubtotalPanel';
-import { BookingPricesPanel } from '@/components/BookingPricesPanel';
+import { BookingPreviewLayout } from '@/components/BookingPreviewLayout';
 
 import { BookingZipSuccess } from '@/components/BookingZipSuccess';
 import {
@@ -19,6 +17,7 @@ import { useMomEasterEggRedirect } from '@/hooks/useMomEasterEggRedirect';
 import { MOM_EASTER_EGG_ZIP } from '@/lib/easterEggZips';
 import { BackHomeLink } from '@/components/BackHomeLink';
 import { FlowFooter } from '@/components/FlowFooter';
+import { readPreviewSlot, writePreviewSlot } from '@/lib/previewSlotStorage';
 
 type BookingFlowContentProps = {
   basePath: '/booking' | '/booking/mom';
@@ -39,12 +38,18 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
   const [showQualifier, setShowQualifier] = useState(false);
   const [showScreensModal, setShowScreensModal] = useState(false);
   const [screensChoice, setScreensChoice] = useState<'outside' | 'fee' | 'decide' | ''>('');
+  const slotFromUrl = searchParams.get('slot');
+  const previewSlot = slotFromUrl ?? readPreviewSlot();
 
   useEffect(() => {
     if (momRedirecting) return;
     setWindowCount(initialWindows);
     setShowQualifier(false);
   }, [zip, initialWindows, momRedirecting]);
+
+  useEffect(() => {
+    if (slotFromUrl) writePreviewSlot(slotFromUrl);
+  }, [slotFromUrl]);
 
   if (momRedirecting) {
     return (
@@ -62,11 +67,16 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
       windows: next,
       qualifier: qualifierCode,
       flow: '30s',
+      slot: previewSlot ?? undefined,
     });
     router.replace(bookingFlowHref(basePath, '', params), { scroll: false });
   };
 
-  const bookingQuery = (extra?: { screenReinstall?: boolean; screensChoice?: typeof screensChoice }) =>
+  const bookingQuery = (extra?: {
+    screenReinstall?: boolean;
+    screensChoice?: typeof screensChoice;
+    slot?: string | null;
+  }) =>
     buildBookingSearchParams({
       zip,
       windows: windowCount,
@@ -74,46 +84,60 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
       screensChoice: extra?.screensChoice,
       qualifier: qualifierCode,
       flow: '30s',
+      slot: extra?.slot ?? previewSlot ?? undefined,
     });
+
+  const syncPreviewSlot = (slot: string | null) => {
+    writePreviewSlot(slot);
+    const params = buildBookingSearchParams({
+      zip,
+      windows: windowCount,
+      qualifier: qualifierCode,
+      flow: '30s',
+      slot: slot ?? undefined,
+    });
+    router.replace(bookingFlowHref(basePath, '', params), { scroll: false });
+  };
 
   const handleConfirm = () => {
     if (!screensChoice) return;
     const screenReinstall = screensChoiceToReinstallFee(screensChoice);
-    router.push(bookingFlowHref(basePath, 'address', bookingQuery({ screenReinstall, screensChoice })));
+    router.push(
+      bookingFlowHref(
+        basePath,
+        'address',
+        bookingQuery({ screenReinstall, screensChoice, slot: previewSlot })
+      )
+    );
   };
 
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 px-5 pt-12 pb-12">
-        <FlowPageLayout
-          rightPanel={
-            <div className="space-y-2">
-              <BookingSubtotalPanel
-                windowCount={windowCount}
-                minWindows={getMinWindows(zip)}
-                onWindowCountChange={updateWindowCount}
-              />
-              <BookingPricesPanel />
-            </div>
-          }
-          main={
-            <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
-              <FlowBrandingHeader
-                currentZip={zip}
-                windows={windowCount}
-                bookingPath={basePath}
-                showZipButtons={!isMomFlow}
-              />
+        <BookingPreviewLayout
+          windowCount={windowCount}
+          minWindows={getMinWindows(zip)}
+          previewSlot={previewSlot}
+          onWindowCountChange={updateWindowCount}
+          onSlotChange={syncPreviewSlot}
+        >
+          <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
+            <FlowBrandingHeader
+              currentZip={zip}
+              windows={windowCount}
+              bookingPath={basePath}
+              showZipButtons={!isMomFlow}
+            />
 
-              {!showQualifier ? (
-                <BookingZipSuccess
-                  zip={zip}
-                  isMomFlow={isMomFlow}
-                  onStartBooking={() => setShowQualifier(true)}
-                  explainHref={`/explain?${bookingQuery()}`}
-                />
-              ) : (
-                <div className="space-y-4">
+            {!showQualifier ? (
+              <BookingZipSuccess
+                zip={zip}
+                isMomFlow={isMomFlow}
+                onStartBooking={() => setShowQualifier(true)}
+                explainHref={`/explain?${bookingQuery()}`}
+              />
+            ) : (
+              <div className="space-y-4">
                   <div className="relative group space-y-3 text-center cursor-help rounded-xl px-1 py-1">
                     <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 z-[60] w-[min(100%,320px)] text-[11px] leading-snug bg-neutral-900 text-white px-3 py-2 rounded-xl shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-100 text-left">
                       I am booking now for some standard style 1st or 2nd story windows that are ready now for a 30 Second Booking! I understand that your professional water fed pole EXTERIOR window cleaning technicians are so good, despite using only purified water, that the perfection is GUARANTEED.
@@ -157,11 +181,10 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
                     ← Back
                   </button>
                   <BackHomeLink />
-                </div>
-              )}
-            </div>
-          }
-        />
+              </div>
+            )}
+          </div>
+        </BookingPreviewLayout>
 
         {showScreensModal && (
           <div

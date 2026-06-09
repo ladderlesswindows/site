@@ -39,6 +39,7 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
   const screensChoiceParam = searchParams.get('screensChoice');
   const paramScreenReinstall = parseScreenReinstall(screenParam, screensChoiceParam);
   const qualifierParam = searchParams.get('qualifier') || '';
+  const slotParam = searchParams.get('slot');
 
   const [windows, setWindows] = useState(paramWindows);
   const [screenReinstall, setScreenReinstall] = useState(paramScreenReinstall);
@@ -54,7 +55,7 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
   const [zipCode] = useState(zip);
   const [isSpecialAddress, setIsSpecialAddress] = useState(false);
 
-  const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<string | null>(slotParam);
   const [slotNotes, setSlotNotes] = useState({ arrivalNotes: '', goalsChoice: '' });
   const [reserving, setReserving] = useState(false);
 
@@ -63,7 +64,8 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
     setScreenReinstall(parseScreenReinstall(screenParam, screensChoiceParam));
     setScreensChoice((screensChoiceParam as ScreensChoice) || '');
     setQualifierCode(qualifierParam);
-  }, [paramWindows, screenParam, screensChoiceParam, qualifierParam]);
+    setSelectedSlot(slotParam);
+  }, [paramWindows, screenParam, screensChoiceParam, qualifierParam, slotParam]);
 
   useEffect(() => {
     const streetLower = street.toLowerCase();
@@ -75,21 +77,26 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
     setIsSpecialAddress(streetMatch && cityMatch);
   }, [street, city]);
 
-  const syncBookingParams = (next: {
-    windows?: number;
-    screenReinstall?: boolean;
-    screensChoice?: ScreensChoice;
-  }) => {
-    const params = buildBookingSearchParams({
-      zip,
-      windows: next.windows ?? windows,
-      screenReinstall: next.screenReinstall ?? screenReinstall,
-      screensChoice: (next.screensChoice ?? screensChoice) || undefined,
-      qualifier: qualifierCode,
-      flow: '30s',
-    });
-    router.replace(bookingFlowHref(basePath, 'address', params), { scroll: false });
-  };
+  const syncBookingParams = useCallback(
+    (next: {
+      windows?: number;
+      screenReinstall?: boolean;
+      screensChoice?: ScreensChoice;
+      slot?: string | null;
+    }) => {
+      const params = buildBookingSearchParams({
+        zip,
+        windows: next.windows ?? windows,
+        screenReinstall: next.screenReinstall ?? screenReinstall,
+        screensChoice: (next.screensChoice ?? screensChoice) || undefined,
+        qualifier: qualifierCode,
+        flow: '30s',
+        slot: next.slot ?? selectedSlot ?? undefined,
+      });
+      router.replace(bookingFlowHref(basePath, 'address', params), { scroll: false });
+    },
+    [zip, windows, screenReinstall, screensChoice, qualifierCode, selectedSlot, router, basePath]
+  );
 
   const updateWindows = (count: number) => {
     const next = clampWindowCount(zip, count);
@@ -192,9 +199,13 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
   const screenFee = screenReinstall ? windows * 2 : 0;
   const total = base + screenFee;
 
-  const handleSlotChange = useCallback((slot: string | null) => {
-    setSelectedSlot(slot);
-  }, []);
+  const handleSlotChange = useCallback(
+    (slot: string | null) => {
+      setSelectedSlot(slot);
+      syncBookingParams({ slot });
+    },
+    [syncBookingParams]
+  );
 
   const handleNotesChange = useCallback(
     (notes: { arrivalNotes: string; goalsChoice: string }) => {
@@ -265,6 +276,7 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
       screensChoice: screensChoice || undefined,
       qualifier: qualifierCode,
       flow: '30s',
+      slot: selectedSlot ?? undefined,
     })
   );
 
@@ -285,6 +297,8 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
                 supabase={supabase}
                 providerId={providerId}
                 supabaseReady={supabaseReady}
+                mode="live"
+                initialSlot={slotParam}
                 selectedSlot={selectedSlot}
                 onSlotChange={handleSlotChange}
                 onNotesChange={handleNotesChange}

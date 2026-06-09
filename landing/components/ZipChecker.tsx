@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getZipInfo, isPartialCoverage, getExampleZip, getMinWindows, getSuccessHeadline } from "./zipRegistry";
@@ -10,7 +10,8 @@ import {
   MOM_EASTER_EGG_ZIP,
 } from "@/lib/easterEggZips";
 import { PartialCoverageDetailsBox } from "./PartialCoverageDetailsBox";
-import { calculateWindowBase, formatPriceAmount } from "./windowPricing";
+import { BookingPreviewLayout } from "./BookingPreviewLayout";
+import { readPreviewSlot, writePreviewSlot } from "@/lib/previewSlotStorage";
 
 
 function MomZipRedirect() {
@@ -27,28 +28,39 @@ export function ZipChecker({
   forcedSuccess, 
   onClearForced,
   windowCount = 1,
-  onSetWindowCount
+  onSetWindowCount,
+  onSuccessChange,
 }: { 
   onZipChange?: (zip: string) => void; 
   forcedSuccess?: string | null; 
   onClearForced?: () => void;
   windowCount?: number;
   onSetWindowCount?: (n: number) => void;
+  onSuccessChange?: (isSuccess: boolean) => void;
 } = {}) {
   const router = useRouter();
   const exampleZip = getExampleZip();
   const [zipCode, setZipCode] = useState(exampleZip);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
+  const [previewSlot, setPreviewSlot] = useState<string | null>(() => readPreviewSlot());
+
+  const setSuccess = useCallback(
+    (next: boolean) => {
+      setIsSuccess(next);
+      onSuccessChange?.(next);
+    },
+    [onSuccessChange]
+  );
 
   useEffect(() => {
     if (forcedSuccess) {
       setZipCode(forcedSuccess);
-      setIsSuccess(true);
+      setSuccess(true);
       onZipChange?.(forcedSuccess);
       onSetWindowCount?.(getMinWindows(forcedSuccess));
     }
-  }, [forcedSuccess]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [forcedSuccess, setSuccess]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isValidZip = /^\d{5}$/.test(zipCode.trim());
 
@@ -78,16 +90,28 @@ export function ZipChecker({
 
     setTimeout(() => {
       const count = Math.max(windowCount, min);
-      router.push(`/booking?zip=${trimmed}&windows=${count}`);
+      const slotQuery = previewSlot ? `&slot=${encodeURIComponent(previewSlot)}` : "";
+      router.push(`/booking?zip=${trimmed}&windows=${count}${slotQuery}`);
     }, 180);
   };
 
   const handleZipChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, "").slice(0, 5);
     setZipCode(value);
-    setIsSuccess(false);
+    setSuccess(false);
     onZipChange?.(value);
     onClearForced?.();
+  };
+
+  const handlePreviewSlotChange = (slot: string | null) => {
+    setPreviewSlot(slot);
+    writePreviewSlot(slot);
+  };
+
+  const bookingHref = (zip: string, count: number) => {
+    const params = new URLSearchParams({ zip, windows: String(count) });
+    if (previewSlot) params.set("slot", previewSlot);
+    return `/booking?${params.toString()}`;
   };
 
   const SuccessView = ({
@@ -95,89 +119,72 @@ export function ZipChecker({
     isPartial,
     explanation,
     onReset,
-    windowCount = 1,
-    onSetWindowCount,
   }: {
     zip: string;
     isPartial: boolean;
     explanation?: string;
     onReset: () => void;
-    windowCount?: number;
-    onSetWindowCount?: (n: number) => void;
   }) => {
     const minWindows = getMinWindows(zip);
-    const subtotal = calculateWindowBase(windowCount);
+    const count = windowCount;
 
     return (
-    <div className="space-y-5 text-center pt-1">
-      <div className={`flex gap-2 ${isPartial ? "flex-col items-stretch" : "items-center justify-start"}`}>
-        <div className={`flex gap-2.5 rounded-2xl bg-emerald-50 px-5 py-3 border border-emerald-100 ${isPartial ? "items-start text-left w-full" : "inline-flex items-center"}`}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-emerald-700 flex-shrink-0"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-              clipRule="evenodd"
-            />
-          </svg>
-          <p className={`font-semibold text-emerald-800 ${isPartial ? "text-sm leading-snug" : "tracking-tight"}`}>
-            {getSuccessHeadline(zip)}
-          </p>
-        </div>
-        <button
-          onClick={onReset}
-          className="text-xs font-medium tracking-wide text-emerald-700 bg-emerald-50 hover:bg-emerald-100 active:bg-emerald-100 border border-emerald-100 px-3 py-1 rounded-xl transition-all flex-shrink-0 self-start"
-        >
-          Check different ZIP
-        </button>
-      </div>
-      {isPartial && explanation && (
-        <PartialCoverageDetailsBox details={explanation} />
-      )}
-
-      {/* Window count selector + price info (for passing to next module) */}
-      {onSetWindowCount && (
-        <div className="text-center">
-          <div className="text-sm text-neutral-600 mb-1">Number of standard windows</div>
-          <div className="flex items-center justify-center gap-3">
-            <button 
-              onClick={() => onSetWindowCount(Math.max(minWindows, windowCount - 1))} 
-              className="w-8 h-8 rounded-full border text-lg font-bold active:bg-neutral-100"
-            >
-              −
-            </button>
-            <div className="text-2xl font-semibold w-10 text-center">{windowCount}</div>
-            <button 
-              onClick={() => onSetWindowCount(windowCount + 1)} 
-              className="w-8 h-8 rounded-full border text-lg font-bold active:bg-neutral-100"
-            >
-              +
-            </button>
-          </div>
-          <div className="text-lg font-semibold text-neutral-900 mt-2">{formatPriceAmount(subtotal)}</div>
-        </div>
-      )}
-
-      <Link
-        href={`/booking?zip=${zipCode}&windows=${windowCount}`}
-        className="block w-full py-5 text-xl font-semibold tracking-wide rounded-3xl bg-[#0f766e] text-white hover:bg-[#0c5f58] active:bg-[#0a524c] shadow-lg shadow-emerald-900/20 transition-all text-center"
+      <BookingPreviewLayout
+        windowCount={count}
+        minWindows={minWindows}
+        previewSlot={previewSlot}
+        onWindowCountChange={(next) => onSetWindowCount?.(next)}
+        onSlotChange={handlePreviewSlotChange}
       >
-        Start 30 Second Booking
-      </Link>
+        <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
+          <h2 className="text-sm font-semibold tracking-wide text-neutral-700 mb-4 text-center">
+            Check if we serve your area
+          </h2>
 
-      <p className="text-sm text-neutral-600 pt-1">
-        30 Second Booking!
-      </p>
-    </div>
-  );
+          <div className="space-y-5 text-center pt-1">
+            <div className={`flex gap-2 ${isPartial ? "flex-col items-stretch" : "items-center justify-start"}`}>
+              <div className={`flex gap-2.5 rounded-2xl bg-emerald-50 px-5 py-3 border border-emerald-100 ${isPartial ? "items-start text-left w-full" : "inline-flex items-center"}`}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-emerald-700 flex-shrink-0"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <p className={`font-semibold text-emerald-800 ${isPartial ? "text-sm leading-snug" : "tracking-tight"}`}>
+                  {getSuccessHeadline(zip)}
+                </p>
+              </div>
+              <button
+                onClick={onReset}
+                className="text-xs font-medium tracking-wide text-emerald-700 bg-emerald-50 hover:bg-emerald-100 active:bg-emerald-100 border border-emerald-100 px-3 py-1 rounded-xl transition-all flex-shrink-0 self-start"
+              >
+                Check different ZIP
+              </button>
+            </div>
+            {isPartial && explanation && <PartialCoverageDetailsBox details={explanation} />}
+
+            <Link
+              href={bookingHref(zip, count)}
+              className="block w-full py-5 text-xl font-semibold tracking-wide rounded-3xl bg-[#0f766e] text-white hover:bg-[#0c5f58] active:bg-[#0a524c] shadow-lg shadow-emerald-900/20 transition-all text-center"
+            >
+              Start 30 Second Booking
+            </Link>
+
+            <p className="text-sm text-neutral-600 pt-1">30 Second Booking!</p>
+          </div>
+        </div>
+      </BookingPreviewLayout>
+    );
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className={isSuccess ? "w-full" : "w-full max-w-md mx-auto"}>
       {!isSuccess ? (
         <form onSubmit={handleCheck} className="space-y-4">
           <div>
@@ -212,13 +219,11 @@ export function ZipChecker({
           isPartial={isPartial}
           explanation={partialExplanation}
           onReset={() => {
-            setIsSuccess(false);
+            setSuccess(false);
             setZipCode("");
             onZipChange?.("");
             onClearForced?.();
           }}
-          windowCount={windowCount}
-          onSetWindowCount={onSetWindowCount}
         />
       ) : isMomEasterEggZip(zipCode.trim()) ? (
         <MomZipRedirect />
@@ -230,7 +235,7 @@ export function ZipChecker({
 
           <button
             onClick={() => {
-              setIsSuccess(false);
+              setSuccess(false);
               setZipCode("");
               onZipChange?.("");
               onClearForced?.();
