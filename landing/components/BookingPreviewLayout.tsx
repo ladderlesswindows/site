@@ -17,6 +17,8 @@ type BookingPreviewLayoutProps = {
   onSlotChange: (slot: string | null) => void;
   /** Mom easter egg — rose + love note on the right */
   showMomLovePanel?: boolean;
+  /** Optional module stacked under the left schedule panel (e.g. window slideshow). */
+  leftPanelExtra?: ReactNode;
 };
 
 /** Three-column booking shell: live schedule preview (left), main module (center), subtotal (right). */
@@ -28,6 +30,7 @@ export function BookingPreviewLayout({
   onWindowCountChange,
   onSlotChange,
   showMomLovePanel = false,
+  leftPanelExtra,
 }: BookingPreviewLayoutProps) {
   const { supabase, providerId, ready: supabaseReady } = useSupabase();
 
@@ -38,15 +41,18 @@ export function BookingPreviewLayout({
       mainClassName="w-full max-w-md flex-shrink-0 order-1 md:order-2"
       rightPanelClassName={`w-full md:flex-shrink-0 order-2 md:order-3 ${showMomLovePanel ? "md:w-52" : "md:w-44"}`}
       leftPanel={
-        <BookingSchedulePanel
-          supabase={supabase}
-          providerId={providerId}
-          supabaseReady={supabaseReady}
-          mode="preview"
-          initialSlot={previewSlot}
-          selectedSlot={previewSlot}
-          onSlotChange={onSlotChange}
-        />
+        <div className="space-y-2">
+          <BookingSchedulePanel
+            supabase={supabase}
+            providerId={providerId}
+            supabaseReady={supabaseReady}
+            mode="preview"
+            initialSlot={previewSlot}
+            selectedSlot={previewSlot}
+            onSlotChange={onSlotChange}
+          />
+          {leftPanelExtra}
+        </div>
       }
       rightPanel={
         <div className="space-y-2">

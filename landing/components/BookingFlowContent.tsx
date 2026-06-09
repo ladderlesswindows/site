@@ -8,6 +8,7 @@ import { BookingPreviewLayout } from '@/components/BookingPreviewLayout';
 
 import { BookingZipSuccess } from '@/components/BookingZipSuccess';
 import { ZipTerritoryImageModule } from '@/components/ZipTerritoryImageModule';
+import { QualifyingWindowSlideshow } from '@/components/QualifyingWindowSlideshow';
 import {
   buildBookingSearchParams,
   buildExplainHref,
@@ -151,6 +152,11 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
           onWindowCountChange={updateWindowCount}
           onSlotChange={syncPreviewSlot}
           showMomLovePanel={isMomFlow}
+          leftPanelExtra={
+            !showQualifier && (getZipInfo(zip) || isMomFlow || isMomEasterEggZip(zip)) ? (
+              <QualifyingWindowSlideshow />
+            ) : undefined
+          }
         >
           <div className="space-y-3">
             <div className="cream-module">
