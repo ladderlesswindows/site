@@ -261,15 +261,38 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
                 Confirm — I understand (exterior only)
               </button>
 
-              <button
-                onClick={() => {
-                  setShowScreensModal(false);
-                  setScreensChoice('');
-                }}
-                className="mt-2 w-full text-xs text-neutral-500 py-2"
-              >
-                ← Back to question
-              </button>
+              <div className="mt-2 space-y-0">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowScreensModal(false);
+                    setScreensChoice('');
+                  }}
+                  className="w-full text-xs text-neutral-500 hover:text-neutral-700 py-2"
+                >
+                  ← Back to question
+                </button>
+                <Link
+                  href={`/explain?${bookingQuery()}`}
+                  onClick={() => {
+                    setShowScreensModal(false);
+                    setScreensChoice('');
+                  }}
+                  className="block w-full text-xs text-neutral-500 hover:text-neutral-700 py-2 text-center"
+                >
+                  ← More info first please
+                </Link>
+                <Link
+                  href="/"
+                  onClick={() => {
+                    setShowScreensModal(false);
+                    setScreensChoice('');
+                  }}
+                  className="block w-full text-xs text-neutral-500 hover:text-neutral-700 py-2 text-center"
+                >
+                  ← Back to home
+                </Link>
+              </div>
             </div>
           </div>
         )}
