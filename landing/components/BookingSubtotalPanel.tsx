@@ -86,8 +86,11 @@ export function BookingSubtotalPanel({
             <ul className="mt-1.5 list-disc pl-3.5 space-y-1">
               <li>
                 $2 fee will apply for technician to remove and reinstall them for the free screen
-                cleaning. Technician will give a free removal lesson if desired to avoid this fee in
-                future visits (most have springs that need compression to remove/install smoothly)
+                cleaning.
+              </li>
+              <li>
+                Technician will give a free removal lesson if desired to avoid this fee in future
+                visits (most have springs that need compression to remove/install smoothly)
               </li>
             </ul>
           </>
