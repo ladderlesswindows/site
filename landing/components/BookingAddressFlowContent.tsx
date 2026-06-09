@@ -196,6 +196,31 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
           />
         </div>
       </div>
+
+      <div className="pt-2">
+        <div className="text-[10px] text-neutral-500 mb-0.5">Goals for this visit *</div>
+        <select
+          value={slotNotes.goalsChoice}
+          onChange={(e) =>
+            setSlotNotes((prev) => ({ ...prev, goalsChoice: e.target.value }))
+          }
+          className="w-full border rounded p-1.5 text-sm bg-white"
+        >
+          <option value="">Select an option...</option>
+          <option value="I'll add every window, and the insides too, if they look perfect and your tech has the time!">
+            1. Add every window (+ insides if time allows)
+          </option>
+          <option value="Just the number I booked, guaranteed no add-ons.">
+            2. Just the number I booked, no add-ons
+          </option>
+          <option value="I booked the ones I believe will be easy for them, but if they qualify I hope to add a few more.">
+            3. Maybe add a few more if they qualify
+          </option>
+          <option value="Too many questions, just get here and we'll chat.">
+            4. We&apos;ll chat when you arrive
+          </option>
+        </select>
+      </div>
     </div>
   );
 
@@ -214,12 +239,9 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
     [selectedSlot, syncBookingParams]
   );
 
-  const handleNotesChange = useCallback(
-    (notes: { arrivalNotes: string; goalsChoice: string }) => {
-      setSlotNotes(notes);
-    },
-    []
-  );
+  const handleNotesChange = useCallback((notes: { arrivalNotes: string }) => {
+    setSlotNotes((prev) => ({ ...prev, arrivalNotes: notes.arrivalNotes }));
+  }, []);
 
   const handleReserve = async () => {
     if (!canProceed || !selectedSlot || !supabase) return;
@@ -362,6 +384,7 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
               ) : (
                 <>
                   {proceedStatusBox}
+                  {addressFields}
 
                   <button
                     type="button"
@@ -376,11 +399,9 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
                     {reserving ? 'Reserving…' : 'Reserve Slot & Proceed'}
                   </button>
                   <p className="text-[10px] text-neutral-500 mt-2 text-center">
-                    Pick a time on the left, then complete your address below — reserve unlocks when
-                    every item above is checked.
+                    Pick a time on the left, then complete your address and goals — reserve unlocks
+                    when every item above is checked.
                   </p>
-
-                  {addressFields}
                 </>
               )}
 

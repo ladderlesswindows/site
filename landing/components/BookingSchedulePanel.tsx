@@ -12,7 +12,7 @@ type BookingSchedulePanelProps = {
   initialSlot?: string | null;
   selectedSlot: string | null;
   onSlotChange: (slot: string | null) => void;
-  onNotesChange?: (notes: { arrivalNotes: string; goalsChoice: string }) => void;
+  onNotesChange?: (notes: { arrivalNotes: string }) => void;
 };
 
 export function BookingSchedulePanel({

@@ -27,7 +27,7 @@ type CustomerSlotPickerProps = {
   mode?: SlotPickerMode;
   initialSlot?: string | null;
   onSlotChange?: (slot: string | null) => void;
-  onNotesChange?: (notes: { arrivalNotes: string; goalsChoice: string }) => void;
+  onNotesChange?: (notes: { arrivalNotes: string }) => void;
 };
 
 function initialPickerState(
@@ -78,7 +78,6 @@ export function CustomerSlotPicker({
   const [bookedSet, setBookedSet] = useState<Set<string>>(new Set());
   const [loadingAvailability, setLoadingAvailability] = useState(!isPreview);
   const [arrivalNotes, setArrivalNotes] = useState('');
-  const [goalsChoice, setGoalsChoice] = useState('');
 
   const weekDates = useMemo(
     () => getWeekdayDatesInWeek(weekAnchor, bookableDatesSet),
@@ -97,11 +96,11 @@ export function CustomerSlotPicker({
 
   const lastNotifiedNotes = useRef<string | undefined>(undefined);
   useEffect(() => {
-    const key = `${arrivalNotes}\0${goalsChoice}`;
-    if (lastNotifiedNotes.current === key) return;
-    lastNotifiedNotes.current = key;
-    onNotesChange?.({ arrivalNotes, goalsChoice });
-  }, [arrivalNotes, goalsChoice, onNotesChange]);
+    if (!onNotesChange || isPreview) return;
+    if (lastNotifiedNotes.current === arrivalNotes) return;
+    lastNotifiedNotes.current = arrivalNotes;
+    onNotesChange({ arrivalNotes });
+  }, [arrivalNotes, onNotesChange, isPreview]);
 
   useEffect(() => {
     if (!initialSlot) return;
@@ -325,42 +324,17 @@ export function CustomerSlotPicker({
       )}
 
       {!isPreview && (
-        <>
-          <div>
-            <div className="text-[10px] text-neutral-500 mb-0.5">
-              Arrival notes (gate code, parking, etc.)
-            </div>
-            <textarea
-              value={arrivalNotes}
-              onChange={(e) => setArrivalNotes(e.target.value)}
-              className="w-full border rounded p-1.5 text-sm h-14 bg-white"
-              placeholder="Gate code, parking, dog notes..."
-            />
+        <div>
+          <div className="text-[10px] text-neutral-500 mb-0.5">
+            Arrival notes (gate code, parking, etc.)
           </div>
-
-          <div>
-            <div className="text-[10px] text-neutral-500 mb-0.5">Goals for this visit *</div>
-            <select
-              value={goalsChoice}
-              onChange={(e) => setGoalsChoice(e.target.value)}
-              className="w-full border rounded p-1.5 text-sm bg-white"
-            >
-              <option value="">Select an option...</option>
-              <option value="I'll add every window, and the insides too, if they look perfect and your tech has the time!">
-                1. Add every window (+ insides if time allows)
-              </option>
-              <option value="Just the number I booked, guaranteed no add-ons.">
-                2. Just the number I booked, no add-ons
-              </option>
-              <option value="I booked the ones I believe will be easy for them, but if they qualify I hope to add a few more.">
-                3. Maybe add a few more if they qualify
-              </option>
-              <option value="Too many questions, just get here and we'll chat.">
-                4. We&apos;ll chat when you arrive
-              </option>
-            </select>
-          </div>
-        </>
+          <textarea
+            value={arrivalNotes}
+            onChange={(e) => setArrivalNotes(e.target.value)}
+            className="w-full border rounded p-1.5 text-sm h-14 bg-white"
+            placeholder="Gate code, parking, dog notes..."
+          />
+        </div>
       )}
 
       {selectedSlot && selectedTime && (
