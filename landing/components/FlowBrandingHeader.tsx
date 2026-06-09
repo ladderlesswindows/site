@@ -6,6 +6,8 @@ type FlowBrandingHeaderProps = {
   windows?: number;
   bookingPath?: string;
   showZipButtons?: boolean;
+  /** Home ZIP success — switch ZIP in place instead of navigating away */
+  onZipSelect?: (zip: string) => void;
 };
 
 export function FlowBrandingHeader({
@@ -13,8 +15,16 @@ export function FlowBrandingHeader({
   windows = 1,
   bookingPath = "/booking",
   showZipButtons = true,
+  onZipSelect,
 }: FlowBrandingHeaderProps) {
   const successZips = getSuccessZips();
+
+  const zipButtonClass = (isActive: boolean) =>
+    `flex-1 min-w-0 text-center text-[8px] leading-none px-0.5 py-0.5 border rounded active:bg-emerald-100 ${
+      isActive
+        ? "border-emerald-600 bg-emerald-100 text-emerald-800 font-semibold"
+        : "border-emerald-100 bg-emerald-50 text-emerald-700"
+    }`;
 
   return (
     <>
@@ -22,15 +32,23 @@ export function FlowBrandingHeader({
         <div className="flex flex-nowrap gap-0.5 mb-2">
           {successZips.map((zip) => {
             const isActive = zip === currentZip;
+            if (onZipSelect) {
+              return (
+                <button
+                  key={zip}
+                  type="button"
+                  onClick={() => onZipSelect(zip)}
+                  className={zipButtonClass(isActive)}
+                >
+                  {zip}
+                </button>
+              );
+            }
             return (
               <Link
                 key={zip}
                 href={`${bookingPath}?zip=${zip}&windows=${windows}`}
-                className={`flex-1 min-w-0 text-center text-[8px] leading-none px-0.5 py-0.5 border rounded active:bg-emerald-100 ${
-                  isActive
-                    ? "border-emerald-600 bg-emerald-100 text-emerald-800 font-semibold"
-                    : "border-emerald-100 bg-emerald-50 text-emerald-700"
-                }`}
+                className={zipButtonClass(isActive)}
               >
                 {zip}
               </Link>

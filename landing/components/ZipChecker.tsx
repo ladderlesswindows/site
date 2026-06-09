@@ -11,6 +11,7 @@ import {
 } from "@/lib/easterEggZips";
 import { PartialCoverageDetailsBox } from "./PartialCoverageDetailsBox";
 import { BookingPreviewLayout } from "./BookingPreviewLayout";
+import { FlowBrandingHeader } from "./FlowBrandingHeader";
 import { readPreviewSlot, writePreviewSlot } from "@/lib/previewSlotStorage";
 
 
@@ -30,6 +31,7 @@ export function ZipChecker({
   windowCount = 1,
   onSetWindowCount,
   onSuccessChange,
+  onZipSelect,
 }: { 
   onZipChange?: (zip: string) => void; 
   forcedSuccess?: string | null; 
@@ -37,6 +39,7 @@ export function ZipChecker({
   windowCount?: number;
   onSetWindowCount?: (n: number) => void;
   onSuccessChange?: (isSuccess: boolean) => void;
+  onZipSelect?: (zip: string) => void;
 } = {}) {
   const router = useRouter();
   const exampleZip = getExampleZip();
@@ -137,9 +140,12 @@ export function ZipChecker({
         onSlotChange={handlePreviewSlotChange}
       >
         <div className="cream-module">
-          <h2 className="text-sm font-semibold tracking-wide text-neutral-700 mb-4 text-center">
-            Check if we serve your area
-          </h2>
+          <FlowBrandingHeader
+            currentZip={zip}
+            windows={count}
+            showZipButtons
+            onZipSelect={onZipSelect}
+          />
 
           <div className="space-y-5 text-center pt-1">
             <div className={`flex gap-2 ${isPartial ? "flex-col items-stretch" : "items-center justify-start"}`}>

@@ -8,12 +8,15 @@ type CoverageModuleProps = {
   forcedSuccess?: string | null;
   onClearForced?: () => void;
   onSuccessChange?: (isSuccess: boolean) => void;
+  /** Home quick-ZIP buttons — swap coverage in place */
+  onZipSelect?: (zip: string) => void;
 };
 
 export default function CoverageModule({
   forcedSuccess = null,
   onClearForced,
   onSuccessChange,
+  onZipSelect,
 }: CoverageModuleProps) {
   const [windowCount, setWindowCount] = useState(1);
   const [coverageSuccess, setCoverageSuccess] = useState(Boolean(forcedSuccess));
@@ -51,6 +54,7 @@ export default function CoverageModule({
         windowCount={windowCount}
         onSetWindowCount={setWindowCount}
         onSuccessChange={handleSuccessChange}
+        onZipSelect={onZipSelect}
       />
     </div>
   );
