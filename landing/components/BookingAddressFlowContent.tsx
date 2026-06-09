@@ -6,7 +6,7 @@ import { FlowBrandingHeader } from '@/components/FlowBrandingHeader';
 import { FlowPageLayout } from '@/components/FlowPageLayout';
 import { BookingSubtotalPanel } from '@/components/BookingSubtotalPanel';
 import { BookingPricesPanel } from '@/components/BookingPricesPanel';
-import { CustomerSlotPicker } from '@/components/CustomerSlotPicker';
+import { BookingSchedulePanel } from '@/components/BookingSchedulePanel';
 import Link from 'next/link';
 import {
   buildBookingSearchParams,
@@ -276,6 +276,21 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
         </div>
 
         <FlowPageLayout
+          containerClassName="mx-auto w-full max-w-5xl"
+          leftPanelClassName="w-full md:w-60 md:flex-shrink-0 order-1 md:order-1"
+          mainClassName="w-full max-w-md flex-shrink-0 order-2 md:order-2"
+          leftPanel={
+            !isSpecialAddress && supabaseReady && supabase ? (
+              <BookingSchedulePanel
+                supabase={supabase}
+                providerId={providerId}
+                supabaseReady={supabaseReady}
+                selectedSlot={selectedSlot}
+                onSlotChange={handleSlotChange}
+                onNotesChange={handleNotesChange}
+              />
+            ) : undefined
+          }
           rightPanel={
             <div className="space-y-2">
               <BookingSubtotalPanel
@@ -287,20 +302,6 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
                 onScreenReinstallChange={toggleScreenFee}
               />
               <BookingPricesPanel />
-              {selectedSlot && (
-                <div className="p-2 border border-emerald-200 bg-emerald-50 rounded-xl text-xs">
-                  <div className="font-medium text-emerald-700">Selected time:</div>
-                  <div>
-                    {new Date(selectedSlot).toLocaleString(undefined, {
-                      weekday: 'long',
-                      month: 'long',
-                      day: 'numeric',
-                      hour: 'numeric',
-                      minute: '2-digit',
-                    })}
-                  </div>
-                </div>
-              )}
             </div>
           }
           main={
@@ -354,19 +355,9 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
                     {reserving ? 'Reserving…' : 'Reserve Slot & Proceed'}
                   </button>
                   <p className="text-[10px] text-neutral-500 mt-2 text-center">
-                    Complete the schedule and address below — reserve unlocks when every item above
-                    is checked.
+                    Pick a time on the left, then complete your address below — reserve unlocks when
+                    every item above is checked.
                   </p>
-
-                  <div className="pt-3 mt-3 border-t border-neutral-200">
-                    <CustomerSlotPicker
-                      supabase={supabase}
-                      providerId={providerId}
-                      supabaseReady={supabaseReady}
-                      onSlotChange={handleSlotChange}
-                      onNotesChange={handleNotesChange}
-                    />
-                  </div>
 
                   {addressFields}
                 </>
