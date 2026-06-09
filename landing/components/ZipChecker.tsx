@@ -9,6 +9,7 @@ import {
   MOM_EASTER_EGG_PATH,
   MOM_EASTER_EGG_ZIP,
 } from "@/lib/easterEggZips";
+import { PartialCoverageDetailsBox } from "./PartialCoverageDetailsBox";
 import { calculateWindowBase, formatPriceAmount } from "./windowPricing";
 
 
@@ -134,7 +135,9 @@ export function ZipChecker({
           Check different ZIP
         </button>
       </div>
-      {isPartial && explanation && <p className="text-sm text-neutral-700">{explanation}</p>}
+      {isPartial && explanation && (
+        <PartialCoverageDetailsBox details={explanation} />
+      )}
 
       {/* Window count selector + price info (for passing to next module) */}
       {onSetWindowCount && (

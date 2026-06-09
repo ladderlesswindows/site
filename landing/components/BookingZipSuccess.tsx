@@ -5,6 +5,7 @@ import { getZipInfo, isPartialCoverage, getSuccessHeadline } from "./zipRegistry
 import { useMomEasterEggRedirect } from "@/hooks/useMomEasterEggRedirect";
 import { isMomEasterEggZip, MOM_EASTER_EGG_HEADLINE } from "@/lib/easterEggZips";
 import { BookingCoverageNotesPanel } from "./BookingCoverageNotesPanel";
+import { PartialCoverageDetailsBox } from "./PartialCoverageDetailsBox";
 import { BackHomeLink } from "./BackHomeLink";
 
 
@@ -69,8 +70,8 @@ export function BookingZipSuccess({
         </p>
       </div>
 
-      {isPartial && explanation && (
-        <p className="text-sm text-neutral-700 text-left">{explanation}</p>
+      {isPartial && explanation && !isMomZip && (
+        <PartialCoverageDetailsBox details={explanation} />
       )}
 
       <div className="flex gap-3">
