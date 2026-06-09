@@ -18,7 +18,7 @@ export function ZipTerritoryImageModule({ zip }: ZipTerritoryImageModuleProps) {
   const city = getZipInfo(zip)?.city;
 
   return (
-    <div className="cream-module overflow-hidden">
+    <div className="hidden md:block cream-module overflow-hidden">
       <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.25rem] bg-neutral-100">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
