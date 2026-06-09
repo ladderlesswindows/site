@@ -51,11 +51,15 @@ export default function AdminBookings() {
         const end = new Date(start.getTime() + (b.duration_minutes || 60) * 60000);
         return {
           id: b.id,
-          title: b.status === 'blocked' ? 'Blocked' : 'Booked',
+          title:
+            b.status === 'blocked'
+              ? b.customer_name || 'Blocked'
+              : b.customer_name || 'Booked',
           start: start.toISOString(),
           end: end.toISOString(),
           extendedProps: {
             status: b.status,
+            customer_name: b.customer_name,
             address: b.address,
             zip_code: b.zip_code,
           },
@@ -133,8 +137,10 @@ export default function AdminBookings() {
     const end = new Date(info.event.end);
     const time = `${start.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} - ${end.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`;
 
+    const name = typeof props.customer_name === 'string' ? props.customer_name : '';
     alert(
       `Time: ${time}\n` +
+      (name ? `Label: ${name}\n` : '') +
       `Status: ${props.status}\n` +
       `Address: ${props.address || 'N/A'} (${props.zip_code || ''})`
     );

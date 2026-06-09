@@ -1,11 +1,32 @@
 import fs from 'fs';
 import path from 'path';
-import { supabase } from './lib/supabase';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { ensureProjectEnvLoaded, serverEnv } from './lib/serverEnv';
+import { PROVIDER_ID } from './lib/bookingConstants';
 
-const PROVIDER_ID = 'cc79bb27-5b21-4c56-aaae-7da80d38fa9f';
+const ICS_FILENAME = 'simplewindowcleaning@gmail.com.ics';
+
+function getImportClient(): SupabaseClient {
+  ensureProjectEnvLoaded();
+  const url = serverEnv('NEXT_PUBLIC_SUPABASE_URL');
+  const serviceRoleKey = serverEnv('SUPABASE_SERVICE_ROLE_KEY');
+  const anonKey = serverEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY');
+
+  if (url && serviceRoleKey) {
+    return createClient(url, serviceRoleKey, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
+  }
+
+  if (url && anonKey) {
+    console.warn('SUPABASE_SERVICE_ROLE_KEY missing — falling back to anon key (RLS may block inserts).');
+    return createClient(url, anonKey);
+  }
+
+  throw new Error('Supabase env missing. Add credentials to repo-root .env.local');
+}
 
 function parseIcsDate(dt: string): Date {
-  // dt like 20230322T123000 (ignores TZID for minimal impl; treats as local time of runner)
   const clean = dt.replace(/Z$/, '');
   const y = clean.slice(0, 4);
   const mo = clean.slice(4, 6);
@@ -59,12 +80,39 @@ function parseEvents(content: string) {
   return events;
 }
 
+async function ensureProvider(supabase: SupabaseClient) {
+  const { data: existing } = await supabase
+    .from('providers')
+    .select('id')
+    .eq('id', PROVIDER_ID)
+    .maybeSingle();
+
+  if (existing) return;
+
+  const { error } = await supabase.from('providers').insert({
+    id: PROVIDER_ID,
+    full_name: 'Ladderless Provider',
+    email: 'simplewindowcleaning@gmail.com',
+    role: 'owner',
+  });
+
+  if (error) {
+    throw new Error(`Could not seed provider row (${PROVIDER_ID}): ${error.message}`);
+  }
+
+  console.log(`Seeded provider row ${PROVIDER_ID}`);
+}
+
 async function main() {
-  const icsPath = path.join(process.cwd(), 'ladderless-provider-app', 'assets', 'simplewindowcleaning@gmail.com.ics');
+  const icsPath = path.join(process.cwd(), 'ladderless-provider-app', 'assets', ICS_FILENAME);
   if (!fs.existsSync(icsPath)) {
     console.error('ICS file not found at', icsPath);
+    console.error('Export from Apple Calendar, then place the file at that path (or copy from Downloads).');
     process.exit(1);
   }
+
+  const supabase = getImportClient();
+  await ensureProvider(supabase);
   const content = fs.readFileSync(icsPath, 'utf8');
   const events = parseEvents(content);
   console.log(`Parsed ${events.length} events from ICS.`);
@@ -76,12 +124,12 @@ async function main() {
   for (const ev of events) {
     const start = parseIcsDate(ev.start);
     const end = parseIcsDate(ev.end);
-    if (end.getTime() < now.getTime() - 86400000) continue; // skip old events
+    if (end.getTime() < now.getTime() - 86400000) continue;
 
     const duration = Math.max(15, Math.round((end.getTime() - start.getTime()) / 60000));
+    const label = ev.summary.trim() || 'Blocked';
 
-    // Simple overlap check for existing blocked around this time (to avoid dups on re-runs)
-    const { data: existing } = await (supabase!)
+    const { data: existing } = await supabase
       .from('bookings')
       .select('id')
       .eq('provider_id', PROVIDER_ID)
@@ -95,32 +143,21 @@ async function main() {
       continue;
     }
 
-    // Insert as 'tentative' first (satisfies RLS "tentative only" insert policy for anon),
-    // then immediately update status to 'blocked'.
-    const { data: insertedRow, error: insertError } = await (supabase!).from('bookings').insert({
+    const { error: insertError } = await supabase.from('bookings').insert({
       provider_id: PROVIDER_ID,
-      customer_name: 'Blocked - Personal',
+      customer_name: label,
       scheduled_start: start.toISOString(),
       duration_minutes: duration,
-      status: 'tentative',
-    }).select().single();
+      status: 'blocked',
+    });
 
-    if (insertError || !insertedRow) {
-      console.error(`Error inserting tentative for "${ev.summary}": ${insertError?.message}`);
+    if (insertError) {
+      console.error(`Error inserting blocked "${label}": ${insertError.message}`);
       continue;
     }
 
-    const { error: updateError } = await (supabase!)
-      .from('bookings')
-      .update({ status: 'blocked' })
-      .eq('id', insertedRow.id);
-
-    if (updateError) {
-      console.error(`Error updating to blocked for "${ev.summary}": ${updateError.message}`);
-    } else {
-      console.log(`Blocked: ${ev.summary} @ ${start.toISOString().slice(0, 16)} (${duration} min)`);
-      inserted++;
-    }
+    console.log(`Blocked: ${label} @ ${start.toISOString().slice(0, 16)} (${duration} min)`);
+    inserted++;
   }
 
   console.log(`Done. Inserted ${inserted} new blocked slots. Skipped ${skipped} duplicates/old.`);
