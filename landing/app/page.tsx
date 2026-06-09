@@ -86,9 +86,21 @@ export default function LadderlessLanding() {
 
           {/* Very tiny admin + contact links at the bottom of the home page */}
           <div className="mt-6 text-center space-y-1">
-            <Link href="/admin/bookings" className="block text-[9px] text-neutral-400 hover:text-neutral-600 tracking-wide">
-              admin
-            </Link>
+            <button
+              type="button"
+              onClick={() => {
+                const pw = prompt("Enter password");
+                if (pw === "shark") {
+                  localStorage.setItem("adminUnlocked", "true");
+                  window.location.href = "/admin/bookings";
+                } else if (pw !== null) {
+                  alert("Incorrect password");
+                }
+              }}
+              className="block w-full text-[9px] text-neutral-400 hover:text-neutral-600 tracking-wide"
+            >
+              Admin
+            </button>
             <a
               href={`mailto:${coverage.contactEmail}`}
               className="block text-[9px] text-neutral-400 hover:text-neutral-600 tracking-wide"

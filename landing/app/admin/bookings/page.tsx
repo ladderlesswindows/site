@@ -1,13 +1,18 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
 import { supabase } from '@/lib/supabase';
 import { PROVIDER_ID } from '@/lib/bookingConstants';
+
+const AdminCalendar = dynamic(
+  () => import('@/components/AdminCalendar').then((mod) => mod.AdminCalendar),
+  {
+    ssr: false,
+    loading: () => <div className="py-12 text-sm text-neutral-500 text-center">Loading calendar…</div>,
+  }
+);
 
 type Booking = {
   id: string;
@@ -21,11 +26,11 @@ type Booking = {
 
 export default function AdminBookings() {
   const [events, setEvents] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
   const [password, setPassword] = useState('');
 
-  const fetchBookings = async () => {
+  const fetchBookings = useCallback(async () => {
     if (!supabase) {
       setLoading(false);
       return;
@@ -65,15 +70,20 @@ export default function AdminBookings() {
       setEvents(calendarEvents);
     }
     setLoading(false);
-  };
+  }, []);
 
   useEffect(() => {
     if (localStorage.getItem('adminUnlocked') === 'true') {
       setUnlocked(true);
     }
+  }, []);
+
+  useEffect(() => {
+    if (!unlocked) return;
+
     fetchBookings();
 
-    let channel: any;
+    let channel: ReturnType<NonNullable<typeof supabase>['channel']> | undefined;
     if (supabase) {
       channel = supabase
         .channel('bookings-changes')
@@ -88,7 +98,7 @@ export default function AdminBookings() {
     return () => {
       if (supabase && channel) supabase.removeChannel(channel);
     };
-  }, []);
+  }, [unlocked, fetchBookings]);
 
   const handleUnlock = (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,8 +124,6 @@ export default function AdminBookings() {
     if (error) {
       alert('Failed to move booking: ' + error.message);
       info.revert();
-    } else {
-      console.log('✅ Booking moved successfully');
     }
   };
 
@@ -149,11 +157,11 @@ export default function AdminBookings() {
 
       if (result.success) {
         alert(result.message + '\n\n--- COPY THIS SQL AND RUN IT IN SUPABASE SQL EDITOR ---\n\n' + result.rlsDropSQL);
-        fetchBookings(); // refresh (will be empty)
+        fetchBookings();
       } else {
-        alert('Nuclear clean failed: ' + result.error);
+        alert('Nuclear clean failed: ' + (result.error || 'Unknown error'));
       }
-    } catch (e) {
+    } catch {
       alert('Nuclear clean request failed.');
     }
   };
@@ -161,16 +169,15 @@ export default function AdminBookings() {
   const handleSelect = async (selectInfo: any) => {
     if (!supabase) {
       alert(
-        'Supabase is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to the repo-root .env.local, then restart npm run dev.'
+        'Supabase is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to environment variables.'
       );
       return;
     }
 
     const date = selectInfo.startStr.split('T')[0];
     const scheduled_start = `${date}T09:00:00`;
-    const duration_minutes = 480; // entire day
+    const duration_minutes = 480;
 
-    // Insert as 'tentative' first to satisfy RLS, then update to 'confirmed'
     const { data, error: insertError } = await supabase.from('bookings').insert({
       provider_id: PROVIDER_ID,
       customer_name: 'John and Deb',
@@ -196,7 +203,6 @@ export default function AdminBookings() {
       return;
     }
 
-    // Send email notification
     try {
       await fetch('/api/send-booking-email', {
         method: 'POST',
@@ -234,7 +240,7 @@ export default function AdminBookings() {
               type="submit"
               className="w-full py-3 bg-neutral-900 text-white rounded-2xl text-sm font-medium active:bg-black"
             >
-              Unlock
+              Admin
             </button>
           </form>
           <p className="text-[10px] text-center text-neutral-400 mt-4">Password is case sensitive</p>
@@ -266,30 +272,11 @@ export default function AdminBookings() {
           {loading && <div className="mb-4 text-sm text-neutral-500">Loading calendar...</div>}
 
           <div className="bg-cream rounded-2xl shadow p-4">
-            <FullCalendar
-              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-              initialView="timeGridWeek"
-              headerToolbar={{
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay',
-              }}
-              editable={true}
-              droppable={true}
-              selectable={true}
-              select={handleSelect}
+            <AdminCalendar
               events={events}
-              eventDrop={handleEventDrop}
-              eventClick={handleEventClick}
-              height="auto"
-              slotMinTime="06:00:00"
-              slotMaxTime="21:00:00"
-              nowIndicator={true}
-              eventTimeFormat={{
-                hour: 'numeric',
-                minute: '2-digit',
-                meridiem: 'short',
-              }}
+              onEventDrop={handleEventDrop}
+              onEventClick={handleEventClick}
+              onSelect={handleSelect}
             />
           </div>
 
