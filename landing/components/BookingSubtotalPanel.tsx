@@ -79,21 +79,26 @@ export function BookingSubtotalPanel({
         </div>
       )}
 
-      <p className="text-[9px] leading-snug text-neutral-500 mt-3 text-left">
+      <div className="text-[9px] leading-snug text-neutral-500 mt-3 text-left">
         {variant === "booking" ? (
           <>
-            On next step choose Free Screen Cleaning procedure. ($2 fee will apply for technician to
-            remove and reinstall them for the free screen cleaning, and a free removal lesson will be
-            offered for ambitious homeowners to save this fee in future)
+            <p>On next step choose Free Screen Cleaning procedure.</p>
+            <ul className="mt-1.5 list-disc pl-3.5 space-y-1">
+              <li>
+                $2 fee will apply for technician to remove and reinstall them for the free screen
+                cleaning. Technician will give a free removal lesson if desired to avoid this fee in
+                future visits (most have springs that need compression to remove/install smoothly)
+              </li>
+            </ul>
           </>
         ) : (
-          <>
+          <p>
             {screenReinstall
               ? "Screen reinstall fee applied. Uncheck above to remove."
               : "Free screen cleaning — check above to add reinstall fee, or have screens ready outside."}
-          </>
+          </p>
         )}
-      </p>
+      </div>
     </div>
   );
 }
