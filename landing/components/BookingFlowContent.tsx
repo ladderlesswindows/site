@@ -7,7 +7,7 @@ import { FlowBrandingHeader } from '@/components/FlowBrandingHeader';
 import { FlowPageLayout } from '@/components/FlowPageLayout';
 import { BookingSubtotalPanel } from '@/components/BookingSubtotalPanel';
 import { BookingPricesPanel } from '@/components/BookingPricesPanel';
-import { BookingCoverageNotesPanel } from '@/components/BookingCoverageNotesPanel';
+
 import { BookingZipSuccess } from '@/components/BookingZipSuccess';
 import {
   buildBookingSearchParams,
@@ -85,7 +85,6 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 px-5 pt-12 pb-12">
         <FlowPageLayout
-          leftPanel={!showQualifier ? <BookingCoverageNotesPanel /> : undefined}
           rightPanel={
             <div className="space-y-2">
               <BookingSubtotalPanel

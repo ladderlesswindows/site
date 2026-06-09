@@ -25,7 +25,6 @@ export function BookingPricesPanel() {
           1 Window Minimum is only for Santa Cruz. Slightly farther like Capitola is a 2 Window
           Minimum and farther yet, like Aptos/Scotts Valley, have a 3 Window Minimum.
         </li>
-        <li>Interior cleaning (when available) may be added for same or lesser price.</li>
         <li>
           All transactions must be done in app, including tips (technician receives 100% of tips).
         </li>
