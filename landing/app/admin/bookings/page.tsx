@@ -140,7 +140,7 @@ export default function AdminBookings() {
     );
   };
 
-  const handleNuclearClean = async () => {
+  const runNuclearCleanConfirm = async (adminPassword: string) => {
     const confirmation = prompt(
       '⚠️ NUCLEAR CLEAN\n\nThis will DELETE ALL rows from bookings and providers tables.\nYou will also receive the SQL to drop RLS policies.\n\nType NUCLEAR to confirm:'
     );
@@ -152,17 +152,32 @@ export default function AdminBookings() {
     try {
       const res = await fetch('/api/admin/nuclear-clean', {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: adminPassword, confirmation }),
       });
       const result = await res.json();
 
       if (result.success) {
-        alert(result.message + '\n\n--- COPY THIS SQL AND RUN IT IN SUPABASE SQL EDITOR ---\n\n' + result.rlsDropSQL);
+        alert(
+          result.message +
+            '\n\n--- COPY THIS SQL AND RUN IT IN SUPABASE SQL EDITOR ---\n\n' +
+            result.rlsDropSQL
+        );
         fetchBookings();
       } else {
         alert('Nuclear clean failed: ' + (result.error || 'Unknown error'));
       }
     } catch {
       alert('Nuclear clean request failed.');
+    }
+  };
+
+  const handleAdminNuclearGate = () => {
+    const pw = prompt('Enter admin password');
+    if (pw === 'shark') {
+      runNuclearCleanConfirm(pw);
+    } else if (pw !== null) {
+      alert('Incorrect password');
     }
   };
 
@@ -252,21 +267,12 @@ export default function AdminBookings() {
               <h1 className="text-2xl font-bold">Admin Schedule • Drag &amp; Drop</h1>
               <p className="text-sm text-neutral-500">Same data as your provider app. Changes sync in real time.</p>
             </div>
-            <div className="flex gap-2">
-              <button
-                onClick={fetchBookings}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
-              >
-                Refresh
-              </button>
-              <button
-                onClick={handleNuclearClean}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm font-semibold"
-                title="DANGER: Deletes ALL bookings + providers data and gives you RLS drop SQL"
-              >
-                Nuclear Clean
-              </button>
-            </div>
+            <button
+              onClick={fetchBookings}
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
+            >
+              Refresh
+            </button>
           </div>
 
           {loading && <div className="mb-4 text-sm text-neutral-500">Loading calendar...</div>}
@@ -283,6 +289,16 @@ export default function AdminBookings() {
           <p className="mt-4 text-xs text-neutral-400">
             Drag events to reschedule. Click for details. Uses the same Supabase data as the customer 30s booking flow and your provider app.
           </p>
+
+          <div className="mt-6 text-center">
+            <button
+              type="button"
+              onClick={handleAdminNuclearGate}
+              className="text-[9px] text-neutral-400 hover:text-neutral-600 tracking-wide"
+            >
+              Admin
+            </button>
+          </div>
         </>
       )}
     </div>
