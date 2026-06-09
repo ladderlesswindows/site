@@ -1,7 +1,38 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { PROVIDER_ID } from '@/lib/bookingConstants';
 
-export const AVAILABLE_TIMES = ['09:00', '11:00', '13:00', '15:00'] as const;
+export type AvailableSlot = {
+  /** 24-hour HH:MM */
+  time: string;
+  durationMinutes: number;
+};
+
+export const AVAILABLE_SLOTS: AvailableSlot[] = [
+  { time: '08:00', durationMinutes: 60 },
+  { time: '09:00', durationMinutes: 60 },
+  { time: '11:00', durationMinutes: 60 },
+  { time: '13:00', durationMinutes: 60 },
+  { time: '15:00', durationMinutes: 60 },
+  { time: '16:00', durationMinutes: 60 },
+  { time: '17:00', durationMinutes: 60 },
+];
+
+export const AVAILABLE_TIMES = AVAILABLE_SLOTS.map((slot) => slot.time);
+
+/** e.g. 08:00 → 8:00 AM, 16:00 → 4:00 PM */
+export function formatSlotTimeLabel(time24: string): string {
+  const [hStr, mStr = '00'] = time24.split(':');
+  const hours = parseInt(hStr, 10);
+  const minutes = mStr.padStart(2, '0');
+  const period = hours >= 12 ? 'PM' : 'AM';
+  const hour12 = hours % 12 === 0 ? 12 : hours % 12;
+  if (minutes === '00') return `${hour12}:00 ${period}`;
+  return `${hour12}:${minutes} ${period}`;
+}
+
+export function getSlotDurationMinutes(time: string): number {
+  return AVAILABLE_SLOTS.find((slot) => slot.time === time)?.durationMinutes ?? 60;
+}
 
 /** Next N calendar days (from tomorrow), weekdays only. */
 export function getBookableWeekdayDates(daysAhead = 30): string[] {
@@ -176,6 +207,7 @@ export async function reserveBookingSlot(
   }
 
   const expiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString();
+  const timePart = input.scheduledStart.split('T')[1]?.slice(0, 5) ?? '';
 
   return client
     .from('bookings')
@@ -189,7 +221,7 @@ export async function reserveBookingSlot(
       window_count: input.windowCount,
       estimated_price: input.estimatedPrice,
       scheduled_start: input.scheduledStart,
-      duration_minutes: 60,
+      duration_minutes: getSlotDurationMinutes(timePart),
       status: 'tentative',
       qualifier_code: input.qualifierCode || null,
       arrival_notes: input.arrivalNotes || null,

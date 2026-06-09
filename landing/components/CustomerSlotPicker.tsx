@@ -3,12 +3,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import {
-  AVAILABLE_TIMES,
+  AVAILABLE_SLOTS,
   buildSelectedSlot,
   fetchBookedSlotKeys,
   findFirstWeekWithOpenSlot,
-  getBookableWeekdayDates,
   formatLocalDate,
+  formatSlotTimeLabel,
+  getBookableWeekdayDates,
   getMondayOfWeek,
   getMonthCalendarDays,
   getWeekdayDatesInWeek,
@@ -223,7 +224,7 @@ export function CustomerSlotPicker({
             {loadingAvailability && ' (loading…)'}
           </div>
           <div className="grid grid-cols-2 gap-2">
-            {AVAILABLE_TIMES.map((time) => {
+            {AVAILABLE_SLOTS.map(({ time }) => {
               const booked = isBooked(selectedDate, time);
               const isSelected = selectedTime === time;
               return (
@@ -240,7 +241,7 @@ export function CustomerSlotPicker({
                       : 'bg-white border-neutral-300 active:bg-neutral-50'
                   }`}
                 >
-                  {time}
+                  {formatSlotTimeLabel(time)}
                 </button>
               );
             })}
@@ -283,16 +284,15 @@ export function CustomerSlotPicker({
         </select>
       </div>
 
-      {selectedSlot && (
+      {selectedSlot && selectedTime && (
         <div className="text-sm text-emerald-700 font-medium">
           Selected:{' '}
-          {new Date(selectedSlot).toLocaleString(undefined, {
+          {parseLocalDate(selectedDate).toLocaleDateString(undefined, {
             weekday: 'short',
             month: 'short',
             day: 'numeric',
-            hour: 'numeric',
-            minute: '2-digit',
-          })}
+          })}{' '}
+          at {formatSlotTimeLabel(selectedTime)}
         </div>
       )}
     </div>

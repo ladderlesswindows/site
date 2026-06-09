@@ -2,6 +2,7 @@
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { CustomerSlotPicker } from '@/components/CustomerSlotPicker';
+import { formatSlotTimeLabel, parseLocalDate } from '@/lib/bookingSlots';
 
 type BookingSchedulePanelProps = {
   supabase: SupabaseClient;
@@ -38,13 +39,20 @@ export function BookingSchedulePanel({
         <div className="p-2 border border-emerald-200 bg-emerald-50 rounded-xl text-xs mt-2">
           <div className="font-medium text-emerald-700">Selected time:</div>
           <div>
-            {new Date(selectedSlot).toLocaleString(undefined, {
-              weekday: 'long',
-              month: 'long',
-              day: 'numeric',
-              hour: 'numeric',
-              minute: '2-digit',
-            })}
+            {(() => {
+              const [datePart, timePart] = selectedSlot.split('T');
+              const time24 = timePart?.slice(0, 5) ?? '';
+              return (
+                <>
+                  {parseLocalDate(datePart).toLocaleDateString(undefined, {
+                    weekday: 'long',
+                    month: 'long',
+                    day: 'numeric',
+                  })}{' '}
+                  at {formatSlotTimeLabel(time24)}
+                </>
+              );
+            })()}
           </div>
         </div>
       )}
