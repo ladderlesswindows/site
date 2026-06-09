@@ -12,6 +12,7 @@ import {
   getBookableWeekdayDates,
   getMondayOfWeek,
   getMonthCalendarDays,
+  getOpenSlotTimesOnDate,
   getWeekdayDatesInWeek,
   parseLocalDate,
   parseSelectedSlot,
@@ -51,6 +52,24 @@ function initialPickerState(
   return { weekAnchor: defaultWeek, selectedDate: defaultDate, selectedTime: null };
 }
 
+function previewConflictMessage(date: string, openCount: number): string {
+  const dayLabel = parseLocalDate(date).toLocaleDateString(undefined, {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  if (openCount === 0) {
+    return `We're sorry — that spot is taken and no other times are open on ${dayLabel}. Please choose another day.`;
+  }
+
+  if (openCount === 1) {
+    return `We're sorry — that spot is taken, but one time is still available on your ideal day (${dayLabel}), or you can choose another day.`;
+  }
+
+  return `We're sorry — that spot is taken, but ${openCount} times are still available on ${dayLabel}, or you can choose another day.`;
+}
+
 export function CustomerSlotPicker({
   supabase,
   providerId,
@@ -75,9 +94,12 @@ export function CustomerSlotPicker({
   const [selectedTime, setSelectedTime] = useState<string | null>(
     () => initialPickerState(bookableDatesList, initialSlot).selectedTime
   );
+  const [previewRevealed, setPreviewRevealed] = useState(() => Boolean(initialSlot));
   const [bookedSet, setBookedSet] = useState<Set<string>>(new Set());
   const [loadingAvailability, setLoadingAvailability] = useState(!isPreview);
   const [arrivalNotes, setArrivalNotes] = useState('');
+
+  const showBookedSlots = !isPreview || previewRevealed;
 
   const weekDates = useMemo(
     () => getWeekdayDatesInWeek(weekAnchor, bookableDatesSet),
@@ -109,10 +131,11 @@ export function CustomerSlotPicker({
     setWeekAnchor(getMondayOfWeek(parsed.date));
     setSelectedDate(parsed.date);
     setSelectedTime(parsed.time);
-  }, [initialSlot]);
+    if (isPreview) setPreviewRevealed(true);
+  }, [initialSlot, isPreview]);
 
   useEffect(() => {
-    if (isPreview) {
+    if (!showBookedSlots) {
       setLoadingAvailability(false);
       setBookedSet(new Set());
       return;
@@ -127,17 +150,19 @@ export function CustomerSlotPicker({
         setBookedSet(set);
         setLoadingAvailability(false);
 
-        if (initialSlot) {
-          const parsed = parseSelectedSlot(initialSlot);
-          if (parsed && set.has(buildSelectedSlot(parsed.date, parsed.time))) {
-            setSelectedTime(null);
-          }
-        } else {
-          const firstOpenWeek = findFirstWeekWithOpenSlot(bookableDatesList, set);
-          setWeekAnchor(firstOpenWeek);
-          const weekDays = getWeekdayDatesInWeek(firstOpenWeek, bookableDatesSet);
-          if (weekDays.length > 0) {
-            setSelectedDate((prev) => (weekDays.includes(prev) ? prev : weekDays[0]));
+        if (!isPreview) {
+          if (initialSlot) {
+            const parsed = parseSelectedSlot(initialSlot);
+            if (parsed && set.has(buildSelectedSlot(parsed.date, parsed.time))) {
+              setSelectedTime(null);
+            }
+          } else {
+            const firstOpenWeek = findFirstWeekWithOpenSlot(bookableDatesList, set);
+            setWeekAnchor(firstOpenWeek);
+            const weekDays = getWeekdayDatesInWeek(firstOpenWeek, bookableDatesSet);
+            if (weekDays.length > 0) {
+              setSelectedDate((prev) => (weekDays.includes(prev) ? prev : weekDays[0]));
+            }
           }
         }
       }
@@ -151,12 +176,27 @@ export function CustomerSlotPicker({
     supabaseReady,
     bookableDatesList,
     bookableDatesSet,
+    showBookedSlots,
     isPreview,
     initialSlot,
   ]);
 
   const isBooked = (date: string, time: string) =>
-    isPreview ? false : bookedSet.has(buildSelectedSlot(date, time));
+    showBookedSlots && bookedSet.has(buildSelectedSlot(date, time));
+
+  const handleSelectTime = (time: string) => {
+    if (isPreview && !previewRevealed) {
+      setPreviewRevealed(true);
+    }
+    setSelectedTime(time);
+  };
+
+  const handleResetPreview = () => {
+    lastNotifiedSlot.current = undefined;
+    setSelectedTime(null);
+    setPreviewRevealed(true);
+    onSlotChange?.(null);
+  };
 
   const selectDate = (date: string) => {
     setSelectedDate(date);
@@ -181,6 +221,19 @@ export function CustomerSlotPicker({
     });
   };
 
+  const selectedSlotTaken =
+    isPreview &&
+    previewRevealed &&
+    !loadingAvailability &&
+    selectedDate &&
+    selectedTime &&
+    isBooked(selectedDate, selectedTime);
+
+  const openOnSelectedDay =
+    selectedDate && showBookedSlots && !loadingAvailability
+      ? getOpenSlotTimesOnDate(selectedDate, bookedSet)
+      : [];
+
   return (
     <div className="space-y-3">
       <div>
@@ -189,7 +242,9 @@ export function CustomerSlotPicker({
         </div>
         <p className="text-[10px] text-neutral-500">
           {isPreview
-            ? 'Real-time calendar preview — confirm screens to see booked times & reserve.'
+            ? previewRevealed
+              ? 'Grey times are already booked — pick an open slot, then confirm screens to reserve.'
+              : 'Tap your ideal time — we will show which spots are truly still open.'
             : 'Live availability — 15-minute hold while you finish.'}
         </p>
       </div>
@@ -295,7 +350,7 @@ export function CustomerSlotPicker({
               month: 'short',
               day: 'numeric',
             })}
-            {loadingAvailability && ' (loading…)'}
+            {loadingAvailability && showBookedSlots && ' (loading…)'}
           </div>
           <div className="grid grid-cols-2 gap-2">
             {AVAILABLE_SLOTS.map(({ time }) => {
@@ -306,10 +361,12 @@ export function CustomerSlotPicker({
                   key={time}
                   type="button"
                   disabled={booked}
-                  onClick={() => setSelectedTime(time)}
+                  onClick={() => handleSelectTime(time)}
                   className={`py-2 text-sm rounded-2xl border transition ${
                     isSelected
-                      ? 'bg-emerald-600 text-white border-emerald-600'
+                      ? booked
+                        ? 'bg-amber-100 text-amber-900 border-amber-400'
+                        : 'bg-emerald-600 text-white border-emerald-600'
                       : booked
                       ? 'bg-neutral-100 text-neutral-400 line-through cursor-not-allowed'
                       : 'bg-white border-neutral-300 active:bg-neutral-50'
@@ -320,6 +377,12 @@ export function CustomerSlotPicker({
               );
             })}
           </div>
+        </div>
+      )}
+
+      {selectedSlotTaken && selectedDate && (
+        <div className="p-2 rounded-xl border border-amber-200 bg-amber-50 text-[11px] leading-snug text-amber-900">
+          {previewConflictMessage(selectedDate, openOnSelectedDay.length)}
         </div>
       )}
 
@@ -337,7 +400,7 @@ export function CustomerSlotPicker({
         </div>
       )}
 
-      {selectedSlot && selectedTime && (
+      {selectedSlot && selectedTime && !selectedSlotTaken && (
         <div
           className={`text-sm font-medium ${
             isPreview ? 'text-neutral-600' : 'text-emerald-700'
@@ -351,6 +414,16 @@ export function CustomerSlotPicker({
           })}{' '}
           at {formatSlotTimeLabel(selectedTime)}
         </div>
+      )}
+
+      {isPreview && previewRevealed && (
+        <button
+          type="button"
+          onClick={handleResetPreview}
+          className="w-full py-2 text-xs font-medium text-neutral-600 border border-neutral-300 rounded-xl bg-white active:bg-neutral-50"
+        >
+          Reset tentative pick
+        </button>
       )}
     </div>
   );

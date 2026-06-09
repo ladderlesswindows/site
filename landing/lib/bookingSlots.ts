@@ -188,6 +188,13 @@ export function isCustomerSlotBooked(
   return bookedIntervals.some((booking) => intervalsOverlap(slot, booking));
 }
 
+/** Open customer slot times on a given date */
+export function getOpenSlotTimesOnDate(date: string, bookedSet: Set<string>): string[] {
+  return AVAILABLE_SLOTS.filter(
+    ({ time }) => !bookedSet.has(buildSelectedSlot(date, time))
+  ).map(({ time }) => time);
+}
+
 function isActiveBooking(status: string, expiresAt: string | null): boolean {
   if (status === 'confirmed' || status === 'blocked') return true;
   if (status === 'tentative') {
