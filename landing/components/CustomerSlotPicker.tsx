@@ -123,7 +123,7 @@ export function CustomerSlotPicker({
 
     let cancelled = false;
     setLoadingAvailability(true);
-    fetchBookedSlotKeys(supabase, providerId).then((set) => {
+    fetchBookedSlotKeys(supabase, providerId, bookableDatesList).then((set) => {
       if (!cancelled) {
         setBookedSet(set);
         setLoadingAvailability(false);

@@ -157,35 +157,97 @@ export function parseSelectedSlot(slot: string): { date: string; time: string } 
   return { date: match[1], time: match[2] };
 }
 
-export async function fetchBookedSlotKeys(
+export type BookedInterval = {
+  startMs: number;
+  endMs: number;
+};
+
+/** Local start/end for a customer-facing slot button */
+export function customerSlotIntervalMs(
+  date: string,
+  time: string
+): BookedInterval {
+  const start = new Date(`${date}T${time}:00`);
+  const durationMinutes = getSlotDurationMinutes(time);
+  return {
+    startMs: start.getTime(),
+    endMs: start.getTime() + durationMinutes * 60_000,
+  };
+}
+
+export function intervalsOverlap(a: BookedInterval, b: BookedInterval): boolean {
+  return a.startMs < b.endMs && b.startMs < a.endMs;
+}
+
+export function isCustomerSlotBooked(
+  date: string,
+  time: string,
+  bookedIntervals: BookedInterval[]
+): boolean {
+  const slot = customerSlotIntervalMs(date, time);
+  return bookedIntervals.some((booking) => intervalsOverlap(slot, booking));
+}
+
+function isActiveBooking(status: string, expiresAt: string | null): boolean {
+  if (status === 'confirmed' || status === 'blocked') return true;
+  if (status === 'tentative') {
+    return Boolean(expiresAt && new Date(expiresAt) > new Date());
+  }
+  return false;
+}
+
+/** Active bookings/blocks as time intervals (local browser timezone). */
+export async function fetchBookedIntervals(
   client: SupabaseClient | null,
   providerId: string = PROVIDER_ID
-): Promise<Set<string>> {
-  const set = new Set<string>();
-  if (!client) return set;
+): Promise<BookedInterval[]> {
+  if (!client) return [];
 
   const { data, error } = await client
     .from('bookings')
-    .select('scheduled_start, expires_at, status')
+    .select('scheduled_start, duration_minutes, expires_at, status')
     .eq('provider_id', providerId)
     .in('status', ['tentative', 'confirmed', 'blocked'])
     .gte('scheduled_start', new Date().toISOString());
 
   if (error) {
     console.error('Error loading bookings:', error);
-    return set;
+    return [];
   }
 
+  const intervals: BookedInterval[] = [];
   data?.forEach((b) => {
+    if (!isActiveBooking(b.status, b.expires_at)) return;
     const start = new Date(b.scheduled_start);
-    const isActive =
-      b.status === 'confirmed' ||
-      b.status === 'blocked' ||
-      (b.expires_at && new Date(b.expires_at) > new Date());
-    if (isActive) {
-      set.add(slotKeyFromDate(start));
-    }
+    const durationMinutes = b.duration_minutes ?? 60;
+    intervals.push({
+      startMs: start.getTime(),
+      endMs: start.getTime() + durationMinutes * 60_000,
+    });
   });
+
+  return intervals;
+}
+
+/**
+ * Customer slot keys (YYYY-MM-DDTHH:MM) that overlap any active booking/block.
+ * Used by the live schedule picker after screen selection.
+ */
+export async function fetchBookedSlotKeys(
+  client: SupabaseClient | null,
+  providerId: string = PROVIDER_ID,
+  bookableDates: string[] = getBookableWeekdayDates(30)
+): Promise<Set<string>> {
+  const intervals = await fetchBookedIntervals(client, providerId);
+  const set = new Set<string>();
+
+  for (const date of bookableDates) {
+    for (const { time } of AVAILABLE_SLOTS) {
+      if (isCustomerSlotBooked(date, time, intervals)) {
+        set.add(buildSelectedSlot(date, time));
+      }
+    }
+  }
 
   return set;
 }
