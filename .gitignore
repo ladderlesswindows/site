@@ -39,6 +39,8 @@ tsconfig.tsbuildinfo
 # LARGE FILES - NEVER COMMIT
 assets/
 landing/public/*.jpg
+!landing/public/ll.jpg
+!landing/public/ll-dark.jpg
 landing/public/*.png
 landing/public/*.mp4
 landing/public/*.mov

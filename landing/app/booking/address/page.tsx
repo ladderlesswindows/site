@@ -281,8 +281,10 @@ function AddressContent() {
                 </>
               ) : !supabase ? (
                 <div className="mt-4 p-3 border border-amber-200 bg-amber-50 rounded-xl text-xs text-amber-900">
-                  Supabase is not configured. Add credentials to repo-root <code>.env.local</code> and restart{' '}
-                  <code>npm run dev</code>.
+                  Supabase is not configured. For local dev, add credentials to repo-root{' '}
+                  <code>.env.local</code> and restart <code>npm run dev</code>. On Vercel, add{' '}
+                  <code>NEXT_PUBLIC_SUPABASE_URL</code>, <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code>, and{' '}
+                  <code>NEXT_PUBLIC_PROVIDER_ID</code> in Project Settings → Environment Variables, then redeploy.
                 </div>
               ) : (
                 <>
