@@ -62,7 +62,7 @@ export function CustomerSlotPicker({
   const isBooked = (date: string, time: string) => bookedSet.has(buildSelectedSlot(date, time));
 
   return (
-    <div className="space-y-3 pt-3 border-t border-neutral-200">
+    <div className="space-y-3">
       <div>
         <div className="text-sm font-medium mb-1">Choose your time slot</div>
         <p className="text-[10px] text-neutral-500">

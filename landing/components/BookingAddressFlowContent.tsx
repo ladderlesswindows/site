@@ -109,7 +109,82 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
   const hasStreet = street.trim().length >= 3;
   const hasCity = city.trim().length >= 2;
   const hasGoals = slotNotes.goalsChoice.trim().length > 0;
-  const canProceed = hasStreet && hasCity && hasGoals;
+  const hasSlot = Boolean(selectedSlot);
+  const canProceed = hasStreet && hasCity && hasGoals && hasSlot;
+
+  const proceedStatusBox = (
+    <div className="p-2 rounded-xl border border-neutral-200 bg-white text-[11px] space-y-0.5">
+      <div className="font-medium text-neutral-600 mb-1">To reserve, complete:</div>
+      <div className={hasStreet ? 'text-emerald-700' : 'text-red-600'}>
+        {hasStreet ? '✓' : '○'} Street address
+      </div>
+      <div className={hasCity ? 'text-emerald-700' : 'text-red-600'}>
+        {hasCity ? '✓' : '○'} City
+      </div>
+      <div className={hasGoals ? 'text-emerald-700' : 'text-red-600'}>
+        {hasGoals ? '✓' : '○'} Goals for this visit
+      </div>
+      <div className={hasSlot ? 'text-emerald-700' : 'text-red-600'}>
+        {hasSlot ? '✓' : '○'} Time slot
+      </div>
+    </div>
+  );
+
+  const addressFields = (
+    <div className="space-y-1.5 pt-3 border-t border-neutral-200">
+      <div className="text-[10px] font-medium text-neutral-600 mb-1">Your address</div>
+      <div>
+        <div className="text-[10px] text-neutral-500 mb-0.5">Street Address *</div>
+        <input
+          type="text"
+          value={street}
+          onChange={(e) => setStreet(e.target.value)}
+          placeholder="123 Main St"
+          className="w-full border rounded p-1.5 text-sm bg-white"
+        />
+      </div>
+      <div>
+        <div className="text-[10px] text-neutral-500 mb-0.5">Apt / Unit (optional)</div>
+        <input
+          type="text"
+          value={apt}
+          onChange={(e) => setApt(e.target.value)}
+          placeholder="Apt 2B"
+          className="w-full border rounded p-1.5 text-sm bg-white"
+        />
+      </div>
+      <div>
+        <div className="text-[10px] text-neutral-500 mb-0.5">City *</div>
+        <input
+          type="text"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          placeholder="City"
+          className="w-full border rounded p-1.5 text-sm bg-white"
+        />
+      </div>
+      <div className="flex gap-1.5">
+        <div className="flex-1">
+          <div className="text-[10px] text-neutral-500 mb-0.5">State</div>
+          <input
+            type="text"
+            value={stateAbbr}
+            readOnly
+            className="w-full border rounded p-1.5 text-sm bg-neutral-50"
+          />
+        </div>
+        <div className="flex-1">
+          <div className="text-[10px] text-neutral-500 mb-0.5">ZIP (pre-filled)</div>
+          <input
+            type="text"
+            value={zipCode}
+            readOnly
+            className="w-full border rounded p-1.5 text-sm bg-neutral-50"
+          />
+        </div>
+      </div>
+    </div>
+  );
 
   const qualifier = getQualifier(qualifierCode);
   const basePrice = qualifier ? qualifier.pricePerWindow : DEFAULT_WINDOW_PRICE;
@@ -237,61 +312,9 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
                 showZipButtons={false}
               />
 
-              <div className="space-y-1.5">
-                <div>
-                  <div className="text-[10px] text-neutral-500 mb-0.5">Street Address *</div>
-                  <input
-                    type="text"
-                    value={street}
-                    onChange={(e) => setStreet(e.target.value)}
-                    placeholder="123 Main St"
-                    className="w-full border rounded p-1.5 text-sm bg-white"
-                  />
-                </div>
-                <div>
-                  <div className="text-[10px] text-neutral-500 mb-0.5">Apt / Unit (optional)</div>
-                  <input
-                    type="text"
-                    value={apt}
-                    onChange={(e) => setApt(e.target.value)}
-                    placeholder="Apt 2B"
-                    className="w-full border rounded p-1.5 text-sm bg-white"
-                  />
-                </div>
-                <div>
-                  <div className="text-[10px] text-neutral-500 mb-0.5">City *</div>
-                  <input
-                    type="text"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    placeholder="City"
-                    className="w-full border rounded p-1.5 text-sm bg-white"
-                  />
-                </div>
-                <div className="flex gap-1.5">
-                  <div className="flex-1">
-                    <div className="text-[10px] text-neutral-500 mb-0.5">State</div>
-                    <input
-                      type="text"
-                      value={stateAbbr}
-                      readOnly
-                      className="w-full border rounded p-1.5 text-sm bg-neutral-50"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <div className="text-[10px] text-neutral-500 mb-0.5">ZIP (pre-filled)</div>
-                    <input
-                      type="text"
-                      value={zipCode}
-                      readOnly
-                      className="w-full border rounded p-1.5 text-sm bg-neutral-50"
-                    />
-                  </div>
-                </div>
-              </div>
-
               {isSpecialAddress ? (
                 <>
+                  {addressFields}
                   <div className="text-center mt-4 mb-2 text-sm font-medium text-emerald-700">
                     Hi John and Deb, Please Book your ideal monthly cleaning day!
                   </div>
@@ -316,35 +339,14 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
                 </div>
               ) : (
                 <>
-                  <CustomerSlotPicker
-                    supabase={supabase}
-                    providerId={providerId}
-                    supabaseReady={supabaseReady}
-                    onSlotChange={handleSlotChange}
-                    onNotesChange={handleNotesChange}
-                  />
-
-                  {!canProceed && (
-                    <div className="mt-3 p-2 rounded-xl border border-neutral-200 bg-white text-[11px] space-y-0.5">
-                      <div className="font-medium text-neutral-600 mb-1">To reserve, complete:</div>
-                      <div className={hasStreet ? 'text-emerald-700' : 'text-red-600'}>
-                        {hasStreet ? '✓' : '○'} Street address
-                      </div>
-                      <div className={hasCity ? 'text-emerald-700' : 'text-red-600'}>
-                        {hasCity ? '✓' : '○'} City
-                      </div>
-                      <div className={hasGoals ? 'text-emerald-700' : 'text-red-600'}>
-                        {hasGoals ? '✓' : '○'} Goals for this visit
-                      </div>
-                    </div>
-                  )}
+                  {proceedStatusBox}
 
                   <button
                     type="button"
                     onClick={handleReserve}
-                    disabled={!canProceed || !selectedSlot || reserving}
+                    disabled={!canProceed || reserving}
                     className={`block w-full py-4 text-lg font-semibold text-center rounded-3xl mt-3 transition ${
-                      canProceed && selectedSlot && !reserving
+                      canProceed && !reserving
                         ? 'bg-[#0f766e] text-white active:bg-[#0c5f58]'
                         : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
                     }`}
@@ -352,8 +354,21 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
                     {reserving ? 'Reserving…' : 'Reserve Slot & Proceed'}
                   </button>
                   <p className="text-[10px] text-neutral-500 mt-2 text-center">
-                    Pick a time above anytime — reserve unlocks once your address and visit goals are complete.
+                    Complete the schedule and address below — reserve unlocks when every item above
+                    is checked.
                   </p>
+
+                  <div className="pt-3 mt-3 border-t border-neutral-200">
+                    <CustomerSlotPicker
+                      supabase={supabase}
+                      providerId={providerId}
+                      supabaseReady={supabaseReady}
+                      onSlotChange={handleSlotChange}
+                      onNotesChange={handleNotesChange}
+                    />
+                  </div>
+
+                  {addressFields}
                 </>
               )}
 
