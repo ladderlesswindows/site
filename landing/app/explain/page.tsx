@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { HOW_VIDEO_SRC } from '@/lib/mediaUrls';
+import { FlowFooter } from '@/components/FlowFooter';
 
 function ExplainContent() {
   const searchParams = useSearchParams();
@@ -93,11 +94,7 @@ function ExplainContent() {
         </div>
       </main>
 
-      <footer className="pb-8">
-        <p className="mt-8 text-center text-xs uppercase tracking-[2.5px] text-neutral-400 font-medium">
-          Fully Insured • Vetted Technicians • Satisfaction Guaranteed
-        </p>
-      </footer>
+      <FlowFooter />
     </div>
   );
 }

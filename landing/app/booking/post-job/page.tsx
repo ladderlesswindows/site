@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSupabase } from '@/hooks/useSupabase';
+import { FlowFooter } from '@/components/FlowFooter';
 
 function PostJobContent() {
   const { supabase, ready: supabaseReady } = useSupabase();
@@ -217,11 +218,7 @@ function PostJobContent() {
         </div>
       </main>
 
-      <footer className="pb-8">
-        <p className="mt-8 text-center text-xs uppercase tracking-[2.5px] text-neutral-400 font-medium">
-          Fully Insured • Vetted Technicians • Satisfaction Guaranteed
-        </p>
-      </footer>
+      <FlowFooter />
     </div>
   );
 }

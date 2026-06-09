@@ -3,6 +3,7 @@
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, Suspense } from 'react';
 import { buildBookingSearchParams, parseScreenReinstall } from '@/components/bookingFlowParams';
+import { FlowFooter } from '@/components/FlowFooter';
 
 /** Legacy route — slot picker now lives inline on /booking/address */
 function SlotRedirect() {
@@ -29,8 +30,11 @@ function SlotRedirect() {
   }, [searchParams, router]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center text-sm text-neutral-500">
-      Loading booking calendar…
+    <div className="min-h-screen flex flex-col">
+      <div className="flex-1 flex items-center justify-center text-sm text-neutral-500">
+        Loading booking calendar…
+      </div>
+      <FlowFooter />
     </div>
   );
 }

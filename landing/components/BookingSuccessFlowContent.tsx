@@ -6,6 +6,7 @@ import { getQualifier, DEFAULT_WINDOW_PRICE } from '@/components/qualifiers';
 import { calculateWindowBase, FIRST_WINDOW_ONLY_PRICE } from '@/components/windowPricing';
 import { parseScreenReinstall } from '@/components/bookingFlowParams';
 import { MOM_EASTER_EGG_ZIP } from '@/lib/easterEggZips';
+import { FlowFooter } from '@/components/FlowFooter';
 
 type BookingSuccessFlowContentProps = {
   basePath: '/booking' | '/booking/mom';
@@ -162,11 +163,7 @@ export function BookingSuccessFlowContent({ basePath }: BookingSuccessFlowConten
         </div>
       </main>
 
-      <footer className="pb-8">
-        <p className="mt-8 text-center text-xs uppercase tracking-[2.5px] text-neutral-400 font-medium">
-          Fully Insured • Vetted Technicians • Satisfaction Guaranteed
-        </p>
-      </footer>
+      <FlowFooter />
     </div>
   );
 }

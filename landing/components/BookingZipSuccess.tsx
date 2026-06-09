@@ -5,6 +5,7 @@ import { getZipInfo, isPartialCoverage, getSuccessHeadline } from "./zipRegistry
 import { useMomEasterEggRedirect } from "@/hooks/useMomEasterEggRedirect";
 import { isMomEasterEggZip, MOM_EASTER_EGG_HEADLINE } from "@/lib/easterEggZips";
 import { BookingCoverageNotesPanel } from "./BookingCoverageNotesPanel";
+import { BackHomeLink } from "./BackHomeLink";
 
 
 type BookingZipSuccessProps = {
@@ -91,9 +92,7 @@ export function BookingZipSuccess({
 
       <BookingCoverageNotesPanel />
 
-      <Link href="/" className="block w-full text-sm text-neutral-500 py-2">
-        ← Back
-      </Link>
+      <BackHomeLink />
     </div>
   );
 }

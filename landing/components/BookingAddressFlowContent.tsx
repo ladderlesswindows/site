@@ -19,6 +19,8 @@ import { getQualifier, DEFAULT_WINDOW_PRICE } from '@/components/qualifiers';
 import { calculateWindowBase } from '@/components/windowPricing';
 import { clampWindowCount, getMinWindows } from '@/components/zipRegistry';
 import { bookingFlowHref, MOM_EASTER_EGG_ZIP } from '@/lib/easterEggZips';
+import { BackHomeLink } from '@/components/BackHomeLink';
+import { FlowFooter } from '@/components/FlowFooter';
 
 type BookingAddressFlowContentProps = {
   basePath: '/booking' | '/booking/mom';
@@ -358,16 +360,13 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
               <Link href={backHref} className="block w-full text-sm text-neutral-500 py-2 mt-2 text-center">
                 ← Back
               </Link>
+              <BackHomeLink />
             </div>
           }
         />
       </main>
 
-      <footer className="pb-8">
-        <p className="mt-8 text-center text-xs uppercase tracking-[2.5px] text-neutral-400 font-medium">
-          Fully Insured • Vetted Technicians • Satisfaction Guaranteed
-        </p>
-      </footer>
+      <FlowFooter />
     </div>
   );
 }

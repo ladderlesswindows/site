@@ -6,6 +6,7 @@ import { useEffect, Suspense } from 'react';
 import { DEFAULT_WINDOW_PRICE } from '@/components/qualifiers';
 import { calculateWindowBase } from '@/components/windowPricing';
 import { buildBookingSearchParams } from '@/components/bookingFlowParams';
+import { FlowFooter } from '@/components/FlowFooter';
 
 function LocationContent() {
   const searchParams = useSearchParams();
@@ -100,19 +101,15 @@ function LocationContent() {
             </Link>
 
             <div className="text-center mt-3">
-              <Link href="/" className="text-xs text-neutral-500">
-                ← Back to Coverage
+              <Link href="/" className="text-sm text-neutral-500 hover:text-neutral-700">
+                ← Back to Home
               </Link>
             </div>
           </div>
         </div>
       </main>
 
-      <footer className="pb-8">
-        <p className="mt-8 text-center text-xs uppercase tracking-[2.5px] text-neutral-400 font-medium">
-          Fully Insured • Vetted Technicians • Satisfaction Guaranteed
-        </p>
-      </footer>
+      <FlowFooter />
     </div>
   );
 }

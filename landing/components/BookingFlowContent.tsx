@@ -17,7 +17,8 @@ import { bookingFlowHref } from '@/lib/easterEggZips';
 import { clampWindowCount, getMinWindows } from '@/components/zipRegistry';
 import { useMomEasterEggRedirect } from '@/hooks/useMomEasterEggRedirect';
 import { MOM_EASTER_EGG_ZIP } from '@/lib/easterEggZips';
-
+import { BackHomeLink } from '@/components/BackHomeLink';
+import { FlowFooter } from '@/components/FlowFooter';
 
 type BookingFlowContentProps = {
   basePath: '/booking' | '/booking/mom';
@@ -155,6 +156,7 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
                   >
                     ← Back
                   </button>
+                  <BackHomeLink />
                 </div>
               )}
             </div>
@@ -273,11 +275,7 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
         )}
       </main>
 
-      <footer className="pb-8">
-        <p className="mt-8 text-center text-xs uppercase tracking-[2.5px] text-neutral-400 font-medium">
-          Fully Insured • Vetted Technicians • Satisfaction Guaranteed
-        </p>
-      </footer>
+      <FlowFooter />
     </div>
   );
 }
