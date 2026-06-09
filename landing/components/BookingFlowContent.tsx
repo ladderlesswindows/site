@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { FlowBrandingHeader } from '@/components/FlowBrandingHeader';
 import { FlowPageLayout } from '@/components/FlowPageLayout';
 import { BookingSubtotalPanel } from '@/components/BookingSubtotalPanel';
+import { BookingPricesPanel } from '@/components/BookingPricesPanel';
 import { BookingZipSuccess } from '@/components/BookingZipSuccess';
 import {
   buildBookingSearchParams,
@@ -84,11 +85,14 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
       <main className="flex-1 px-5 pt-12 pb-12">
         <FlowPageLayout
           rightPanel={
-            <BookingSubtotalPanel
-              windowCount={windowCount}
-              minWindows={getMinWindows(zip)}
-              onWindowCountChange={updateWindowCount}
-            />
+            <div className="space-y-2">
+              <BookingSubtotalPanel
+                windowCount={windowCount}
+                minWindows={getMinWindows(zip)}
+                onWindowCountChange={updateWindowCount}
+              />
+              <BookingPricesPanel />
+            </div>
           }
           main={
             <div className="border border-neutral-200 rounded-3xl bg-cream p-2">

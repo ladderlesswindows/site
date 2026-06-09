@@ -22,7 +22,7 @@ export function FlowPageLayout({ main, rightPanel, leftPanel }: FlowPageLayoutPr
         </div>
 
         {rightPanel && (
-          <aside className="w-full md:w-36 md:flex-shrink-0 order-3">
+          <aside className="w-full md:w-44 md:flex-shrink-0 order-3">
             {rightPanel}
           </aside>
         )}

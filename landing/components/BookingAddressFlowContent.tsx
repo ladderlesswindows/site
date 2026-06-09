@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { FlowBrandingHeader } from '@/components/FlowBrandingHeader';
 import { FlowPageLayout } from '@/components/FlowPageLayout';
 import { BookingSubtotalPanel } from '@/components/BookingSubtotalPanel';
+import { BookingPricesPanel } from '@/components/BookingPricesPanel';
 import { CustomerSlotPicker } from '@/components/CustomerSlotPicker';
 import Link from 'next/link';
 import {
@@ -208,6 +209,7 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
                 onWindowCountChange={updateWindows}
                 onScreenReinstallChange={toggleScreenFee}
               />
+              <BookingPricesPanel />
               {selectedSlot && (
                 <div className="p-2 border border-emerald-200 bg-emerald-50 rounded-xl text-xs">
                   <div className="font-medium text-emerald-700">Selected time:</div>
