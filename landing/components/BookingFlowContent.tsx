@@ -2,13 +2,14 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { FlowBrandingHeader } from '@/components/FlowBrandingHeader';
 import { BookingPreviewLayout } from '@/components/BookingPreviewLayout';
 
 import { BookingZipSuccess } from '@/components/BookingZipSuccess';
 import {
   buildBookingSearchParams,
+  isSamePathQuery,
   screensChoiceToReinstallFee,
 } from '@/components/bookingFlowParams';
 import { bookingFlowHref } from '@/lib/easterEggZips';
@@ -44,8 +45,14 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
   useEffect(() => {
     if (momRedirecting) return;
     setWindowCount(initialWindows);
+  }, [initialWindows, momRedirecting]);
+
+  useEffect(() => {
+    if (momRedirecting) return;
     setShowQualifier(false);
-  }, [zip, initialWindows, momRedirecting]);
+    setShowScreensModal(false);
+    setScreensChoice('');
+  }, [zip, momRedirecting]);
 
   useEffect(() => {
     if (slotFromUrl) writePreviewSlot(slotFromUrl);
@@ -59,18 +66,37 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
     );
   }
 
-  const updateWindowCount = (count: number) => {
-    const next = clampWindowCount(zip, count);
-    setWindowCount(next);
-    const params = buildBookingSearchParams({
-      zip,
-      windows: next,
-      qualifier: qualifierCode,
-      flow: '30s',
-      slot: previewSlot ?? undefined,
-    });
-    router.replace(bookingFlowHref(basePath, '', params), { scroll: false });
-  };
+  const replaceBookingQuery = useCallback(
+    (overrides: {
+      windows?: number;
+      qualifier?: string;
+      slot?: string | null;
+    }) => {
+      const params = buildBookingSearchParams({
+        zip,
+        windows: overrides.windows ?? windowCount,
+        qualifier: overrides.qualifier ?? qualifierCode,
+        flow: '30s',
+        slot: overrides.slot ?? previewSlot ?? undefined,
+      });
+      const href = bookingFlowHref(basePath, '', params);
+      if (typeof window !== 'undefined') {
+        const current = `${window.location.pathname}${window.location.search}`;
+        if (isSamePathQuery(current, href)) return;
+      }
+      router.replace(href, { scroll: false });
+    },
+    [zip, windowCount, qualifierCode, previewSlot, basePath, router]
+  );
+
+  const updateWindowCount = useCallback(
+    (count: number) => {
+      const next = clampWindowCount(zip, count);
+      setWindowCount(next);
+      replaceBookingQuery({ windows: next });
+    },
+    [zip, replaceBookingQuery]
+  );
 
   const bookingQuery = (extra?: {
     screenReinstall?: boolean;
@@ -87,17 +113,14 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
       slot: extra?.slot ?? previewSlot ?? undefined,
     });
 
-  const syncPreviewSlot = (slot: string | null) => {
-    writePreviewSlot(slot);
-    const params = buildBookingSearchParams({
-      zip,
-      windows: windowCount,
-      qualifier: qualifierCode,
-      flow: '30s',
-      slot: slot ?? undefined,
-    });
-    router.replace(bookingFlowHref(basePath, '', params), { scroll: false });
-  };
+  const syncPreviewSlot = useCallback(
+    (slot: string | null) => {
+      writePreviewSlot(slot);
+      if (slot === slotFromUrl) return;
+      replaceBookingQuery({ slot });
+    },
+    [slotFromUrl, replaceBookingQuery]
+  );
 
   const handleConfirm = () => {
     if (!screensChoice) return;

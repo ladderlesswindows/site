@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import {
   AVAILABLE_SLOTS,
@@ -88,11 +88,18 @@ export function CustomerSlotPicker({
   const selectedSlot =
     selectedDate && selectedTime ? buildSelectedSlot(selectedDate, selectedTime) : null;
 
+  const lastNotifiedSlot = useRef<string | null | undefined>(undefined);
   useEffect(() => {
+    if (lastNotifiedSlot.current === selectedSlot) return;
+    lastNotifiedSlot.current = selectedSlot;
     onSlotChange?.(selectedSlot);
   }, [selectedSlot, onSlotChange]);
 
+  const lastNotifiedNotes = useRef<string | undefined>(undefined);
   useEffect(() => {
+    const key = `${arrivalNotes}\0${goalsChoice}`;
+    if (lastNotifiedNotes.current === key) return;
+    lastNotifiedNotes.current = key;
     onNotesChange?.({ arrivalNotes, goalsChoice });
   }, [arrivalNotes, goalsChoice, onNotesChange]);
 

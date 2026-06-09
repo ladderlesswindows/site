@@ -10,6 +10,7 @@ import { BookingSchedulePanel } from '@/components/BookingSchedulePanel';
 import Link from 'next/link';
 import {
   buildBookingSearchParams,
+  isSamePathQuery,
   parseScreenReinstall,
   type ScreensChoice,
 } from '@/components/bookingFlowParams';
@@ -93,7 +94,12 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
         flow: '30s',
         slot: next.slot ?? selectedSlot ?? undefined,
       });
-      router.replace(bookingFlowHref(basePath, 'address', params), { scroll: false });
+      const href = bookingFlowHref(basePath, 'address', params);
+      if (typeof window !== 'undefined') {
+        const current = `${window.location.pathname}${window.location.search}`;
+        if (isSamePathQuery(current, href)) return;
+      }
+      router.replace(href, { scroll: false });
     },
     [zip, windows, screenReinstall, screensChoice, qualifierCode, selectedSlot, router, basePath]
   );
@@ -201,10 +207,11 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
 
   const handleSlotChange = useCallback(
     (slot: string | null) => {
+      if (slot === selectedSlot) return;
       setSelectedSlot(slot);
       syncBookingParams({ slot });
     },
-    [syncBookingParams]
+    [selectedSlot, syncBookingParams]
   );
 
   const handleNotesChange = useCallback(

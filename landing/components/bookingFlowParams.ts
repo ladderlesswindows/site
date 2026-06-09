@@ -13,6 +13,31 @@ export function parseScreenReinstall(
   return screenParam === "true" || screenParam === "1";
 }
 
+/** Compare path+query ignoring param order and encoding differences */
+export function isSamePathQuery(current: string, target: string): boolean {
+  const split = (value: string) => {
+    const q = value.indexOf("?");
+    if (q === -1) return { pathname: value, params: new URLSearchParams() };
+    return {
+      pathname: value.slice(0, q),
+      params: new URLSearchParams(value.slice(q + 1)),
+    };
+  };
+
+  const a = split(current);
+  const b = split(target);
+  if (a.pathname !== b.pathname) return false;
+
+  const keys = new Set<string>();
+  a.params.forEach((_, key) => keys.add(key));
+  b.params.forEach((_, key) => keys.add(key));
+
+  for (const key of keys) {
+    if (a.params.get(key) !== b.params.get(key)) return false;
+  }
+  return true;
+}
+
 export function buildBookingSearchParams(input: {
   zip: string;
   windows: number;
