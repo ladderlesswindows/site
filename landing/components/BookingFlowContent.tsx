@@ -143,6 +143,7 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
           previewSlot={previewSlot}
           onWindowCountChange={updateWindowCount}
           onSlotChange={syncPreviewSlot}
+          showMomLovePanel={isMomFlow}
         >
           <div className="cream-module">
             <FlowBrandingHeader

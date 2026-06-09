@@ -309,12 +309,25 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
     })
   );
 
+  const subtotalPanel = (
+    <BookingSubtotalPanel
+      windowCount={windows}
+      minWindows={getMinWindows(zip)}
+      screenReinstall={screenReinstall}
+      variant="address"
+      onWindowCountChange={updateWindows}
+      onScreenReinstallChange={toggleScreenFee}
+    />
+  );
+
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 px-5 pt-12 pb-12">
         <div className="mb-4 text-sm font-medium text-center text-emerald-700">
           Awesome! Now, BOOK your ideal time in our real-time booking calendar.
         </div>
+
+        <div className="md:hidden mx-auto w-full max-w-md mb-3">{subtotalPanel}</div>
 
         <FlowPageLayout
           containerClassName="mx-auto w-full max-w-5xl"
@@ -336,14 +349,7 @@ export function BookingAddressFlowContent({ basePath }: BookingAddressFlowConten
           }
           rightPanel={
             <div className="space-y-2">
-              <BookingSubtotalPanel
-                windowCount={windows}
-                minWindows={getMinWindows(zip)}
-                screenReinstall={screenReinstall}
-                variant="address"
-                onWindowCountChange={updateWindows}
-                onScreenReinstallChange={toggleScreenFee}
-              />
+              <div className="hidden md:block">{subtotalPanel}</div>
               <BookingPricesPanel />
             </div>
           }

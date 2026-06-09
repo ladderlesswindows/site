@@ -5,6 +5,7 @@ import { FlowPageLayout } from "@/components/FlowPageLayout";
 import { BookingSchedulePanel } from "@/components/BookingSchedulePanel";
 import { BookingSubtotalPanel } from "@/components/BookingSubtotalPanel";
 import { BookingPricesPanel } from "@/components/BookingPricesPanel";
+import { MomLovePanel } from "@/components/MomLovePanel";
 import { useSupabase } from "@/hooks/useSupabase";
 
 type BookingPreviewLayoutProps = {
@@ -14,6 +15,8 @@ type BookingPreviewLayoutProps = {
   previewSlot: string | null;
   onWindowCountChange: (count: number) => void;
   onSlotChange: (slot: string | null) => void;
+  /** Mom easter egg — rose + love note on the right */
+  showMomLovePanel?: boolean;
 };
 
 /** Three-column booking shell: live schedule preview (left), main module (center), subtotal (right). */
@@ -24,15 +27,16 @@ export function BookingPreviewLayout({
   previewSlot,
   onWindowCountChange,
   onSlotChange,
+  showMomLovePanel = false,
 }: BookingPreviewLayoutProps) {
   const { supabase, providerId, ready: supabaseReady } = useSupabase();
 
   return (
     <FlowPageLayout
       containerClassName="mx-auto w-full max-w-5xl"
-      leftPanelClassName="w-full md:w-60 md:flex-shrink-0 order-1 md:order-1"
-      mainClassName="w-full max-w-md flex-shrink-0 order-2 md:order-2"
-      rightPanelClassName="w-full md:w-44 md:flex-shrink-0 order-3"
+      leftPanelClassName="w-full md:w-60 md:flex-shrink-0 order-3 md:order-1"
+      mainClassName="w-full max-w-md flex-shrink-0 order-1 md:order-2"
+      rightPanelClassName={`w-full md:flex-shrink-0 order-2 md:order-3 ${showMomLovePanel ? "md:w-52" : "md:w-44"}`}
       leftPanel={
         <BookingSchedulePanel
           supabase={supabase}
@@ -46,6 +50,11 @@ export function BookingPreviewLayout({
       }
       rightPanel={
         <div className="space-y-2">
+          {showMomLovePanel && (
+            <div className="hidden md:block">
+              <MomLovePanel />
+            </div>
+          )}
           <BookingSubtotalPanel
             windowCount={windowCount}
             minWindows={minWindows}

@@ -7,6 +7,7 @@ import { isMomEasterEggZip, MOM_EASTER_EGG_HEADLINE } from "@/lib/easterEggZips"
 import { BookingCoverageNotesPanel } from "./BookingCoverageNotesPanel";
 import { PartialCoverageDetailsBox } from "./PartialCoverageDetailsBox";
 import { BackHomeLink } from "./BackHomeLink";
+import { MomLovePanel } from "./MomLovePanel";
 
 
 type BookingZipSuccessProps = {
@@ -69,6 +70,12 @@ export function BookingZipSuccess({
           {isMomZip ? MOM_EASTER_EGG_HEADLINE : getSuccessHeadline(zip)}
         </p>
       </div>
+
+      {isMomZip && (
+        <div className="md:hidden">
+          <MomLovePanel />
+        </div>
+      )}
 
       {isPartial && explanation && !isMomZip && (
         <PartialCoverageDetailsBox details={explanation} />
