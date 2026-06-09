@@ -3,13 +3,18 @@
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { resolveExplainContinueHref } from '@/components/bookingFlowParams';
 import { HOW_VIDEO_SRC } from '@/lib/mediaUrls';
+import { bookingFlowHref, isMomEasterEggZip } from '@/lib/easterEggZips';
 import { FlowFooter } from '@/components/FlowFooter';
 
 function ExplainContent() {
   const searchParams = useSearchParams();
-  const zip = searchParams.get('zip') || '95060';
-  const continueHref = `/booking/address?${searchParams.toString() || 'zip=95060&windows=1&flow=30s'}`;
+  const continueHref = resolveExplainContinueHref(
+    searchParams,
+    isMomEasterEggZip,
+    bookingFlowHref
+  );
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -78,15 +83,17 @@ function ExplainContent() {
 
           {/* Buttons */}
           <div className="flex flex-col gap-3">
-            <Link
-              href={continueHref}
-              className="block w-full py-4 text-lg font-semibold text-center rounded-3xl bg-[#0f766e] text-white active:bg-[#0c5f58]"
-            >
-              Continue
-            </Link>
+            {continueHref && (
+              <Link
+                href={continueHref}
+                className="block w-full py-4 text-lg font-semibold text-center rounded-3xl bg-[#0f766e] text-white active:bg-[#0c5f58]"
+              >
+                Continue booking
+              </Link>
+            )}
             <Link
               href="/"
-              className="block w-full py-3 text-base font-medium text-center rounded-3xl border border-neutral-300 text-neutral-600 active:bg-neutral-50"
+              className={`block w-full py-3 text-base font-medium text-center rounded-3xl border border-neutral-300 text-neutral-600 active:bg-neutral-50 ${continueHref ? "" : "py-4 text-lg font-semibold"}`}
             >
               Back Home
             </Link>

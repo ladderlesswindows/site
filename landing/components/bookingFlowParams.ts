@@ -64,3 +64,56 @@ export function buildBookingSearchParams(input: {
   if (input.slot) params.set("slot", input.slot);
   return params.toString();
 }
+
+const BOOKING_RETURN_PATHS = new Set([
+  "/booking",
+  "/booking/mom",
+  "/booking/address",
+  "/booking/mom/address",
+]);
+
+/** Only allow in-app booking paths as explain return targets */
+export function isSafeBookingReturnPath(path: string): boolean {
+  try {
+    const decoded = decodeURIComponent(path.trim());
+    if (!decoded.startsWith("/booking")) return false;
+    const pathname = decoded.split("?")[0];
+    return BOOKING_RETURN_PATHS.has(pathname);
+  } catch {
+    return false;
+  }
+}
+
+/** Link to /explain while preserving booking state and a return target */
+export function buildExplainHref(returnTo: string, bookingQuery: string): string {
+  const params = new URLSearchParams(bookingQuery);
+  params.set("returnTo", returnTo);
+  return `/explain?${params.toString()}`;
+}
+
+/**
+ * Where explain "Continue" should go, or null when opened from home (no booking context).
+ * Prefers explicit returnTo; falls back to /booking or /booking/mom from flow params.
+ */
+export function resolveExplainContinueHref(
+  searchParams: URLSearchParams,
+  isMomZip: (zip: string) => boolean,
+  bookingHref: (basePath: string, step: "" | "address" | "success", query?: string) => string
+): string | null {
+  const returnTo = searchParams.get("returnTo");
+  if (returnTo && isSafeBookingReturnPath(returnTo)) {
+    return decodeURIComponent(returnTo.trim());
+  }
+
+  const zip = searchParams.get("zip")?.trim();
+  if (!zip || searchParams.get("flow") !== "30s") return null;
+
+  const params = new URLSearchParams();
+  searchParams.forEach((value, key) => {
+    if (key !== "returnTo") params.set(key, value);
+  });
+
+  const query = params.toString();
+  const basePath = isMomZip(zip) ? "/booking/mom" : "/booking";
+  return bookingHref(basePath, "", query);
+}

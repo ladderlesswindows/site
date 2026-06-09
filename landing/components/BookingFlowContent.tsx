@@ -9,6 +9,7 @@ import { BookingPreviewLayout } from '@/components/BookingPreviewLayout';
 import { BookingZipSuccess } from '@/components/BookingZipSuccess';
 import {
   buildBookingSearchParams,
+  buildExplainHref,
   isSamePathQuery,
   screensChoiceToReinstallFee,
 } from '@/components/bookingFlowParams';
@@ -122,6 +123,11 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
     [slotFromUrl, replaceBookingQuery]
   );
 
+  const explainHref = buildExplainHref(
+    bookingFlowHref(basePath, '', bookingQuery()),
+    bookingQuery()
+  );
+
   const handleConfirm = () => {
     if (!screensChoice) return;
     const screenReinstall = screensChoiceToReinstallFee(screensChoice);
@@ -158,7 +164,7 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
                 zip={zip}
                 isMomFlow={isMomFlow}
                 onStartBooking={() => setShowQualifier(true)}
-                explainHref={`/explain?${bookingQuery()}`}
+                explainHref={explainHref}
               />
             ) : (
               <div className="space-y-4">
@@ -191,7 +197,7 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
                       Yes, lets see the schedule!
                     </button>
                     <Link
-                      href={`/explain?${bookingQuery()}`}
+                      href={explainHref}
                       className="flex-1 py-4 px-2 text-sm font-medium leading-snug text-center rounded-3xl border-2 border-[#0f766e] text-[#0f766e] active:bg-emerald-50 flex items-center justify-center"
                     >
                       Please explain more first ..
@@ -320,7 +326,7 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
                   ← Back to question
                 </button>
                 <Link
-                  href={`/explain?${bookingQuery()}`}
+                  href={explainHref}
                   onClick={() => {
                     setShowScreensModal(false);
                     setScreensChoice('');
