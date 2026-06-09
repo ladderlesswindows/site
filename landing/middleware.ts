@@ -5,7 +5,7 @@ import { MOM_EASTER_EGG_PATH, MOM_EASTER_EGG_ZIP } from '@/lib/easterEggZips';
 export function middleware(request: NextRequest) {
   const { pathname, searchParams } = request.nextUrl;
 
-  if (pathname === MOM_EASTER_EGG_PATH) {
+  if (pathname.startsWith(MOM_EASTER_EGG_PATH)) {
     return NextResponse.next();
   }
 
@@ -14,8 +14,8 @@ export function middleware(request: NextRequest) {
     searchParams.get('zip')?.trim() === MOM_EASTER_EGG_ZIP
   ) {
     const url = request.nextUrl.clone();
-    url.pathname = MOM_EASTER_EGG_PATH;
-    url.search = `zip=${MOM_EASTER_EGG_ZIP}`;
+    const momSuffix = pathname.slice('/booking'.length);
+    url.pathname = `${MOM_EASTER_EGG_PATH}${momSuffix}`;
     return NextResponse.redirect(url);
   }
 

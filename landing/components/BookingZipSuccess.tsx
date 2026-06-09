@@ -3,22 +3,26 @@
 import Link from "next/link";
 import { getZipInfo, isPartialCoverage, getSuccessHeadline } from "./zipRegistry";
 import { useMomEasterEggRedirect } from "@/hooks/useMomEasterEggRedirect";
+import { isMomEasterEggZip, MOM_EASTER_EGG_HEADLINE } from "@/lib/easterEggZips";
 import { WindowQualifierDisclaimer } from "./WindowQualifierDisclaimer";
 
 type BookingZipSuccessProps = {
   zip: string;
+  isMomFlow?: boolean;
   onStartBooking: () => void;
   explainHref: string;
 };
 
 export function BookingZipSuccess({
   zip,
+  isMomFlow = false,
   onStartBooking,
   explainHref,
 }: BookingZipSuccessProps) {
-  const momRedirecting = useMomEasterEggRedirect(zip);
+  const momRedirecting = useMomEasterEggRedirect(isMomFlow ? null : zip);
   const zipInfo = getZipInfo(zip);
-  const isPartial = isPartialCoverage(zip);
+  const isMomZip = isMomFlow || isMomEasterEggZip(zip);
+  const isPartial = isMomZip ? true : isPartialCoverage(zip);
   const explanation = zipInfo?.explanation ?? "";
 
   if (momRedirecting) {
@@ -27,7 +31,7 @@ export function BookingZipSuccess({
     );
   }
 
-  if (!zipInfo) {
+  if (!zipInfo && !isMomZip) {
     return (
       <div className="space-y-4 text-center">
         <div className="inline-flex items-center gap-2.5 rounded-2xl bg-amber-50 px-5 py-3 border border-amber-100 text-amber-800">
@@ -59,7 +63,7 @@ export function BookingZipSuccess({
           />
         </svg>
         <p className={`font-semibold text-emerald-800 ${isPartial ? "text-sm leading-snug" : "tracking-tight"}`}>
-          {getSuccessHeadline(zip)}
+          {isMomZip ? MOM_EASTER_EGG_HEADLINE : getSuccessHeadline(zip)}
         </p>
       </div>
 

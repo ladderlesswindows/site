@@ -1,12 +1,12 @@
 "use client";
 
 import { Suspense } from 'react';
-import { BookingSuccessFlowContent } from '@/components/BookingSuccessFlowContent';
+import { BookingAddressFlowContent } from '@/components/BookingAddressFlowContent';
 
-export default function BookingSuccessPage() {
+export default function MomAddressPage() {
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
-      <BookingSuccessFlowContent basePath="/booking" />
+      <BookingAddressFlowContent basePath="/booking/mom" />
     </Suspense>
   );
 }

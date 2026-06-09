@@ -9,3 +9,16 @@ export function isMomEasterEggZip(zip: string): boolean {
 }
 
 export const MOM_EASTER_EGG_PATH = '/booking/mom';
+
+export function getBookingFlowBasePath(zip: string): string {
+  return isMomEasterEggZip(zip) ? MOM_EASTER_EGG_PATH : '/booking';
+}
+
+export function bookingFlowHref(
+  basePath: string,
+  step: '' | 'address' | 'success',
+  query?: string
+): string {
+  const path = step ? `${basePath}/${step}` : basePath;
+  return query ? `${path}?${query}` : path;
+}
