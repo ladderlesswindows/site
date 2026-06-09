@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { HOW_VIDEO_SRC } from '@/lib/mediaUrls';
 
 function ExplainContent() {
   const searchParams = useSearchParams();
@@ -27,7 +28,7 @@ function ExplainContent() {
           {/* Looping video */}
           <div className="mb-6">
             <video
-              src="/videos/IMG_3266.MP4"
+              src={HOW_VIDEO_SRC}
               autoPlay
               loop
               muted

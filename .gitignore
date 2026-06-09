@@ -43,6 +43,7 @@ landing/public/*.jpg
 !landing/public/ll-dark.jpg
 landing/public/*.png
 landing/public/*.mp4
+!landing/public/videos/img_3266.mp4
 landing/public/*.mov
 
 # Next.js huge binaries

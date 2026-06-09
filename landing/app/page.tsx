@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import CoverageModule from "@/components/CoverageModule";
 import { getSuccessZips, coverage } from "@/components/zipRegistry";
+import { HOW_VIDEO_SRC } from "@/lib/mediaUrls";
 
 export default function LadderlessLanding() {
   const [showVideo, setShowVideo] = useState(false);
@@ -126,7 +127,7 @@ export default function LadderlessLanding() {
                   Close
                 </button>
                 <video
-                  src="/videos/IMG_3266.MP4"
+                  src={HOW_VIDEO_SRC}
                   controls
                   autoPlay
                   className="w-full h-auto max-h-[80vh]"
