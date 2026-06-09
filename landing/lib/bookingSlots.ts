@@ -3,7 +3,8 @@ import { PROVIDER_ID } from '@/lib/bookingConstants';
 
 export const AVAILABLE_TIMES = ['09:00', '11:00', '13:00', '15:00'] as const;
 
-export function getAvailableDates(daysAhead = 7): string[] {
+/** Next N calendar days (from tomorrow), weekdays only. */
+export function getBookableWeekdayDates(daysAhead = 30): string[] {
   const dates: string[] = [];
   const today = new Date();
   for (let i = 1; i <= daysAhead; i++) {
@@ -12,6 +13,92 @@ export function getAvailableDates(daysAhead = 7): string[] {
     dates.push(formatLocalDate(d));
   }
   return dates;
+}
+
+/** @deprecated Use getBookableWeekdayDates — kept for short rolling windows */
+export function getAvailableDates(daysAhead = 7): string[] {
+  return getBookableWeekdayDates(daysAhead);
+}
+
+export function parseLocalDate(dateStr: string): Date {
+  return new Date(dateStr + 'T00:00:00');
+}
+
+/** Monday (local) of the week containing dateStr */
+export function getMondayOfWeek(dateStr: string): string {
+  const d = parseLocalDate(dateStr);
+  const day = d.getDay();
+  const diff = day === 0 ? -6 : 1 - day;
+  d.setDate(d.getDate() + diff);
+  return formatLocalDate(d);
+}
+
+/** Mon–Fri in the week starting weekMonday that are bookable */
+export function getWeekdayDatesInWeek(
+  weekMonday: string,
+  bookableDates: Set<string>
+): string[] {
+  const monday = parseLocalDate(weekMonday);
+  const dates: string[] = [];
+  for (let i = 0; i < 5; i++) {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    const key = formatLocalDate(d);
+    if (bookableDates.has(key)) dates.push(key);
+  }
+  return dates;
+}
+
+export function isWeekFullyBooked(
+  weekDates: string[],
+  bookedSet: Set<string>
+): boolean {
+  if (weekDates.length === 0) return true;
+  return weekDates.every((date) =>
+    AVAILABLE_TIMES.every((time) => bookedSet.has(buildSelectedSlot(date, time)))
+  );
+}
+
+/** First week (Mon anchor) within range that still has an open slot */
+export function findFirstWeekWithOpenSlot(
+  bookableDates: string[],
+  bookedSet: Set<string>
+): string {
+  if (bookableDates.length === 0) return getMondayOfWeek(formatLocalDate(new Date()));
+
+  const bookableSet = new Set(bookableDates);
+  let weekMonday = getMondayOfWeek(bookableDates[0]);
+  const rangeEnd = bookableDates[bookableDates.length - 1];
+
+  while (weekMonday <= rangeEnd) {
+    const weekDates = getWeekdayDatesInWeek(weekMonday, bookableSet);
+    if (!isWeekFullyBooked(weekDates, bookedSet)) return weekMonday;
+    const nextMonday = parseLocalDate(weekMonday);
+    nextMonday.setDate(nextMonday.getDate() + 7);
+    weekMonday = formatLocalDate(nextMonday);
+  }
+
+  return getMondayOfWeek(bookableDates[0]);
+}
+
+export type MonthCalendarCell = {
+  date: string;
+  bookable: boolean;
+};
+
+/** Next 30 calendar days (from tomorrow) for month-picker grid */
+export function getMonthCalendarDays(daysAhead = 30): MonthCalendarCell[] {
+  const cells: MonthCalendarCell[] = [];
+  const today = new Date();
+  for (let i = 1; i <= daysAhead; i++) {
+    const d = new Date(today.getTime() + i * 86400000);
+    const dow = d.getDay();
+    cells.push({
+      date: formatLocalDate(d),
+      bookable: dow !== 0 && dow !== 6,
+    });
+  }
+  return cells;
 }
 
 export function formatLocalDate(d: Date): string {

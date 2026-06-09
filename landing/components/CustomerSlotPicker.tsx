@@ -6,8 +6,16 @@ import {
   AVAILABLE_TIMES,
   buildSelectedSlot,
   fetchBookedSlotKeys,
-  getAvailableDates,
+  findFirstWeekWithOpenSlot,
+  getBookableWeekdayDates,
+  formatLocalDate,
+  getMondayOfWeek,
+  getMonthCalendarDays,
+  getWeekdayDatesInWeek,
+  parseLocalDate,
 } from '@/lib/bookingSlots';
+
+type DateViewMode = 'week' | 'month';
 
 type CustomerSlotPickerProps = {
   supabase: SupabaseClient | null;
@@ -24,13 +32,25 @@ export function CustomerSlotPicker({
   onSlotChange,
   onNotesChange,
 }: CustomerSlotPickerProps) {
-  const availableDates = useMemo(() => getAvailableDates(), []);
-  const [selectedDate, setSelectedDate] = useState(availableDates[0] || '');
+  const bookableDatesList = useMemo(() => getBookableWeekdayDates(30), []);
+  const bookableDatesSet = useMemo(() => new Set(bookableDatesList), [bookableDatesList]);
+  const monthCells = useMemo(() => getMonthCalendarDays(30), []);
+
+  const [viewMode, setViewMode] = useState<DateViewMode>('week');
+  const [weekAnchor, setWeekAnchor] = useState(() =>
+    getMondayOfWeek(bookableDatesList[0] || formatLocalDate(new Date()))
+  );
+  const [selectedDate, setSelectedDate] = useState(bookableDatesList[0] || '');
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [bookedSet, setBookedSet] = useState<Set<string>>(new Set());
   const [loadingAvailability, setLoadingAvailability] = useState(true);
   const [arrivalNotes, setArrivalNotes] = useState('');
   const [goalsChoice, setGoalsChoice] = useState('');
+
+  const weekDates = useMemo(
+    () => getWeekdayDatesInWeek(weekAnchor, bookableDatesSet),
+    [weekAnchor, bookableDatesSet]
+  );
 
   const selectedSlot =
     selectedDate && selectedTime ? buildSelectedSlot(selectedDate, selectedTime) : null;
@@ -52,91 +72,186 @@ export function CustomerSlotPicker({
       if (!cancelled) {
         setBookedSet(set);
         setLoadingAvailability(false);
+        const firstOpenWeek = findFirstWeekWithOpenSlot(bookableDatesList, set);
+        setWeekAnchor(firstOpenWeek);
+        const weekDays = getWeekdayDatesInWeek(firstOpenWeek, bookableDatesSet);
+        if (weekDays.length > 0) {
+          setSelectedDate((prev) => (weekDays.includes(prev) ? prev : weekDays[0]));
+        }
       }
     });
     return () => {
       cancelled = true;
     };
-  }, [supabase, providerId, supabaseReady]);
+  }, [supabase, providerId, supabaseReady, bookableDatesList, bookableDatesSet]);
 
   const isBooked = (date: string, time: string) => bookedSet.has(buildSelectedSlot(date, time));
+
+  const selectDate = (date: string) => {
+    setSelectedDate(date);
+    setSelectedTime(null);
+  };
+
+  const handleMonthDayPick = (date: string) => {
+    selectDate(date);
+    setWeekAnchor(getMondayOfWeek(date));
+    setViewMode('week');
+  };
+
+  const formatDayLabel = (date: string, style: 'short' | 'compact' = 'short') => {
+    const d = parseLocalDate(date);
+    if (style === 'compact') {
+      return d.toLocaleDateString(undefined, { day: 'numeric' });
+    }
+    return d.toLocaleDateString(undefined, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+    });
+  };
 
   return (
     <div className="space-y-3">
       <div>
         <div className="text-sm font-medium mb-1">Choose your time slot</div>
         <p className="text-[10px] text-neutral-500">
-          Live availability from Supabase — 15-minute hold while you finish. (FullCalendar is admin-only.)
+          Live availability from Supabase — 15-minute hold while you finish.
         </p>
       </div>
 
       <div>
-        <div className="text-xs text-neutral-500 mb-1">Available dates</div>
-        <div className="flex gap-2 overflow-x-auto pb-1">
-          {availableDates.map((date) => {
-            const d = new Date(date + 'T00:00:00');
-            const label = d.toLocaleDateString(undefined, {
-              weekday: 'short',
-              month: 'short',
-              day: 'numeric',
-            });
-            return (
+        <div className="flex items-center justify-between gap-2 mb-1">
+          <div className="text-xs text-neutral-500">
+            {viewMode === 'week' ? 'This week' : 'Next 30 days'}
+          </div>
+          <div className="flex rounded-lg border border-neutral-200 overflow-hidden text-[10px]">
+            <button
+              type="button"
+              onClick={() => setViewMode('week')}
+              className={`px-2 py-0.5 ${
+                viewMode === 'week'
+                  ? 'bg-emerald-100 text-emerald-800 font-medium'
+                  : 'bg-white text-neutral-600'
+              }`}
+            >
+              Week
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode('month')}
+              className={`px-2 py-0.5 border-l border-neutral-200 ${
+                viewMode === 'month'
+                  ? 'bg-emerald-100 text-emerald-800 font-medium'
+                  : 'bg-white text-neutral-600'
+              }`}
+            >
+              Month
+            </button>
+          </div>
+        </div>
+
+        {viewMode === 'week' ? (
+          <div className="flex gap-1.5 overflow-x-auto pb-1">
+            {weekDates.map((date) => (
               <button
                 key={date}
                 type="button"
-                onClick={() => {
-                  setSelectedDate(date);
-                  setSelectedTime(null);
-                }}
-                className={`px-3 py-1 text-xs rounded-full border flex-shrink-0 whitespace-nowrap ${
+                onClick={() => selectDate(date)}
+                className={`px-2 py-1 text-[10px] rounded-full border flex-shrink-0 whitespace-nowrap ${
                   selectedDate === date
                     ? 'bg-emerald-100 border-emerald-600 text-emerald-800'
                     : 'bg-white border-neutral-300'
                 }`}
               >
-                {label}
+                {formatDayLabel(date)}
               </button>
-            );
-          })}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div>
+            <div className="grid grid-cols-7 gap-0.5 mb-1">
+              {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((label, i) => (
+                <div
+                  key={`${label}-${i}`}
+                  className="text-[8px] text-center text-neutral-400 font-medium"
+                >
+                  {label}
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-7 gap-0.5">
+              {(() => {
+                const firstDow = parseLocalDate(monthCells[0]?.date ?? '').getDay();
+                const blanks = Array.from({ length: firstDow }, (_, i) => (
+                  <div key={`blank-${i}`} className="h-7" />
+                ));
+                const dayButtons = monthCells.map(({ date, bookable }) => (
+                  <button
+                    key={date}
+                    type="button"
+                    disabled={!bookable}
+                    onClick={() => bookable && handleMonthDayPick(date)}
+                    className={`h-7 text-[10px] rounded border ${
+                      !bookable
+                        ? 'border-transparent text-neutral-300 cursor-default'
+                        : selectedDate === date
+                        ? 'bg-emerald-100 border-emerald-600 text-emerald-800 font-medium'
+                        : 'bg-white border-neutral-200 text-neutral-800 active:bg-neutral-50'
+                    }`}
+                  >
+                    {formatDayLabel(date, 'compact')}
+                  </button>
+                ));
+                return [...blanks, ...dayButtons];
+              })()}
+            </div>
+            <p className="text-[9px] text-neutral-500 mt-1.5">
+              Tap a weekday — you&apos;ll return to week view for times.
+            </p>
+          </div>
+        )}
       </div>
 
-      <div>
-        <div className="text-xs text-neutral-500 mb-1">
-          Times for{' '}
-          {new Date(selectedDate + 'T00:00:00').toLocaleDateString(undefined, {
-            month: 'short',
-            day: 'numeric',
-          })}
-          {loadingAvailability && ' (loading…)'}
+      {viewMode === 'week' && selectedDate && (
+        <div>
+          <div className="text-xs text-neutral-500 mb-1">
+            Times for{' '}
+            {parseLocalDate(selectedDate).toLocaleDateString(undefined, {
+              month: 'short',
+              day: 'numeric',
+            })}
+            {loadingAvailability && ' (loading…)'}
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            {AVAILABLE_TIMES.map((time) => {
+              const booked = isBooked(selectedDate, time);
+              const isSelected = selectedTime === time;
+              return (
+                <button
+                  key={time}
+                  type="button"
+                  disabled={booked}
+                  onClick={() => setSelectedTime(time)}
+                  className={`py-2 text-sm rounded-2xl border transition ${
+                    isSelected
+                      ? 'bg-emerald-600 text-white border-emerald-600'
+                      : booked
+                      ? 'bg-neutral-100 text-neutral-400 line-through cursor-not-allowed'
+                      : 'bg-white border-neutral-300 active:bg-neutral-50'
+                  }`}
+                >
+                  {time}
+                </button>
+              );
+            })}
+          </div>
         </div>
-        <div className="grid grid-cols-2 gap-2">
-          {AVAILABLE_TIMES.map((time) => {
-            const booked = isBooked(selectedDate, time);
-            const isSelected = selectedTime === time;
-            return (
-              <button
-                key={time}
-                type="button"
-                disabled={booked}
-                onClick={() => setSelectedTime(time)}
-                className={`py-2 text-sm rounded-2xl border transition ${
-                  isSelected
-                    ? 'bg-emerald-600 text-white border-emerald-600'
-                    : booked
-                    ? 'bg-neutral-100 text-neutral-400 line-through cursor-not-allowed'
-                    : 'bg-white border-neutral-300 active:bg-neutral-50'
-                }`}
-              >
-                {time}
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      )}
 
       <div>
-        <div className="text-[10px] text-neutral-500 mb-0.5">Arrival notes (gate code, parking, etc.)</div>
+        <div className="text-[10px] text-neutral-500 mb-0.5">
+          Arrival notes (gate code, parking, etc.)
+        </div>
         <textarea
           value={arrivalNotes}
           onChange={(e) => setArrivalNotes(e.target.value)}
@@ -163,7 +278,7 @@ export function CustomerSlotPicker({
             3. Maybe add a few more if they qualify
           </option>
           <option value="Too many questions, just get here and we'll chat.">
-            4. We'll chat when you arrive
+            4. We&apos;ll chat when you arrive
           </option>
         </select>
       </div>
