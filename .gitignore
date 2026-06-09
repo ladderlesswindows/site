@@ -46,6 +46,7 @@ assets/
 landing/assets/
 landing/public/*.jpg
 !landing/public/ll.jpg
+!landing/public/template*.jpg
 landing/public/*.png
 landing/public/*.mp4
 !landing/public/videos/img_3266.mp4

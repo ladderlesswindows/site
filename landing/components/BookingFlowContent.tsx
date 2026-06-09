@@ -7,6 +7,7 @@ import { FlowBrandingHeader } from '@/components/FlowBrandingHeader';
 import { BookingPreviewLayout } from '@/components/BookingPreviewLayout';
 
 import { BookingZipSuccess } from '@/components/BookingZipSuccess';
+import { ZipTerritoryImageModule } from '@/components/ZipTerritoryImageModule';
 import {
   buildBookingSearchParams,
   buildExplainHref,
@@ -14,9 +15,9 @@ import {
   screensChoiceToReinstallFee,
 } from '@/components/bookingFlowParams';
 import { bookingFlowHref } from '@/lib/easterEggZips';
-import { clampWindowCount, getMinWindows } from '@/components/zipRegistry';
+import { clampWindowCount, getMinWindows, getZipInfo } from '@/components/zipRegistry';
 import { useMomEasterEggRedirect } from '@/hooks/useMomEasterEggRedirect';
-import { MOM_EASTER_EGG_ZIP } from '@/lib/easterEggZips';
+import { isMomEasterEggZip, MOM_EASTER_EGG_ZIP } from '@/lib/easterEggZips';
 import { BackHomeLink } from '@/components/BackHomeLink';
 import { FlowFooter } from '@/components/FlowFooter';
 import { readPreviewSlot, writePreviewSlot } from '@/lib/previewSlotStorage';
@@ -151,22 +152,23 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
           onSlotChange={syncPreviewSlot}
           showMomLovePanel={isMomFlow}
         >
-          <div className="cream-module">
-            <FlowBrandingHeader
-              currentZip={zip}
-              windows={windowCount}
-              bookingPath={basePath}
-              showZipButtons={!isMomFlow}
-            />
-
-            {!showQualifier ? (
-              <BookingZipSuccess
-                zip={zip}
-                isMomFlow={isMomFlow}
-                onStartBooking={() => setShowQualifier(true)}
-                explainHref={explainHref}
+          <div className="space-y-3">
+            <div className="cream-module">
+              <FlowBrandingHeader
+                currentZip={zip}
+                windows={windowCount}
+                bookingPath={basePath}
+                showZipButtons={!isMomFlow}
               />
-            ) : (
+
+              {!showQualifier ? (
+                <BookingZipSuccess
+                  zip={zip}
+                  isMomFlow={isMomFlow}
+                  onStartBooking={() => setShowQualifier(true)}
+                  explainHref={explainHref}
+                />
+              ) : (
               <div className="space-y-4">
                   <div className="relative group space-y-3 text-center cursor-help rounded-xl px-1 py-1">
                     <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 z-[60] w-[min(100%,320px)] text-[11px] leading-snug bg-neutral-900 text-white px-3 py-2 rounded-xl shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-100 text-left">
@@ -212,6 +214,11 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
                   </button>
                   <BackHomeLink />
               </div>
+              )}
+            </div>
+
+            {!showQualifier && (getZipInfo(zip) || isMomFlow || isMomEasterEggZip(zip)) && (
+              <ZipTerritoryImageModule zip={zip} />
             )}
           </div>
         </BookingPreviewLayout>
