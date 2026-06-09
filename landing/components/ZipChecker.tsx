@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getZipInfo, isPartialCoverage, getExampleZip, getMinWindows, getSuccessHeadline } from "./zipRegistry";
-import { calculateWindowBase, formatPriceAmount, formatWindowPrice } from "./windowPricing";
+import { calculateWindowBase, formatPriceAmount } from "./windowPricing";
 import { WindowQualifierDisclaimer } from "./WindowQualifierDisclaimer";
 
 export function ZipChecker({ 
@@ -135,7 +135,6 @@ export function ZipChecker({
             </button>
           </div>
           <div className="text-lg font-semibold text-neutral-900 mt-2">{formatPriceAmount(subtotal)}</div>
-          <div className="text-sm text-neutral-600 mt-1">{formatWindowPrice()}</div>
           <WindowQualifierDisclaimer className="mt-2" />
         </div>
       )}

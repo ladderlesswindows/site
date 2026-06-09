@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { getZipInfo, isPartialCoverage, getSuccessHeadline } from "./zipRegistry";
-import { formatWindowPrice } from "./windowPricing";
 import { WindowQualifierDisclaimer } from "./WindowQualifierDisclaimer";
 
 type BookingZipSuccessProps = {
@@ -58,10 +57,6 @@ export function BookingZipSuccess({
       {isPartial && explanation && (
         <p className="text-sm text-neutral-700 text-left">{explanation}</p>
       )}
-
-      <div className="text-center text-sm text-neutral-600">
-        {formatWindowPrice()}
-      </div>
 
       <div className="flex gap-3">
         <button

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 import { getQualifier, DEFAULT_WINDOW_PRICE } from "./qualifiers";
-import { calculateWindowBase, formatWindowPrice, formatWindowBaseSummary } from "./windowPricing";
+import { calculateWindowBase, formatWindowBaseSummary } from "./windowPricing";
 import { WindowQualifierDisclaimer } from "./WindowQualifierDisclaimer";
 
 interface BookingSummaryProps {
@@ -99,7 +99,6 @@ export default function BookingSummary({
               +
             </button>
           </div>
-          <div className="text-sm text-neutral-600 mt-1">{formatWindowPrice(basePricePerWindow)}</div>
           <WindowQualifierDisclaimer className="mt-2" />
         </div>
 

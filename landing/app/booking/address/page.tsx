@@ -37,8 +37,6 @@ function AddressContent() {
   );
   const [qualifierCode, setQualifierCode] = useState(qualifierParam);
 
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
   const [street, setStreet] = useState('');
   const [apt, setApt] = useState('');
   const [city, setCity] = useState('');
@@ -98,11 +96,10 @@ function AddressContent() {
 
   const addressSummary = `${street.trim()}${apt ? ' ' + apt.trim() : ''}, ${city.trim()}, ${stateAbbr} ${zipCode}`;
 
-  const hasName = fullName.trim().length >= 2;
-  const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   const hasStreet = street.trim().length >= 3;
   const hasCity = city.trim().length >= 2;
-  const canProceed = hasName && hasEmail && hasStreet && hasCity;
+  const hasGoals = slotNotes.goalsChoice.trim().length > 0;
+  const canProceed = hasStreet && hasCity && hasGoals;
 
   const qualifier = getQualifier(qualifierCode);
   const basePrice = qualifier ? qualifier.pricePerWindow : DEFAULT_WINDOW_PRICE;
@@ -130,8 +127,8 @@ function AddressContent() {
       windowCount: windows,
       screenReinstall,
       qualifierCode,
-      name: fullName.trim(),
-      email: email.trim(),
+      name: '',
+      email: '',
       address: addressSummary,
       scheduledStart: selectedSlot,
       estimatedPrice: total,
@@ -152,9 +149,7 @@ function AddressContent() {
       screensChoice: screensChoice || undefined,
       qualifier: qualifierCode,
       flow: '30s',
-      name: fullName.trim(),
       address: addressSummary,
-      email: email.trim(),
     });
     const successParams = new URLSearchParams(params);
     successParams.set('slot', selectedSlot);
@@ -219,26 +214,6 @@ function AddressContent() {
               <FlowBrandingHeader currentZip={zip} windows={windows} showZipButtons={false} />
 
               <div className="space-y-1.5">
-                <div>
-                  <div className="text-[10px] text-neutral-500 mb-0.5">Full Name *</div>
-                  <input
-                    type="text"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    placeholder="Full Name"
-                    className="w-full border rounded p-1.5 text-sm bg-white"
-                  />
-                </div>
-                <div>
-                  <div className="text-[10px] text-neutral-500 mb-0.5">Email *</div>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Email for receipt"
-                    className="w-full border rounded p-1.5 text-sm bg-white"
-                  />
-                </div>
                 <div>
                   <div className="text-[10px] text-neutral-500 mb-0.5">Street Address *</div>
                   <input
@@ -319,17 +294,14 @@ function AddressContent() {
                   {!canProceed && (
                     <div className="mt-3 p-2 rounded-xl border border-neutral-200 bg-white text-[11px] space-y-0.5">
                       <div className="font-medium text-neutral-600 mb-1">To reserve, complete:</div>
-                      <div className={hasName ? 'text-emerald-700' : 'text-red-600'}>
-                        {hasName ? '✓' : '○'} Full name (2+ characters)
-                      </div>
-                      <div className={hasEmail ? 'text-emerald-700' : 'text-red-600'}>
-                        {hasEmail ? '✓' : '○'} Valid email
-                      </div>
                       <div className={hasStreet ? 'text-emerald-700' : 'text-red-600'}>
                         {hasStreet ? '✓' : '○'} Street address
                       </div>
                       <div className={hasCity ? 'text-emerald-700' : 'text-red-600'}>
                         {hasCity ? '✓' : '○'} City
+                      </div>
+                      <div className={hasGoals ? 'text-emerald-700' : 'text-red-600'}>
+                        {hasGoals ? '✓' : '○'} Goals for this visit
                       </div>
                     </div>
                   )}
@@ -347,7 +319,7 @@ function AddressContent() {
                     {reserving ? 'Reserving…' : 'Reserve Slot & Proceed'}
                   </button>
                   <p className="text-[10px] text-neutral-500 mt-2 text-center">
-                    Pick a time above anytime — reserve unlocks once your details are complete.
+                    Pick a time above anytime — reserve unlocks once your address and visit goals are complete.
                   </p>
                 </>
               )}

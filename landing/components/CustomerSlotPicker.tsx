@@ -137,7 +137,7 @@ export function CustomerSlotPicker({
       </div>
 
       <div>
-        <div className="text-[10px] text-neutral-500 mb-0.5">Goals for this visit</div>
+        <div className="text-[10px] text-neutral-500 mb-0.5">Goals for this visit *</div>
         <select
           value={goalsChoice}
           onChange={(e) => setGoalsChoice(e.target.value)}

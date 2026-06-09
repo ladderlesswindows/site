@@ -18,10 +18,6 @@ export function calculateWindowBase(
   return windowCount * standardPricePerWindow;
 }
 
-export function formatWindowPrice(standardPrice: number = DEFAULT_WINDOW_PRICE): string {
-  return `${formatPriceAmount(standardPrice)} per qualifying window, 1st window $20 and 1 window minimum downtown, 2 minimum on East-Side, 3 minimum outskirts of town`;
-}
-
 export function formatWindowBaseSummary(
   windowCount: number,
   standardPricePerWindow: number = DEFAULT_WINDOW_PRICE
