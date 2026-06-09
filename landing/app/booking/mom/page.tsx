@@ -1,35 +1,16 @@
 "use client";
 
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import { Suspense, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { Suspense } from 'react';
 import { FlowBrandingHeader } from '@/components/FlowBrandingHeader';
 import { FlowPageLayout } from '@/components/FlowPageLayout';
 import {
-  isMomEasterEggZip,
   MOM_EASTER_EGG_HEADLINE,
   MOM_EASTER_EGG_ZIP,
 } from '@/lib/easterEggZips';
 
 function MomEasterEggContent() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const zip = searchParams.get('zip') || MOM_EASTER_EGG_ZIP;
-
-  useEffect(() => {
-    if (!isMomEasterEggZip(zip)) {
-      router.replace('/');
-    }
-  }, [zip, router]);
-
-  if (!isMomEasterEggZip(zip)) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-sm text-neutral-500">
-        Redirecting…
-      </div>
-    );
-  }
+  const zip = MOM_EASTER_EGG_ZIP;
 
   return (
     <div className="min-h-screen flex flex-col">

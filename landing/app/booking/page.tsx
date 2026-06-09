@@ -18,8 +18,9 @@ import { WindowQualifierDisclaimer } from '@/components/WindowQualifierDisclaime
 function BookingContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const zip = searchParams.get('zip') || '95060';
-  const momRedirecting = useMomEasterEggRedirect(zip);
+  const rawZip = searchParams.get('zip');
+  const momRedirecting = useMomEasterEggRedirect(rawZip);
+  const zip = rawZip || '95060';
   const windowsParam = searchParams.get('windows') || String(getMinWindows(zip));
   const initialWindows = clampWindowCount(zip, parseInt(windowsParam, 10) || getMinWindows(zip));
 

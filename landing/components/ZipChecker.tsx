@@ -4,15 +4,18 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getZipInfo, isPartialCoverage, getExampleZip, getMinWindows, getSuccessHeadline } from "./zipRegistry";
-import { isMomEasterEggZip, MOM_EASTER_EGG_PATH } from "@/lib/easterEggZips";
+import {
+  isMomEasterEggZip,
+  MOM_EASTER_EGG_PATH,
+  MOM_EASTER_EGG_ZIP,
+} from "@/lib/easterEggZips";
 import { calculateWindowBase, formatPriceAmount } from "./windowPricing";
 import { WindowQualifierDisclaimer } from "./WindowQualifierDisclaimer";
 
-function MomZipRedirect({ zip }: { zip: string }) {
-  const router = useRouter();
+function MomZipRedirect() {
   useEffect(() => {
-    router.push(`${MOM_EASTER_EGG_PATH}?zip=${zip}`);
-  }, [zip, router]);
+    window.location.assign(`${MOM_EASTER_EGG_PATH}?zip=${MOM_EASTER_EGG_ZIP}`);
+  }, []);
   return (
     <div className="text-center text-sm text-neutral-500 py-4">Redirecting…</div>
   );
@@ -62,7 +65,7 @@ export function ZipChecker({
 
     const trimmed = zipCode.trim();
     if (isMomEasterEggZip(trimmed)) {
-      router.push(`${MOM_EASTER_EGG_PATH}?zip=${trimmed}`);
+      window.location.assign(`${MOM_EASTER_EGG_PATH}?zip=${MOM_EASTER_EGG_ZIP}`);
       return;
     }
 
@@ -81,6 +84,7 @@ export function ZipChecker({
   const handleZipChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, "").slice(0, 5);
     setZipCode(value);
+    setIsSuccess(false);
     onZipChange?.(value);
     onClearForced?.();
   };
@@ -215,7 +219,7 @@ export function ZipChecker({
           onSetWindowCount={onSetWindowCount}
         />
       ) : isMomEasterEggZip(zipCode.trim()) ? (
-        <MomZipRedirect zip={zipCode.trim()} />
+        <MomZipRedirect />
       ) : (
         <div className="space-y-5 text-center pt-1">
           <div className="inline-flex items-center gap-2.5 rounded-2xl bg-amber-50 px-5 py-3 border border-amber-100 text-amber-800">
