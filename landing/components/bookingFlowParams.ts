@@ -1,4 +1,19 @@
+import { getMinWindows } from "@/components/zipRegistry";
+import { readPreviewSlot } from "@/lib/previewSlotStorage";
+
 export type ScreensChoice = "outside" | "fee" | "decide" | "";
+
+/** Canonical entry URL for a ZIP — home buttons and checker both use this */
+export function buildBookingEntryHref(zip: string, windowCount?: number): string {
+  const windows = windowCount ?? getMinWindows(zip);
+  const params = new URLSearchParams({
+    zip: zip.trim(),
+    windows: String(windows),
+  });
+  const slot = readPreviewSlot();
+  if (slot) params.set("slot", slot);
+  return `/booking?${params.toString()}`;
+}
 
 export function screensChoiceToReinstallFee(choice: ScreensChoice): boolean {
   return choice === "fee";

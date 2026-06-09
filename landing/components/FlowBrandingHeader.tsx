@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { buildBookingEntryHref } from "@/components/bookingFlowParams";
 import { getSuccessZips } from "./zipRegistry";
 
 type FlowBrandingHeaderProps = {
@@ -6,8 +7,6 @@ type FlowBrandingHeaderProps = {
   windows?: number;
   bookingPath?: string;
   showZipButtons?: boolean;
-  /** Home ZIP success — switch ZIP in place instead of navigating away */
-  onZipSelect?: (zip: string) => void;
 };
 
 export function FlowBrandingHeader({
@@ -15,7 +14,6 @@ export function FlowBrandingHeader({
   windows = 1,
   bookingPath = "/booking",
   showZipButtons = true,
-  onZipSelect,
 }: FlowBrandingHeaderProps) {
   const successZips = getSuccessZips();
 
@@ -32,22 +30,14 @@ export function FlowBrandingHeader({
         <div className="flex flex-nowrap gap-0.5 mb-2">
           {successZips.map((zip) => {
             const isActive = zip === currentZip;
-            if (onZipSelect) {
-              return (
-                <button
-                  key={zip}
-                  type="button"
-                  onClick={() => onZipSelect(zip)}
-                  className={zipButtonClass(isActive)}
-                >
-                  {zip}
-                </button>
-              );
-            }
             return (
               <Link
                 key={zip}
-                href={`${bookingPath}?zip=${zip}&windows=${windows}`}
+                href={
+                  bookingPath === "/booking"
+                    ? buildBookingEntryHref(zip, windows)
+                    : `${bookingPath}?zip=${zip}&windows=${windows}`
+                }
                 className={zipButtonClass(isActive)}
               >
                 {zip}

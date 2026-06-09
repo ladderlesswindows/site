@@ -6,7 +6,6 @@ import { useMomEasterEggRedirect } from "@/hooks/useMomEasterEggRedirect";
 import { isMomEasterEggZip, MOM_EASTER_EGG_HEADLINE } from "@/lib/easterEggZips";
 import { BookingCoverageNotesPanel } from "./BookingCoverageNotesPanel";
 import { PartialCoverageDetailsBox } from "./PartialCoverageDetailsBox";
-import { BackHomeLink } from "./BackHomeLink";
 import { MomLovePanel } from "./MomLovePanel";
 
 
@@ -99,8 +98,6 @@ export function BookingZipSuccess({
       </div>
 
       <BookingCoverageNotesPanel />
-
-      <BackHomeLink />
     </div>
   );
 }
