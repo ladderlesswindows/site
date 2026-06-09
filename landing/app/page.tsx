@@ -20,8 +20,8 @@ export default function LadderlessLanding() {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 px-5 pt-12 pb-12">
-        <div className="mx-auto w-full max-w-md">
-          <div className="cream-module mb-6">
+        <div className="mx-auto w-full max-w-md mb-6">
+          <div className="cream-module">
             <div className="relative mb-4">
               <img
                 src="/ll.jpg"
@@ -72,9 +72,11 @@ export default function LadderlessLanding() {
               </Link>
             </div>
           </div>
+        </div>
 
-          <CoverageModule />
+        <CoverageModule />
 
+        <div className="mx-auto w-full max-w-md">
           <p className="mt-8 text-center text-xs uppercase tracking-[2.5px] text-neutral-400 font-medium">
             Fully Insured • Vetted Technicians • Satisfaction Guaranteed
           </p>

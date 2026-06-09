@@ -49,7 +49,7 @@ export function ZipChecker({
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full">
       <form onSubmit={handleCheck} className="space-y-4">
         <div>
           <input

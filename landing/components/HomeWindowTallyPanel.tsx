@@ -21,7 +21,7 @@ export function HomeWindowTallyPanel({
   const additionalRate = formatPriceAmount(DEFAULT_WINDOW_PRICE);
 
   return (
-    <div className="cream-module-pad3 mt-4">
+    <div className="cream-module-pad3">
       <div className="text-[10px] uppercase tracking-wide text-neutral-500 text-center mb-1">
         Subtotal
       </div>
