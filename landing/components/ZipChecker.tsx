@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getExampleZip, getMinWindows } from "./zipRegistry";
 import { isMomEasterEggZip, MOM_EASTER_EGG_PATH, MOM_EASTER_EGG_ZIP } from "@/lib/easterEggZips";
@@ -9,14 +9,23 @@ import { buildBookingEntryHref } from "@/components/bookingFlowParams";
 type ZipCheckerProps = {
   windowCount?: number;
   onSetWindowCount?: (n: number) => void;
+  onZipChange?: (zip: string) => void;
 };
 
 /** Home ZIP input — always sends covered zips to /booking for the shared success page */
-export function ZipChecker({ windowCount = 1, onSetWindowCount }: ZipCheckerProps = {}) {
+export function ZipChecker({
+  windowCount = 1,
+  onSetWindowCount,
+  onZipChange,
+}: ZipCheckerProps = {}) {
   const router = useRouter();
   const exampleZip = getExampleZip();
   const [zipCode, setZipCode] = useState(exampleZip);
   const [isChecking, setIsChecking] = useState(false);
+
+  useEffect(() => {
+    onZipChange?.(zipCode);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isValidZip = /^\d{5}$/.test(zipCode.trim());
 
@@ -49,7 +58,11 @@ export function ZipChecker({ windowCount = 1, onSetWindowCount }: ZipCheckerProp
             inputMode="numeric"
             maxLength={5}
             value={zipCode}
-            onChange={(e) => setZipCode(e.target.value.replace(/\D/g, "").slice(0, 5))}
+            onChange={(e) => {
+              const value = e.target.value.replace(/\D/g, "").slice(0, 5);
+              setZipCode(value);
+              onZipChange?.(value);
+            }}
             placeholder={exampleZip}
             aria-label="ZIP code"
             className="w-full px-5 py-4 text-2xl font-semibold tracking-[2px] text-center border-2 border-neutral-300 rounded-2xl bg-white placeholder:text-neutral-400 focus:border-[#0f766e] focus:ring-0 transition-all"

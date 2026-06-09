@@ -1,11 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ZipChecker } from "./ZipChecker";
+import { HomeWindowTallyPanel } from "./HomeWindowTallyPanel";
+import { getMinWindows, getZipInfo } from "./zipRegistry";
 
 /** Home coverage checker — ZIP success lives on /booking, not inline */
 export default function CoverageModule() {
   const [windowCount, setWindowCount] = useState(1);
+  const [draftZip, setDraftZip] = useState("");
+
+  const zipInfo = getZipInfo(draftZip);
+  const minWindows = zipInfo ? getMinWindows(draftZip) : 1;
+
+  useEffect(() => {
+    if (!zipInfo) return;
+    setWindowCount((count) => Math.max(count, minWindows));
+  }, [draftZip, minWindows, zipInfo]);
 
   return (
     <div className="cream-module">
@@ -13,7 +24,17 @@ export default function CoverageModule() {
         Check if we serve your area
       </h2>
 
-      <ZipChecker windowCount={windowCount} onSetWindowCount={setWindowCount} />
+      <ZipChecker
+        windowCount={windowCount}
+        onSetWindowCount={setWindowCount}
+        onZipChange={setDraftZip}
+      />
+
+      <HomeWindowTallyPanel
+        windowCount={windowCount}
+        minWindows={minWindows}
+        onWindowCountChange={setWindowCount}
+      />
     </div>
   );
 }
