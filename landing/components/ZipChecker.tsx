@@ -10,7 +10,7 @@ import {
   MOM_EASTER_EGG_ZIP,
 } from "@/lib/easterEggZips";
 import { calculateWindowBase, formatPriceAmount } from "./windowPricing";
-import { WindowQualifierDisclaimer } from "./WindowQualifierDisclaimer";
+
 
 function MomZipRedirect() {
   useEffect(() => {
@@ -156,7 +156,6 @@ export function ZipChecker({
             </button>
           </div>
           <div className="text-lg font-semibold text-neutral-900 mt-2">{formatPriceAmount(subtotal)}</div>
-          <WindowQualifierDisclaimer className="mt-2" />
         </div>
       )}
 

@@ -7,6 +7,7 @@ import { FlowBrandingHeader } from '@/components/FlowBrandingHeader';
 import { FlowPageLayout } from '@/components/FlowPageLayout';
 import { BookingSubtotalPanel } from '@/components/BookingSubtotalPanel';
 import { BookingPricesPanel } from '@/components/BookingPricesPanel';
+import { BookingCoverageNotesPanel } from '@/components/BookingCoverageNotesPanel';
 import { BookingZipSuccess } from '@/components/BookingZipSuccess';
 import {
   buildBookingSearchParams,
@@ -16,7 +17,7 @@ import { bookingFlowHref } from '@/lib/easterEggZips';
 import { clampWindowCount, getMinWindows } from '@/components/zipRegistry';
 import { useMomEasterEggRedirect } from '@/hooks/useMomEasterEggRedirect';
 import { MOM_EASTER_EGG_ZIP } from '@/lib/easterEggZips';
-import { WindowQualifierDisclaimer } from '@/components/WindowQualifierDisclaimer';
+
 
 type BookingFlowContentProps = {
   basePath: '/booking' | '/booking/mom';
@@ -84,6 +85,7 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 px-5 pt-12 pb-12">
         <FlowPageLayout
+          leftPanel={!showQualifier ? <BookingCoverageNotesPanel /> : undefined}
           rightPanel={
             <div className="space-y-2">
               <BookingSubtotalPanel
@@ -147,8 +149,6 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
                       Please explain more first ..
                     </Link>
                   </div>
-
-                  <WindowQualifierDisclaimer />
 
                   <button
                     onClick={() => setShowQualifier(false)}

@@ -12,7 +12,7 @@ export function FlowPageLayout({ main, rightPanel, leftPanel }: FlowPageLayoutPr
     <div className="mx-auto w-full max-w-3xl">
       <div className="flex flex-col items-center gap-3 md:flex-row md:items-start md:justify-center">
         {leftPanel && (
-          <aside className="w-full md:w-40 md:flex-shrink-0 order-2 md:order-1">
+          <aside className="w-full md:w-44 md:flex-shrink-0 order-2 md:order-1">
             {leftPanel}
           </aside>
         )}

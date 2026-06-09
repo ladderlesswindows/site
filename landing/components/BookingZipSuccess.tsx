@@ -4,7 +4,7 @@ import Link from "next/link";
 import { getZipInfo, isPartialCoverage, getSuccessHeadline } from "./zipRegistry";
 import { useMomEasterEggRedirect } from "@/hooks/useMomEasterEggRedirect";
 import { isMomEasterEggZip, MOM_EASTER_EGG_HEADLINE } from "@/lib/easterEggZips";
-import { WindowQualifierDisclaimer } from "./WindowQualifierDisclaimer";
+
 
 type BookingZipSuccessProps = {
   zip: string;
@@ -87,8 +87,6 @@ export function BookingZipSuccess({
           Please explain more first ..
         </Link>
       </div>
-
-      <WindowQualifierDisclaimer />
 
       <Link href="/" className="block w-full text-sm text-neutral-500 py-2">
         ← Back
