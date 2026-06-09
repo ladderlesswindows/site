@@ -1,22 +1,31 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+function getSupabaseAdmin() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
-if (!supabaseUrl || !serviceRoleKey) {
-  throw new Error('Missing Supabase service role key. Add SUPABASE_SERVICE_ROLE_KEY to .env.local (get it from Supabase Dashboard > Project Settings > API > service_role key)')
+  if (!supabaseUrl || !serviceRoleKey) {
+    return null
+  }
+
+  return createClient(supabaseUrl, serviceRoleKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  })
 }
-
-const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
-  },
-})
 
 export async function POST() {
   try {
+    const supabaseAdmin = getSupabaseAdmin()
+    if (!supabaseAdmin) {
+      return NextResponse.json(
+        { error: 'Missing Supabase service role key. Add SUPABASE_SERVICE_ROLE_KEY to environment variables.' },
+        { status: 500 }
+      )
+    }
     // Delete all data (using .neq trick because PostgREST requires a filter for DELETE)
     await supabaseAdmin.from('bookings').delete().neq('id', '00000000-0000-0000-0000-000000000000')
     await supabaseAdmin.from('providers').delete().neq('id', '00000000-0000-0000-0000-000000000000')

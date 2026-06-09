@@ -1,7 +1,5 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -13,6 +11,8 @@ export async function POST(request: Request) {
       console.log('📧 RESEND_API_KEY not set — email would have been sent');
       return Response.json({ success: true, note: 'RESEND_API_KEY not set — only logged' });
     }
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     const to = customer_email || 'ascwindowcleaning@gmail.com';
     let subject = '';
