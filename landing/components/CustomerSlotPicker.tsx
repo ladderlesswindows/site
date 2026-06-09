@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from 'react';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import {
   AVAILABLE_TIMES,
   buildSelectedSlot,
@@ -9,11 +10,17 @@ import {
 } from '@/lib/bookingSlots';
 
 type CustomerSlotPickerProps = {
+  supabase: SupabaseClient | null;
+  providerId: string;
+  supabaseReady: boolean;
   onSlotChange?: (slot: string | null) => void;
   onNotesChange?: (notes: { arrivalNotes: string; goalsChoice: string }) => void;
 };
 
 export function CustomerSlotPicker({
+  supabase,
+  providerId,
+  supabaseReady,
   onSlotChange,
   onNotesChange,
 }: CustomerSlotPickerProps) {
@@ -37,9 +44,11 @@ export function CustomerSlotPicker({
   }, [arrivalNotes, goalsChoice, onNotesChange]);
 
   useEffect(() => {
+    if (!supabaseReady) return;
+
     let cancelled = false;
     setLoadingAvailability(true);
-    fetchBookedSlotKeys().then((set) => {
+    fetchBookedSlotKeys(supabase, providerId).then((set) => {
       if (!cancelled) {
         setBookedSet(set);
         setLoadingAvailability(false);
@@ -48,7 +57,7 @@ export function CustomerSlotPicker({
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [supabase, providerId, supabaseReady]);
 
   const isBooked = (date: string, time: string) => bookedSet.has(buildSelectedSlot(date, time));
 

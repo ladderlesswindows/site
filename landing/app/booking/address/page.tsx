@@ -12,8 +12,8 @@ import {
   parseScreenReinstall,
   type ScreensChoice,
 } from '@/components/bookingFlowParams';
-import { supabase } from '@/lib/supabase';
 import { reserveBookingSlot } from '@/lib/bookingSlots';
+import { useSupabase } from '@/hooks/useSupabase';
 import { getQualifier, DEFAULT_WINDOW_PRICE } from '@/components/qualifiers';
 import { calculateWindowBase } from '@/components/windowPricing';
 import { clampWindowCount, getMinWindows } from '@/components/zipRegistry';
@@ -21,6 +21,7 @@ import { clampWindowCount, getMinWindows } from '@/components/zipRegistry';
 function AddressContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { supabase, providerId, ready: supabaseReady } = useSupabase();
 
   const zip = searchParams.get('zip') || '95060';
   const windowsParam = searchParams.get('windows') || '1';
@@ -122,19 +123,23 @@ function AddressContent() {
     if (!canProceed || !selectedSlot || !supabase) return;
 
     setReserving(true);
-    const { data, error } = await reserveBookingSlot({
-      zip,
-      windowCount: windows,
-      screenReinstall,
-      qualifierCode,
-      name: '',
-      email: '',
-      address: addressSummary,
-      scheduledStart: selectedSlot,
-      estimatedPrice: total,
-      arrivalNotes: slotNotes.arrivalNotes || undefined,
-      goals: slotNotes.goalsChoice || undefined,
-    });
+    const { data, error } = await reserveBookingSlot(
+      supabase,
+      {
+        zip,
+        windowCount: windows,
+        screenReinstall,
+        qualifierCode,
+        name: '',
+        email: '',
+        address: addressSummary,
+        scheduledStart: selectedSlot,
+        estimatedPrice: total,
+        arrivalNotes: slotNotes.arrivalNotes || undefined,
+        goals: slotNotes.goalsChoice || undefined,
+      },
+      providerId
+    );
     setReserving(false);
 
     if (error) {
@@ -279,6 +284,10 @@ function AddressContent() {
                     Schedule
                   </button>
                 </>
+              ) : !supabaseReady ? (
+                <div className="mt-4 p-3 border border-neutral-200 bg-white rounded-xl text-xs text-neutral-600">
+                  Loading live availability…
+                </div>
               ) : !supabase ? (
                 <div className="mt-4 p-3 border border-amber-200 bg-amber-50 rounded-xl text-xs text-amber-900">
                   Supabase is not configured. For local dev, add credentials to repo-root{' '}
@@ -289,6 +298,9 @@ function AddressContent() {
               ) : (
                 <>
                   <CustomerSlotPicker
+                    supabase={supabase}
+                    providerId={providerId}
+                    supabaseReady={supabaseReady}
                     onSlotChange={handleSlotChange}
                     onNotesChange={handleNotesChange}
                   />

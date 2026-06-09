@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { PROVIDER_ID } from '@/lib/bookingConstants';
 
 export const AVAILABLE_TIMES = ['09:00', '11:00', '13:00', '15:00'] as const;
@@ -32,14 +32,17 @@ export function buildSelectedSlot(date: string, time: string): string {
   return `${date}T${time}`;
 }
 
-export async function fetchBookedSlotKeys(): Promise<Set<string>> {
+export async function fetchBookedSlotKeys(
+  client: SupabaseClient | null,
+  providerId: string = PROVIDER_ID
+): Promise<Set<string>> {
   const set = new Set<string>();
-  if (!supabase) return set;
+  if (!client) return set;
 
-  const { data, error } = await supabase
+  const { data, error } = await client
     .from('bookings')
     .select('scheduled_start, expires_at, status')
-    .eq('provider_id', PROVIDER_ID)
+    .eq('provider_id', providerId)
     .in('status', ['tentative', 'confirmed', 'blocked'])
     .gte('scheduled_start', new Date().toISOString());
 
@@ -76,17 +79,21 @@ export type ReserveBookingInput = {
   goals?: string;
 };
 
-export async function reserveBookingSlot(input: ReserveBookingInput) {
-  if (!supabase) {
+export async function reserveBookingSlot(
+  client: SupabaseClient | null,
+  input: ReserveBookingInput,
+  providerId: string = PROVIDER_ID
+) {
+  if (!client) {
     return { data: null, error: new Error('Supabase is not configured') };
   }
 
   const expiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString();
 
-  return supabase
+  return client
     .from('bookings')
     .insert({
-      provider_id: PROVIDER_ID,
+      provider_id: providerId,
       customer_name: input.name || 'Customer',
       customer_email: input.email || null,
       customer_phone: null,

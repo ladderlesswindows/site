@@ -4,7 +4,10 @@ import { loadEnvConfig } from "@next/env";
 
 // Monorepo layout: secrets live in repo-root .env.local, app runs from landing/
 const repoRoot = path.resolve(__dirname, "..");
-const { combinedEnv } = loadEnvConfig(repoRoot);
+const landingRoot = path.resolve(__dirname);
+const { combinedEnv: repoEnv } = loadEnvConfig(repoRoot);
+const { combinedEnv: landingEnv } = loadEnvConfig(landingRoot);
+const combinedEnv = { ...landingEnv, ...repoEnv };
 
 function publicEnv(key: keyof typeof combinedEnv): string {
   // Vercel injects process.env at build time; local dev uses repo-root .env.local via loadEnvConfig

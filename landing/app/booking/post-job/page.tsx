@@ -3,9 +3,10 @@
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
+import { useSupabase } from '@/hooks/useSupabase';
 
 function PostJobContent() {
+  const { supabase, ready: supabaseReady } = useSupabase();
   const searchParams = useSearchParams();
   const bookingId = searchParams.get('booking_id') || searchParams.get('id');
   const customerEmailParam = searchParams.get('email');
@@ -18,6 +19,8 @@ function PostJobContent() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
+    if (!supabaseReady) return;
+
     if (!supabase) {
       setLoading(false);
       return;
@@ -55,7 +58,7 @@ function PostJobContent() {
     };
 
     loadBooking();
-  }, [bookingId, customerEmailParam]);
+  }, [bookingId, customerEmailParam, supabase, supabaseReady]);
 
   const total = booking ? (booking.estimated_price || 0) + tip : 0;
 

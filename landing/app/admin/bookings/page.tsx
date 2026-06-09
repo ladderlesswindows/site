@@ -3,8 +3,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
-import { PROVIDER_ID } from '@/lib/bookingConstants';
+import { useSupabase } from '@/hooks/useSupabase';
 
 const AdminCalendar = dynamic(
   () => import('@/components/AdminCalendar').then((mod) => mod.AdminCalendar),
@@ -25,6 +24,7 @@ type Booking = {
 };
 
 export default function AdminBookings() {
+  const { supabase, providerId, ready: supabaseReady } = useSupabase();
   const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
@@ -39,7 +39,7 @@ export default function AdminBookings() {
     const { data, error } = await supabase
       .from('bookings')
       .select('*')
-      .eq('provider_id', PROVIDER_ID)
+      .eq('provider_id', providerId)
       .order('scheduled_start', { ascending: true });
 
     if (error) {
@@ -70,7 +70,7 @@ export default function AdminBookings() {
       setEvents(calendarEvents);
     }
     setLoading(false);
-  }, []);
+  }, [supabase, providerId]);
 
   useEffect(() => {
     if (localStorage.getItem('adminUnlocked') === 'true') {
@@ -79,7 +79,7 @@ export default function AdminBookings() {
   }, []);
 
   useEffect(() => {
-    if (!unlocked) return;
+    if (!unlocked || !supabaseReady) return;
 
     fetchBookings();
 
@@ -98,7 +98,7 @@ export default function AdminBookings() {
     return () => {
       if (supabase && channel) supabase.removeChannel(channel);
     };
-  }, [unlocked, fetchBookings]);
+  }, [unlocked, supabaseReady, fetchBookings]);
 
   const handleUnlock = (e: React.FormEvent) => {
     e.preventDefault();
@@ -179,7 +179,7 @@ export default function AdminBookings() {
     const duration_minutes = 480;
 
     const { data, error: insertError } = await supabase.from('bookings').insert({
-      provider_id: PROVIDER_ID,
+      provider_id: providerId,
       customer_name: 'John and Deb',
       scheduled_start,
       duration_minutes,
