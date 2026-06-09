@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { getZipInfo, isPartialCoverage, getSuccessHeadline } from "./zipRegistry";
+import { useMomEasterEggRedirect } from "@/hooks/useMomEasterEggRedirect";
 import { WindowQualifierDisclaimer } from "./WindowQualifierDisclaimer";
 
 type BookingZipSuccessProps = {
@@ -15,9 +16,17 @@ export function BookingZipSuccess({
   onStartBooking,
   explainHref,
 }: BookingZipSuccessProps) {
+  const momRedirecting = useMomEasterEggRedirect(zip);
   const zipInfo = getZipInfo(zip);
   const isPartial = isPartialCoverage(zip);
   const explanation = zipInfo?.explanation ?? "";
+
+  if (momRedirecting) {
+    return (
+      <div className="text-center text-sm text-neutral-500 py-4">Redirecting…</div>
+    );
+  }
+
   if (!zipInfo) {
     return (
       <div className="space-y-4 text-center">

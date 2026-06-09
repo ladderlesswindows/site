@@ -4,8 +4,19 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getZipInfo, isPartialCoverage, getExampleZip, getMinWindows, getSuccessHeadline } from "./zipRegistry";
+import { isMomEasterEggZip, MOM_EASTER_EGG_PATH } from "@/lib/easterEggZips";
 import { calculateWindowBase, formatPriceAmount } from "./windowPricing";
 import { WindowQualifierDisclaimer } from "./WindowQualifierDisclaimer";
+
+function MomZipRedirect({ zip }: { zip: string }) {
+  const router = useRouter();
+  useEffect(() => {
+    router.push(`${MOM_EASTER_EGG_PATH}?zip=${zip}`);
+  }, [zip, router]);
+  return (
+    <div className="text-center text-sm text-neutral-500 py-4">Redirecting…</div>
+  );
+}
 
 export function ZipChecker({ 
   onZipChange, 
@@ -49,15 +60,21 @@ export function ZipChecker({
 
     if (!isValidZip) return;
 
+    const trimmed = zipCode.trim();
+    if (isMomEasterEggZip(trimmed)) {
+      router.push(`${MOM_EASTER_EGG_PATH}?zip=${trimmed}`);
+      return;
+    }
+
     setIsChecking(true);
 
     // Brief delay, then go straight to the single-module booking page
-    const min = getMinWindows(zipCode.trim());
+    const min = getMinWindows(trimmed);
     onSetWindowCount?.(Math.max(windowCount, min));
 
     setTimeout(() => {
       const count = Math.max(windowCount, min);
-      router.push(`/booking?zip=${zipCode.trim()}&windows=${count}`);
+      router.push(`/booking?zip=${trimmed}&windows=${count}`);
     }, 180);
   };
 
@@ -197,6 +214,8 @@ export function ZipChecker({
           windowCount={windowCount}
           onSetWindowCount={onSetWindowCount}
         />
+      ) : isMomEasterEggZip(zipCode.trim()) ? (
+        <MomZipRedirect zip={zipCode.trim()} />
       ) : (
         <div className="space-y-5 text-center pt-1">
           <div className="inline-flex items-center gap-2.5 rounded-2xl bg-amber-50 px-5 py-3 border border-amber-100 text-amber-800">

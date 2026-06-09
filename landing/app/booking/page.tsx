@@ -12,12 +12,14 @@ import {
   screensChoiceToReinstallFee,
 } from '@/components/bookingFlowParams';
 import { clampWindowCount, getMinWindows } from '@/components/zipRegistry';
+import { useMomEasterEggRedirect } from '@/hooks/useMomEasterEggRedirect';
 import { WindowQualifierDisclaimer } from '@/components/WindowQualifierDisclaimer';
 
 function BookingContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const zip = searchParams.get('zip') || '95060';
+  const momRedirecting = useMomEasterEggRedirect(zip);
   const windowsParam = searchParams.get('windows') || String(getMinWindows(zip));
   const initialWindows = clampWindowCount(zip, parseInt(windowsParam, 10) || getMinWindows(zip));
 
@@ -28,9 +30,18 @@ function BookingContent() {
   const [screensChoice, setScreensChoice] = useState<"outside" | "fee" | "decide" | "">("");
 
   useEffect(() => {
+    if (momRedirecting) return;
     setWindowCount(initialWindows);
     setShowQualifier(false);
-  }, [zip, initialWindows]);
+  }, [zip, initialWindows, momRedirecting]);
+
+  if (momRedirecting) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-sm text-neutral-500">
+        Redirecting…
+      </div>
+    );
+  }
 
   const updateWindowCount = (count: number) => {
     const next = clampWindowCount(zip, count);
