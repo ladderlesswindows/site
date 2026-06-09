@@ -65,8 +65,6 @@ create policy "Allow anon update (demo)"
 Insert one provider row and copy its id into NEXT_PUBLIC_PROVIDER_ID.
 
 ## Client
-lib/supabase.ts uses the anon key for browser queries/inserts. The slot page falls back gracefully if env is missing.
+`hooks/useSupabase.ts` creates the browser client from build-time `NEXT_PUBLIC_*` vars or `/api/supabase-config` at runtime. Used by the slot picker, address step, admin calendar, and post-job page.
 
-See app/booking/slot/page.tsx and app/admin/bookings/page.tsx for usage.
-
-Keep policies minimal. Use the provider-app for real worker auth later.
+Keep policies minimal until real worker auth is added.

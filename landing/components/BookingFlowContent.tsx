@@ -144,7 +144,7 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
           onWindowCountChange={updateWindowCount}
           onSlotChange={syncPreviewSlot}
         >
-          <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
+          <div className="cream-module">
             <FlowBrandingHeader
               currentZip={zip}
               windows={windowCount}

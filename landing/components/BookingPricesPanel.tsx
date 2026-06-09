@@ -9,7 +9,7 @@ export function BookingPricesPanel() {
   const additionalRate = formatPriceAmount(DEFAULT_WINDOW_PRICE);
 
   return (
-    <div className="border border-neutral-200 rounded-3xl bg-cream p-3">
+    <div className="cream-module-pad3">
       <div className="text-[10px] uppercase tracking-wide text-neutral-500 text-center mb-2">
         Prices
       </div>

@@ -104,10 +104,10 @@ async function ensureProvider(supabase: SupabaseClient) {
 }
 
 async function main() {
-  const icsPath = path.join(process.cwd(), 'ladderless-provider-app', 'assets', ICS_FILENAME);
+  const icsPath = path.join(process.cwd(), 'assets', 'calendar', ICS_FILENAME);
   if (!fs.existsSync(icsPath)) {
     console.error('ICS file not found at', icsPath);
-    console.error('Export from Apple Calendar, then place the file at that path (or copy from Downloads).');
+    console.error('Export from Apple Calendar, then place the file at landing/assets/calendar/.');
     process.exit(1);
   }
 

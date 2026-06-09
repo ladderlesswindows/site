@@ -21,7 +21,7 @@ export default function LadderlessLanding() {
       <main className="flex-1 px-5 pt-12 pb-12">
         <div className={`mx-auto w-full ${coverageSuccess ? "max-w-5xl" : "max-w-md"}`}>
           {/* branding module: logo + "How?" marketing button (generic, not coverage-specific) */}
-          <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
+          <div className="cream-module mb-6">
             {/* logo with quick ZIP row overlaid inside the frame */}
             <div className="relative mb-4">
               <img

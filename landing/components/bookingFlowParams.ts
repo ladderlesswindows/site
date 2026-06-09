@@ -64,17 +64,3 @@ export function buildBookingSearchParams(input: {
   if (input.slot) params.set("slot", input.slot);
   return params.toString();
 }
-
-/** Query string for `/booking/slot` after address step. */
-export function buildSlotSearchParams(input: {
-  zip: string;
-  windows: number;
-  screenReinstall?: boolean;
-  screensChoice?: ScreensChoice;
-  qualifier?: string;
-  name: string;
-  address: string;
-  email: string;
-}): string {
-  return buildBookingSearchParams({ ...input, flow: "30s" });
-}

@@ -36,7 +36,7 @@ export default function CoverageModule({
       className={
         coverageSuccess
           ? "w-full"
-          : "border border-neutral-200 rounded-3xl bg-cream p-2"
+          : "cream-module"
       }
     >
       {!coverageSuccess && (

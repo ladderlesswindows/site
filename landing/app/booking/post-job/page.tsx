@@ -97,12 +97,12 @@ function PostJobContent() {
       <div className="min-h-screen flex flex-col">
         <main className="flex-1 px-5 pt-12 pb-12">
           <div className="mx-auto max-w-md">
-            <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
+            <div className="cream-module mb-6">
               <div className="flex justify-center mb-4">
                 <img src="/ll.jpg" alt="Ladderless Windows" className="w-full h-auto object-contain rounded-3xl" />
               </div>
             </div>
-            <div className="border border-neutral-200 rounded-3xl bg-cream p-6 text-center">
+            <div className="cream-module p-6 text-center">
               <h1 className="text-xl font-semibold mb-3">Job not found</h1>
               <p className="text-sm text-neutral-600 mb-4">
                 Please use the link from your email or text, or enter booking ID.
@@ -122,7 +122,7 @@ function PostJobContent() {
       <div className="min-h-screen flex flex-col">
         <main className="flex-1 px-5 pt-12 pb-12">
           <div className="mx-auto max-w-md text-center">
-            <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
+            <div className="cream-module mb-6">
               <div className="flex justify-center mb-4">
                 <img src="/ll.jpg" alt="Ladderless Windows" className="w-full h-auto object-contain rounded-3xl" />
               </div>
@@ -150,7 +150,7 @@ function PostJobContent() {
       <main className="flex-1 px-5 pt-12 pb-12">
         <div className="mx-auto max-w-md">
           {/* branding */}
-          <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
+          <div className="cream-module mb-6">
             <div className="flex justify-center mb-4">
               <img src="/ll.jpg" alt="Ladderless Windows" className="w-full h-auto object-contain rounded-3xl" />
             </div>
@@ -162,7 +162,7 @@ function PostJobContent() {
           </p>
 
           {/* Summary */}
-          <div className="border border-neutral-200 rounded-3xl bg-cream p-4 mb-6 text-sm">
+          <div className="cream-module p-4 mb-6 text-sm">
             <div>Base: ${booking.estimated_price || 0}</div>
             <div className="flex items-center gap-2 mt-2">
               Tip: $

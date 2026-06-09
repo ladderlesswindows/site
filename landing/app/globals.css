@@ -42,3 +42,18 @@ button:focus-visible {
   color: #0f766e;
 }
 
+/* Shared cream-bordered visual modules (home, booking flow, explain) */
+.cream-module {
+  border: 1px solid var(--color-neutral-200, #e5e5e5);
+  border-radius: 1.5rem;
+  background-color: var(--color-cream);
+  padding: 0.5rem;
+}
+
+.cream-module-pad3 {
+  border: 1px solid var(--color-neutral-200, #e5e5e5);
+  border-radius: 1.5rem;
+  background-color: var(--color-cream);
+  padding: 0.75rem;
+}
+

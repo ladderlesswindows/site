@@ -53,7 +53,7 @@ export function BookingSuccessFlowContent({ basePath }: BookingSuccessFlowConten
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 px-5 pt-12 pb-12">
         <div className="mx-auto max-w-md">
-          <div className="border border-neutral-200 rounded-3xl bg-cream p-2 mb-6">
+          <div className="cream-module mb-6">
             <div className="mb-2">
               <div className="hidden md:block">
                 <div className="flex justify-between">
@@ -75,7 +75,7 @@ export function BookingSuccessFlowContent({ basePath }: BookingSuccessFlowConten
             </div>
           </div>
 
-          <div className="border border-neutral-200 rounded-3xl bg-cream p-2">
+          <div className="cream-module">
             <div className="text-center py-2">
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-100 mb-3">
                 <svg
