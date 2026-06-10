@@ -57,3 +57,11 @@ button:focus-visible {
   padding: 0.75rem;
 }
 
+/* Home periphery panels — border only, no cream fill */
+.home-side-module {
+  border: 1px solid var(--color-neutral-200, #e5e5e5);
+  border-radius: 1.5rem;
+  background-color: transparent;
+  padding: 0.75rem;
+}
+

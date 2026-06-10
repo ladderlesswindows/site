@@ -8,7 +8,7 @@ import { BookingPreviewLayout } from '@/components/BookingPreviewLayout';
 
 import { BookingZipSuccess } from '@/components/BookingZipSuccess';
 import { ZipTerritoryImageModule } from '@/components/ZipTerritoryImageModule';
-import { QualifyingWindowSlideshow } from '@/components/QualifyingWindowSlideshow';
+import { HomeWindowExampleSlideshow } from '@/components/HomeWindowExampleSlideshow';
 import {
   buildBookingSearchParams,
   buildExplainHref,
@@ -17,6 +17,7 @@ import {
 } from '@/components/bookingFlowParams';
 import { bookingFlowHref } from '@/lib/easterEggZips';
 import { clampWindowCount, getMinWindows, getZipInfo } from '@/components/zipRegistry';
+import { hasHomeWindowExampleSlides } from '@/lib/homeWindowExampleSlides';
 import { useMomEasterEggRedirect } from '@/hooks/useMomEasterEggRedirect';
 import { isMomEasterEggZip, MOM_EASTER_EGG_ZIP } from '@/lib/easterEggZips';
 import { BackHomeLink } from '@/components/BackHomeLink';
@@ -153,8 +154,8 @@ export function BookingFlowContent({ basePath }: BookingFlowContentProps) {
           onSlotChange={syncPreviewSlot}
           showMomLovePanel={isMomFlow}
           leftPanelExtra={
-            !showQualifier && (getZipInfo(zip) || isMomFlow || isMomEasterEggZip(zip)) ? (
-              <QualifyingWindowSlideshow />
+            !showQualifier && hasHomeWindowExampleSlides(windowCount) ? (
+              <HomeWindowExampleSlideshow windowCount={windowCount} />
             ) : undefined
           }
         >

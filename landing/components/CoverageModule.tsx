@@ -5,6 +5,8 @@ import { FlowPageLayout } from "@/components/FlowPageLayout";
 import { HomeBrandingChrome } from "./HomeBrandingChrome";
 import { ZipChecker } from "./ZipChecker";
 import { HomeWindowTallyPanel } from "./HomeWindowTallyPanel";
+import { HomeWindowExampleSlideshow } from "./HomeWindowExampleSlideshow";
+import { HomeReviewsPanel } from "./HomeReviewsPanel";
 import { getMinWindows, getZipInfo } from "./zipRegistry";
 
 type CoverageModuleProps = {
@@ -24,15 +26,20 @@ export default function CoverageModule({ onOpenVideo }: CoverageModuleProps) {
     setWindowCount((count) => Math.max(count, minWindows));
   }, [draftZip, minWindows, zipInfo]);
 
-  const panelTop = "self-start w-full";
+  const panelTop = "w-full md:self-stretch";
+  const exampleSlideshow = (
+    <HomeWindowExampleSlideshow windowCount={windowCount} plainSurface />
+  );
 
   return (
     <FlowPageLayout
       containerClassName="mx-auto w-full max-w-5xl"
-      leftPanelClassName={`hidden md:block md:w-60 md:flex-shrink-0 md:order-1 ${panelTop}`}
-      mainClassName={`max-w-md flex-shrink-0 order-1 md:order-2 ${panelTop}`}
+      stretchSidePanels
+      leftPanelClassName={`hidden md:block md:w-44 md:flex-shrink-0 md:order-1 ${panelTop}`}
+      mainClassName={`max-w-md flex-shrink-0 order-1 md:order-2 md:self-start ${panelTop}`}
       rightPanelClassName={`md:w-44 md:flex-shrink-0 order-2 md:order-3 ${panelTop}`}
-      leftPanel={<div aria-hidden className="hidden md:block min-h-0" />}
+      mobileBottomPanel={exampleSlideshow}
+      leftPanel={<HomeReviewsPanel />}
       main={
         <div className="cream-module">
           <HomeBrandingChrome onOpenVideo={onOpenVideo} />
@@ -49,11 +56,14 @@ export default function CoverageModule({ onOpenVideo }: CoverageModuleProps) {
         </div>
       }
       rightPanel={
-        <HomeWindowTallyPanel
-          windowCount={windowCount}
-          minWindows={minWindows}
-          onWindowCountChange={setWindowCount}
-        />
+        <div className="flex h-full flex-col">
+          <HomeWindowTallyPanel
+            windowCount={windowCount}
+            minWindows={minWindows}
+            onWindowCountChange={setWindowCount}
+          />
+          <div className="hidden md:block">{exampleSlideshow}</div>
+        </div>
       }
     />
   );

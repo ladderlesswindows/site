@@ -40,6 +40,7 @@ export function BookingPreviewLayout({
       leftPanelClassName="w-full md:w-60 md:flex-shrink-0 order-3 md:order-1"
       mainClassName="w-full max-w-md flex-shrink-0 order-1 md:order-2"
       rightPanelClassName={`w-full md:flex-shrink-0 order-2 md:order-3 ${showMomLovePanel ? "md:w-52" : "md:w-44"}`}
+      mobileBottomPanel={leftPanelExtra}
       leftPanel={
         <div className="space-y-2">
           <BookingSchedulePanel
@@ -51,7 +52,7 @@ export function BookingPreviewLayout({
             selectedSlot={previewSlot}
             onSlotChange={onSlotChange}
           />
-          {leftPanelExtra}
+          {leftPanelExtra ? <div className="hidden md:block">{leftPanelExtra}</div> : null}
         </div>
       }
       rightPanel={

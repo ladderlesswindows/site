@@ -29,7 +29,7 @@ export const zipRegistry: ZipInfo[] = [
     zip: '95003',
     city: 'Aptos',
     coverage: 'partial',
-    minWindows: 2,
+    minWindows: 3,
     explanation: 'Currently only homes under 3 miles from your nearest HWY 1 offramp and under are covered',
   },
   {
@@ -53,6 +53,10 @@ export const zipRegistry: ZipInfo[] = [
 
 export const getMinWindows = (zip: string): number =>
   getZipInfo(zip)?.minWindows ?? DEFAULT_MIN_WINDOWS;
+
+/** ZIPs (and mom easter egg) where a single qualifying window can be booked. */
+export const allowsSingleWindowMinimum = (zip: string, isMomFlow = false): boolean =>
+  isMomFlow || getMinWindows(zip) === DEFAULT_MIN_WINDOWS;
 
 /** Clamp window count to this ZIP's minimum */
 export const clampWindowCount = (zip: string, count: number): number =>
