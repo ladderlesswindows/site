@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput, Pressable } from "react-native";
+import { View, Text, TextInput, Pressable, StyleSheet } from "react-native";
 import { Minus, Plus } from "lucide-react-native";
 
 interface NumberInputProps {
@@ -53,7 +53,7 @@ export function NumberInput({
             value={String(value)}
             onChangeText={handleTextChange}
             keyboardType="numeric"
-            className="text-center text-4xl font-bold text-slate-900"
+            style={styles.input}
             selectTextOnFocus
           />
         </View>
@@ -74,3 +74,12 @@ export function NumberInput({
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  input: {
+    textAlign: "center",
+    fontSize: 36,
+    fontWeight: "700",
+    color: "#0f172a",
+  },
+});
