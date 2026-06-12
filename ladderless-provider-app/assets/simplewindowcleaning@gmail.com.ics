@@ -1,0 +1,2239 @@
+BEGIN:VCALENDAR
+CALSCALE:GREGORIAN
+PRODID:-//Apple Inc.//macOS 26.5.1//EN
+VERSION:2.0
+X-APPLE-CALENDAR-COLOR:#9FE1E7
+X-WR-CALDESC:simplewindowcleaning@gmail.com
+X-WR-CALNAME:simplewindowcleaning@gmail.com
+BEGIN:VTIMEZONE
+TZID:America/Chicago
+BEGIN:DAYLIGHT
+DTSTART:20070311T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+TZNAME:CDT
+TZOFFSETFROM:-0600
+TZOFFSETTO:-0500
+END:DAYLIGHT
+BEGIN:STANDARD
+DTSTART:20071104T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+TZNAME:CST
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0600
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VTIMEZONE
+TZID:America/Los_Angeles
+BEGIN:DAYLIGHT
+DTSTART:20070311T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+TZNAME:PDT
+TZOFFSETFROM:-0800
+TZOFFSETTO:-0700
+END:DAYLIGHT
+BEGIN:STANDARD
+DTSTART:20071104T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+TZNAME:PST
+TZOFFSETFROM:-0700
+TZOFFSETTO:-0800
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+ATTENDEE;CN="aclockyeriii@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="aclockyeri
+ ii@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-NUM-GUESTS=0:mail
+ to:aclockyeriii@gmail.com
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CREATED:20230228T151926Z
+DESCRIPTION:AC Lockyer is inviting you to a scheduled Zoom meeting.<br><
+ br>Topic: Zoom w/ Chris Vinson<br>Time: Mar 22\, 2023 03:30 PM Eastern T
+ ime (US and Canada)<br><br>Join Zoom Meeting<br><a href="https://us02web
+ .zoom.us/j/82099595232?pwd=RjNqSWN0Z3drazljRHN1eXMxTVd6QT09">https://us0
+ 2web.zoom.us/j/82099595232?pwd=RjNqSWN0Z3drazljRHN1eXMxTVd6QT09</a><br><
+ br>Meeting ID: 820 9959 5232<br>Passcode: 610544<br>One tap mobile<br>+1
+ 3052241968\,\,82099595232#\,\,\,\,*610544# US<br>+16465588656\,\,8209959
+ 5232#\,\,\,\,*610544# US (New York)<br><br>Dial by your location<br>    
+     +1 305 224 1968 US<br>        +1 646 558 8656 US (New York)<br>     
+    +1 646 931 3860 US<br>        +1 301 715 8592 US (Washington DC)<br> 
+        +1 309 205 3325 US<br>        +1 312 626 6799 US (Chicago)<br>   
+      +1 507 473 4847 US<br>        +1 564 217 2000 US<br>        +1 669 
+ 444 9171 US<br>        +1 669 900 6833 US (San Jose)<br>        +1 689 2
+ 78 1000 US<br>        +1 719 359 4580 US<br>        +1 253 205 0468 US<b
+ r>        +1 253 215 8782 US (Tacoma)<br>        +1 346 248 7799 US (Hou
+ ston)<br>        +1 360 209 5623 US<br>        +1 386 347 5053 US<br>Mee
+ ting ID: 820 9959 5232<br>Passcode: 610544<br>Find your local number: <a
+  href="https://us02web.zoom.us/u/kdLlZ02aVa">https://us02web.zoom.us/u/k
+ dLlZ02aVa</a>
+DTEND;TZID=America/Los_Angeles:20230322T130000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20230322T123000
+LAST-MODIFIED:20230322T190158Z
+ORGANIZER;CN="aclockyeriii@gmail.com";EMAIL="aclockyeriii@gmail.com":mai
+ lto:aclockyeriii@gmail.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Zoom w/ Chris Vinson
+TRANSP:OPAQUE
+UID:5rtj3ufv8t66j41edtfi80tflq@google.com
+BEGIN:VALARM
+ACKNOWLEDGED:20230322T190012Z
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:5336E35B-2F2D-4BF2-BAEF-591C01DE3586
+X-WR-ALARMUID:5336E35B-2F2D-4BF2-BAEF-591C01DE3586
+END:VALARM
+BEGIN:VALARM
+ACTION:NONE
+TRIGGER;VALUE=DATE-TIME:19760401T005545Z
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="momenden@cabrillo.edu";CUTYPE=INDIVIDUAL;EMAIL="momenden@ca
+ brillo.edu";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-NUM-GUESTS=0:mailto
+ :momenden@cabrillo.edu
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT
+ ;X-NUM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CREATED:20230123T235940Z
+DESCRIPTION:-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:
+ ~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin Zoom Meeting\nhttps://us06web.zoom.us/
+ j/81758132842 (ID: 81758132842)\n\nJoin by phone\n(US) +1 301-715-8592\n
+ \nJoining instructions: https://www.google.com/url?q=https://application
+ s.zoom.us/addon/invitation/detail?meetingUuid%3DmjQLL9hCTjeXzHsM6r2UIA%2
+ 53D%253D%26signature%3Da0d8eea68ec1a188e20ca198010ab481b42c8394251554145
+ 25176ea4853638e%26v%3D1&sa=D&source=calendar&usg=AOvVaw0VdK9raFUP6_cLeoL
+ mhax1\n\nMeeting host: <a href="mailto:momenden@cabrillo.edu" target="_b
+ lank">momenden@cabrillo.edu</a><br /><br />Join Zoom Meeting: <br /><a h
+ ref="https://www.google.com/url?q=https://us06web.zoom.us/j/81758132842&
+ amp\;sa=D&amp\;source=calendar&amp\;usg=AOvVaw20P_erosSC-RWKR-8q2QbD" ta
+ rget="_blank">https://us06web.zoom.us/j/81758132842</a>\n\nPlease do not
+  edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~
+ :~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-
+DTEND;TZID=America/Los_Angeles:20230124T160000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20230124T153000
+LAST-MODIFIED:20230124T232431Z
+ORGANIZER;CN="momenden@cabrillo.edu";EMAIL="momenden@cabrillo.edu":mailt
+ o:momenden@cabrillo.edu
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Chris & Monica Zoom Check In
+TRANSP:OPAQUE
+UID:0t9hh081dhqac831lp626bfp5f@google.com
+BEGIN:VALARM
+ACKNOWLEDGED:20230124T232427Z
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:45068CCA-1718-4D0F-BB0A-006BB673A82B
+X-WR-ALARMUID:45068CCA-1718-4D0F-BB0A-006BB673A82B
+END:VALARM
+BEGIN:VALARM
+ACTION:NONE
+TRIGGER;VALUE=DATE-TIME:19760401T005545Z
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="aclockyeriii@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="aclockyeri
+ ii@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-NUM-GUESTS=0:mail
+ to:aclockyeriii@gmail.com
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT
+ ;X-NUM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CREATED:20230323T121754Z
+DESCRIPTION:AC Lockyer is inviting you to a scheduled Zoom meeting.<br><
+ br>Topic: Zoom w/ Chris Vinson<br>Time: Mar 30\, 2023 03:00 PM Eastern T
+ ime (US and Canada)<br><br>Join Zoom Meeting<br><a href="https://us02web
+ .zoom.us/j/88654050220?pwd=S04xdmY3OUNRQTBIY1NvVGZDNmxQdz09">https://us0
+ 2web.zoom.us/j/88654050220?pwd=S04xdmY3OUNRQTBIY1NvVGZDNmxQdz09</a><br><
+ br>Meeting ID: 886 5405 0220<br>Passcode: 853404<br>One tap mobile<br>+1
+ 3052241968\,\,88654050220#\,\,\,\,*853404# US<br>+13017158592\,\,8865405
+ 0220#\,\,\,\,*853404# US (Washington DC)<br><br>Dial by your location<br
+ >        +1 305 224 1968 US<br>        +1 301 715 8592 US (Washington DC
+ )<br>        +1 309 205 3325 US<br>        +1 312 626 6799 US (Chicago)<
+ br>        +1 646 558 8656 US (New York)<br>        +1 646 931 3860 US<b
+ r>        +1 253 215 8782 US (Tacoma)<br>        +1 346 248 7799 US (Hou
+ ston)<br>        +1 360 209 5623 US<br>        +1 386 347 5053 US<br>   
+      +1 507 473 4847 US<br>        +1 564 217 2000 US<br>        +1 669 
+ 444 9171 US<br>        +1 669 900 6833 US (San Jose)<br>        +1 689 2
+ 78 1000 US<br>        +1 719 359 4580 US<br>        +1 253 205 0468 US<b
+ r>Meeting ID: 886 5405 0220<br>Passcode: 853404<br>Find your local numbe
+ r: <a href="https://us02web.zoom.us/u/kcC43dm9Xm">https://us02web.zoom.u
+ s/u/kcC43dm9Xm</a>
+DTEND;TZID=America/Los_Angeles:20230330T130000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20230330T123000
+LAST-MODIFIED:20230330T182359Z
+ORGANIZER;CN="aclockyeriii@gmail.com";EMAIL="aclockyeriii@gmail.com":mai
+ lto:aclockyeriii@gmail.com
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Zoom w/ Chris Vinson
+TRANSP:OPAQUE
+UID:0onn6nqlvau7f61mvdk7u8i48g@google.com
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:1F5DF7A0-FE42-46D9-9681-C6DA3356DDE3
+X-WR-ALARMUID:1F5DF7A0-FE42-46D9-9681-C6DA3356DDE3
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT
+ ;X-NUM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CREATED:20230307T145828Z
+DESCRIPTION:Join from a PC\, Mac\, iPad\, iPhone or Android device:\n   
+  Please click this URL to join. https://howardpartridge.zoom.us/w/840608
+ 74911?tk=HfnIHRKslhGFfjxtcjKsCypH3y0Mvte6fGjVzUv6jfw.DQMAAAATkmsonxZSNkY
+ xNTFLWFNrU3locjRrMlRMeS13AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&uuid=WN_nq0z_dDk
+ RRSNSuxkrAoBWg\nDescription: The 14 fastest ways to the CA$H in any busi
+ ness…\n\nOr One tap mobile:\n    +16699006833\,\,84060874911# US (San Jo
+ se)\n    +16694449171\,\,84060874911# US\n\nOr join by phone:\n    Dial(
+ for higher quality\, dial a number based on your current location):\n   
+      US: +1 669 900 6833  or +1 669 444 9171  or +1 253 215 8782  or +1 
+ 346 248 7799  or +1 719 359 4580  or +1 253 205 0468  or +1 646 931 3860
+   or +1 689 278 1000  or +1 301 715 8592  or +1 305 224 1968  or +1 309 
+ 205 3325  or +1 312 626 6799  or +1 360 209 5623  or +1 386 347 5053  or
+  +1 507 473 4847  or +1 564 217 2000  or +1 646 876 9923 \n    Webinar I
+ D: 840 6087 4911\n    International numbers available: https://howardpar
+ tridge.zoom.us/u/kct1G2MtmT\n\n
+DTEND;TZID=America/Chicago:20230307T103000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Chicago:20230307T090000
+LAST-MODIFIED:20230307T145833Z
+LOCATION:https://howardpartridge.zoom.us/w/84060874911?tk=HfnIHRKslhGFfj
+ xtcjKsCypH3y0Mvte6fGjVzUv6jfw.DQMAAAATkmsonxZSNkYxNTFLWFNrU3locjRrMlRMeS
+ 13AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&uuid=WN_nq0z_dDkRRSNSuxkrAoBWg
+ORGANIZER;CN="Howard Partridge";EMAIL="no-reply@zoom.us":mailto:no-reply
+ @zoom.us
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:LIVE Marketing Training with Howard Partridge - The 14 fastest w
+ ays to the CA$H in any business…
+TRANSP:OPAQUE
+UID:b97kuj9o6go3cc1o6sq3ic9ha8r4cc9l655lgkrbadsmgshkdcp58j3p5lrg
+BEGIN:VALARM
+ACKNOWLEDGED:20230307T143827Z
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:32B4FD70-3657-40B6-B582-6E6E575901BF
+X-WR-ALARMUID:32B4FD70-3657-40B6-B582-6E6E575901BF
+END:VALARM
+BEGIN:VALARM
+ACTION:NONE
+TRIGGER;VALUE=DATE-TIME:19760401T005545Z
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20220728T144652Z
+DESCRIPTION:Event Name: Coaching Calls for New Taskers\nEvent Descriptio
+ n: New to TaskRabbit? Sign up for a 1x1 Coaching Call for newer Taskers 
+ who want personalized guidance on how to build their business on the pla
+ tform\, communicate with Clients\, and get advice about where demand is 
+ in their metro area. Come with questions!If you do not see any available
+  times\, please join us for a New Tasker Virtual Workshop where we cover
+  the same information to set you up for success! \nDate & Time: 09:40am 
+ - 10:00am (Pacific Time - US & Canada) on Thursday\, July 28\, 2022\n\nH
+ elp us prepare by telling us what topics you want to be covered during t
+ he call:: Help clients find me\n\nHow did you hear about the Coaching op
+ portunity?: Ap\n\nNeed to make changes to this event?\nCancel: https://c
+ alendly.com/cancellations/925ec8b2-eca3-4298-8406-1b56db6b3156\nReschedu
+ le: https://calendly.com/reschedulings/925ec8b2-eca3-4298-8406-1b56db6b3
+ 156\n
+DTEND;TZID=America/Los_Angeles:20220728T100000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20220728T094000
+LAST-MODIFIED:20220728T144652Z
+LOCATION:No location - we'll give you a call from +1 (206) 472-1603
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Coaching Calls for New Taskers with Ashlee J.
+TRANSP:OPAQUE
+UID:3619g6suhg5lughkk5q6dj92q9@google.com
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:ABA43A23-9DB4-44D4-97E8-6D56DA61D3AE
+X-WR-ALARMUID:ABA43A23-9DB4-44D4-97E8-6D56DA61D3AE
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="brgreens@cabrillo.edu";CUTYPE=INDIVIDUAL;EMAIL="brgreens@ca
+ brillo.edu";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-NUM-GUESTS=0:mailto
+ :brgreens@cabrillo.edu
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+ATTENDEE;CN="sstosto@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="sstosto@gmail.c
+ om";PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT;X-NUM-GUESTS=0:mailto:sst
+ osto@gmail.com
+CREATED:20231022T200649Z
+DESCRIPTION:Roof and Solar Array Cleaning Estimate
+DTEND;TZID=America/Los_Angeles:20231104T120000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20231104T110000
+LAST-MODIFIED:20231022T220722Z
+LOCATION:809C Lewis Road\, Royal Oaks
+ORGANIZER;CN="brgreens@cabrillo.edu";EMAIL="brgreens@cabrillo.edu":mailt
+ o:brgreens@cabrillo.edu
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Appt. w/Chris Vinson
+TRANSP:OPAQUE
+UID:1vl4fdeciqlk5sc3ejrvkik1v2@google.com
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:A43F7197-D6BE-4D69-A223-B05DC1754C8A
+X-WR-ALARMUID:A43F7197-D6BE-4D69-A223-B05DC1754C8A
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20240101T202803Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DNy-wZ_TmXYijjDNsVsxda-NBh
+ TotYhxFY\n
+DTEND;VALUE=DATE:20240117
+DTSTAMP:20260606T232641Z
+DTSTART;VALUE=DATE:20240115
+LAST-MODIFIED:20241012T005009Z
+LOCATION:Motel 6 South Lake Tahoe\, CA\, South Lake Tahoe
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Stay at Motel 6 South Lake Tahoe\, CA
+TRANSP:TRANSPARENT
+UID:7kukuqrfedlm2f9ta062ov99b2i96am0cb8utjhjah9ncp9lh1ceborthfpc3cm8f1i0
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT15H
+UID:25361B2F-508E-4ECD-BEAF-669071C5BFE4
+X-APPLE-DEFAULT-ALARM:TRUE
+X-WR-ALARMUID:25361B2F-508E-4ECD-BEAF-669071C5BFE4
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20240102T200527Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DOg9aASdGnEWE981_rn6iPGIXE
+ zuJ4FdxY\n
+DTEND;VALUE=DATE:20240106
+DTSTAMP:20260606T232641Z
+DTSTART;VALUE=DATE:20240104
+LAST-MODIFIED:20241012T005009Z
+LOCATION:Motel 6 South Lake Tahoe\, CA\, South Lake Tahoe
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Stay at Motel 6 South Lake Tahoe\, CA
+TRANSP:TRANSPARENT
+UID:7kukuqrfedlm2f9td8lj0thkmkp0ueoqseij47v0dmkqjmtrbv2lu32f0g49u3hq66k0
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT15H
+UID:AF5BD997-3EAF-4A95-BBAB-53F1B2D6932A
+X-APPLE-DEFAULT-ALARM:TRUE
+X-WR-ALARMUID:AF5BD997-3EAF-4A95-BBAB-53F1B2D6932A
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20240125T152131Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DM5w21DNExmljxzBfFdzWoIRTn
+ mAXo6cR0\n
+DTEND;VALUE=DATE:20240126
+DTSTAMP:20260606T232641Z
+DTSTART;VALUE=DATE:20240124
+LAST-MODIFIED:20241012T005008Z
+LOCATION:Motel 6 South Lake Tahoe\, CA\, South Lake Tahoe
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Stay at Motel 6 South Lake Tahoe\, CA
+TRANSP:TRANSPARENT
+UID:7kukuqrfedlm2f9tk4uhfqotbliu4ibq8rcrokeulgcr59j48ski5cfdp88utn4fchsg
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT15H
+UID:023E8F0B-48FE-48CA-861F-40E8A4AAAD08
+X-APPLE-DEFAULT-ALARM:TRUE
+X-WR-ALARMUID:023E8F0B-48FE-48CA-861F-40E8A4AAAD08
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20240125T152228Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DOtPIpCxpLmRhZzjHKRdtFFJOL
+ AdCtn2yk\n
+DTEND;VALUE=DATE:20240129
+DTSTAMP:20260606T232641Z
+DTSTART;VALUE=DATE:20240127
+LAST-MODIFIED:20241012T005009Z
+LOCATION:Motel 6 Carson City\, NV\, Carson City
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Stay at Motel 6 Carson City\, NV
+TRANSP:TRANSPARENT
+UID:7kukuqrfedlm2f9t03ijs4uskqo7v4os53mke1gseddn8745j8f31o9tvm5lms48k830
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT15H
+UID:05AE6A80-9D5B-4ED7-87DE-B59A31F07552
+X-APPLE-DEFAULT-ALARM:TRUE
+X-WR-ALARMUID:05AE6A80-9D5B-4ED7-87DE-B59A31F07552
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20240202T154255Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DOxe9EYIDlBAoxHrTbVDyyb9V9
+ bSmkxiNQ\n
+DTEND;VALUE=DATE:20240214
+DTSTAMP:20260606T232641Z
+DTSTART;VALUE=DATE:20240212
+LAST-MODIFIED:20241012T005009Z
+LOCATION:Motel 6 South Lake Tahoe\, CA\, South Lake Tahoe
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Stay at Motel 6 South Lake Tahoe\, CA
+TRANSP:TRANSPARENT
+UID:7kukuqrfedlm2f9t19vq2m9390st4vl0o287i7rnh4sauosscep53qicqj1g27r25at0
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT15H
+UID:FA03447A-8A66-45EE-8751-BBED52E9538E
+X-WR-ALARMUID:FA03447A-8A66-45EE-8751-BBED52E9538E
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT15H
+UID:A71CA47F-7CB9-4542-9210-054662C14DD1
+X-APPLE-DEFAULT-ALARM:TRUE
+X-WR-ALARMUID:A71CA47F-7CB9-4542-9210-054662C14DD1
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20240213T214937Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DPlUoekRmw50FIktMX27fbC2is
+ R6D6mFN8\n
+DTEND;VALUE=DATE:20240224
+DTSTAMP:20260606T232641Z
+DTSTART;VALUE=DATE:20240222
+LAST-MODIFIED:20241012T005009Z
+LOCATION:Motel 6 South Lake Tahoe\, CA\, South Lake Tahoe
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Stay at Motel 6 South Lake Tahoe\, CA
+TRANSP:TRANSPARENT
+UID:7kukuqrfedlm2f9t8mn85h5lhdlnmp7ar49gj2op7thlh0k51qgojp51d36717bmn7cg
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT15H
+UID:4A29AC08-6844-42E3-A18D-F1CE833CF34D
+X-WR-ALARMUID:4A29AC08-6844-42E3-A18D-F1CE833CF34D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT15H
+UID:391F53F2-B16F-4846-A13F-0D006AB0EA3B
+X-APPLE-DEFAULT-ALARM:TRUE
+X-WR-ALARMUID:391F53F2-B16F-4846-A13F-0D006AB0EA3B
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20240215T233535Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DOJfFO39xe_yFdsF1ZbKPZ1yIT
+ UrrSc2As\n
+DTEND;VALUE=DATE:20240302
+DTSTAMP:20260606T232641Z
+DTSTART;VALUE=DATE:20240229
+LAST-MODIFIED:20241012T005008Z
+LOCATION:Motel 6 South Lake Tahoe\, CA\, South Lake Tahoe
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Stay at Motel 6 South Lake Tahoe\, CA
+TRANSP:TRANSPARENT
+UID:7kukuqrfedlm2f9tmgkt8kap2gnjg6a5bb6alk126jbu0j3mbtprff8v47j75erj2ae0
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT15H
+UID:3B5B85DA-1028-45F7-A542-69411DF2DFCD
+X-WR-ALARMUID:3B5B85DA-1028-45F7-A542-69411DF2DFCD
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT15H
+UID:9B53422D-3E6E-42CC-B57D-6CE5CAA0D373
+X-APPLE-DEFAULT-ALARM:TRUE
+X-WR-ALARMUID:9B53422D-3E6E-42CC-B57D-6CE5CAA0D373
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20240225T185207Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DMVemTNANtkYgk_FifwB7kMoXr
+ voQH0SRc\n
+DTEND;VALUE=DATE:20240306
+DTSTAMP:20260606T232641Z
+DTSTART;VALUE=DATE:20240304
+LAST-MODIFIED:20241012T005009Z
+LOCATION:Motel 6 South Lake Tahoe\, CA\, South Lake Tahoe
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Stay at Motel 6 South Lake Tahoe\, CA
+TRANSP:TRANSPARENT
+UID:7kukuqrfedlm2f9t97tmfkkdt9j2vo3f2tn4j03pu7nd4gabb776a5u6fh399n9m1dv0
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT15H
+UID:360B9555-ED4D-438E-A0B2-BFC62025E89E
+X-WR-ALARMUID:360B9555-ED4D-438E-A0B2-BFC62025E89E
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT15H
+UID:829ADBE2-2C42-4400-B156-625016CCD2B9
+X-APPLE-DEFAULT-ALARM:TRUE
+X-WR-ALARMUID:829ADBE2-2C42-4400-B156-625016CCD2B9
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20240225T185053Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DPFiuTFh8CjeJzqg1TJaUY0DEn
+ MuCFvdzk\n
+DTEND;VALUE=DATE:20240305
+DTSTAMP:20260606T232641Z
+DTSTART;VALUE=DATE:20240303
+LAST-MODIFIED:20241012T005009Z
+LOCATION:Motel 6 South Lake Tahoe\, CA\, South Lake Tahoe
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Stay at Motel 6 South Lake Tahoe\, CA
+TRANSP:TRANSPARENT
+UID:7kukuqrfedlm2f9t6q7m7ak4bjpu76sbuelqo971rop577k15lblomrk8utqpfbinvkg
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT15H
+UID:20C1D65C-D932-49AA-8C53-38A4D1A77E39
+X-WR-ALARMUID:20C1D65C-D932-49AA-8C53-38A4D1A77E39
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT15H
+UID:FB7ADFC6-F54D-4D21-8852-B63124C38227
+X-APPLE-DEFAULT-ALARM:TRUE
+X-WR-ALARMUID:FB7ADFC6-F54D-4D21-8852-B63124C38227
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20240228T195815Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DPdEoGE5pUnnEwkp3WX1FJo0LN
+ eNCN8wTE\n
+DTEND;VALUE=DATE:20240304
+DTSTAMP:20260606T232641Z
+DTSTART;VALUE=DATE:20240302
+LAST-MODIFIED:20241012T005008Z
+LOCATION:Motel 6 Carson City\, NV\, Carson City
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Stay at Motel 6 Carson City\, NV
+TRANSP:TRANSPARENT
+UID:7kukuqrfedlm2f9tk5cufavnbdh71t24qm081rt314j261nik26dukltb3g32v1l1ong
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT15H
+UID:EE7DAA6E-2A91-479D-BD80-E03668CD1F80
+X-APPLE-DEFAULT-ALARM:TRUE
+X-WR-ALARMUID:EE7DAA6E-2A91-479D-BD80-E03668CD1F80
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20240228T213133Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DN9PdvkJ6WD6C5DjvKYjuX0xZ8
+ RwDLkg-Q\n
+DTEND;VALUE=DATE:20240304
+DTSTAMP:20260606T232641Z
+DTSTART;VALUE=DATE:20240302
+LAST-MODIFIED:20241012T005009Z
+LOCATION:Motel 6 South Lake Tahoe\, CA\, South Lake Tahoe
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Stay at Motel 6 South Lake Tahoe\, CA
+TRANSP:TRANSPARENT
+UID:7kukuqrfedlm2f9t3ja8ero323tuk0m2s0t780nuqjudem8694rnpgskr2mv9tgruam0
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT15H
+UID:095EBD29-E60B-4B83-B9D6-E06FA5F63E69
+X-APPLE-DEFAULT-ALARM:TRUE
+X-WR-ALARMUID:095EBD29-E60B-4B83-B9D6-E06FA5F63E69
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20240228T212839Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DMq34fmn2HkcnPxRcxy-aJ6ja-
+ kiXmGI2Q\n
+DTEND;VALUE=DATE:20240306
+DTSTAMP:20260606T232641Z
+DTSTART;VALUE=DATE:20240301
+LAST-MODIFIED:20241012T005009Z
+LOCATION:Motel 6 South Lake Tahoe\, CA\, South Lake Tahoe
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Stay at Motel 6 South Lake Tahoe\, CA
+TRANSP:TRANSPARENT
+UID:7kukuqrfedlm2f9t1c0999ivpm7t6tuvfmmm91nsbh6t239jguoi0f9ai0ac3be7pm80
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT15H
+UID:64A7D864-96B5-4070-8E2E-24B8051DF728
+X-APPLE-DEFAULT-ALARM:TRUE
+X-WR-ALARMUID:64A7D864-96B5-4070-8E2E-24B8051DF728
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20240307T161752Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DOhDS85szSr3XJDcRKdWAKlPVk
+ PA2WCeSs\n
+DTEND;VALUE=DATE:20240316
+DTSTAMP:20260606T232641Z
+DTSTART;VALUE=DATE:20240314
+LAST-MODIFIED:20241012T005008Z
+LOCATION:Motel 6 South Lake Tahoe\, CA\, South Lake Tahoe
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Stay at Motel 6 South Lake Tahoe\, CA
+TRANSP:TRANSPARENT
+UID:7kukuqrfedlm2f9tsqkag4nhadmuuq0d7q95r83jombacan7t1533l99m92j76lb9rl0
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT15H
+UID:2FC6E3E2-D803-48F2-9BC6-DB6B469B4322
+X-WR-ALARMUID:2FC6E3E2-D803-48F2-9BC6-DB6B469B4322
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT15H
+UID:0A30B17A-F5D7-4269-BCD2-689C02194E8C
+X-APPLE-DEFAULT-ALARM:TRUE
+X-WR-ALARMUID:0A30B17A-F5D7-4269-BCD2-689C02194E8C
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20240403T183321Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DNtnbFBal7dU64IZcUClOEDUmf
+ 4rytE7nE\n
+DTEND;VALUE=DATE:20240410
+DTSTAMP:20260606T232641Z
+DTSTART;VALUE=DATE:20240408
+LAST-MODIFIED:20241012T005009Z
+LOCATION:Motel 6 Reno – Livestock NV\, Reno
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Stay at Motel 6 Reno – Livestock NV
+TRANSP:TRANSPARENT
+UID:7kukuqrfedlm2f9t43dvsgaf2g50ap57h2rkkrm501479evgji3ua6qlt169mr99otmg
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT15H
+UID:EF46A5C5-41FE-475F-81F1-2DB0C2EC7B01
+X-WR-ALARMUID:EF46A5C5-41FE-475F-81F1-2DB0C2EC7B01
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT15H
+UID:F62746CE-ED86-463D-9329-52B988E0A27A
+X-APPLE-DEFAULT-ALARM:TRUE
+X-WR-ALARMUID:F62746CE-ED86-463D-9329-52B988E0A27A
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20241107T195812Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DP0TYiPoBj5APctDZCN64eg5cU
+ 0Um-_V34\n
+DTEND;VALUE=DATE:20241111
+DTSTAMP:20260606T232641Z
+DTSTART;VALUE=DATE:20241109
+LAST-MODIFIED:20251113T194322Z
+LOCATION:Motel 6 Belmont\, CA - San Francisco - Redwood City\, Belmont
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Stay at Motel 6 Belmont\, CA - San Francisco - Redwood City
+TRANSP:TRANSPARENT
+UID:jqf5ob94ok5ri4vv88cm73r5js@google.com
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT15H
+UID:1E6ADD07-B51B-4B37-A990-733A9A3472CA
+X-APPLE-DEFAULT-ALARM:TRUE
+X-WR-ALARMUID:1E6ADD07-B51B-4B37-A990-733A9A3472CA
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT7H
+UID:2F049C06-8205-4322-B9A2-8778CADEAB1B
+X-WR-ALARMUID:2F049C06-8205-4322-B9A2-8778CADEAB1B
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="Jennifer Pachter";CUTYPE=INDIVIDUAL;EMAIL="jennifer.pachter
+ @actionlink.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-NUM-GUESTS=0:m
+ ailto:jennifer.pachter@actionlink.com
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT
+ ;X-NUM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CREATED:20250206T170730Z
+DESCRIPTION:Event Name: Phone interview - Merchandising\n\nThis will be 
+ a 20-30 minute phone interview to discuss the details of our Merchandisi
+ ng position\, and answer any questions that you may have.\n\nLocation: +
+ 1 831-331-1133\n\nNeed to make changes to this event?\nCancel: https://c
+ alendly.com/cancellations/a03a6769-bc10-4422-b06a-f138228d8ea1\nReschedu
+ le: https://calendly.com/reschedulings/a03a6769-bc10-4422-b06a-f138228d8
+ ea1\n--\n\nCONFIDENTIALITY NOTICE: This e-mail message\, including any a
+ ttachments\, is for the sole use of the intended recipient(s) and may co
+ ntain confidential and privileged information or is otherwise protected 
+ by law. Any unauthorized review\, use\, disclosure or distribution is pr
+ ohibited. If you are not the intended recipient\, please contact the sen
+ der by reply e-mail and destroy all copies of the original message.\n\n
+DTEND;TZID=America/Chicago:20250206T150000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Chicago:20250206T143000
+LAST-MODIFIED:20250206T191055Z
+LOCATION:+1 831-331-1133
+ORGANIZER;CN="Jennifer Pachter";EMAIL="jennifer.pachter@actionlink.com":
+ mailto:jennifer.pachter@actionlink.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Chris Vinson and Jennifer Pachter - Actionlink Recruiter
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E00800000000F7F6A096B978DB01000000000000
+ 00001000000016E32E8397019D4091CC8CFC782380DE
+X-APPLE-NEEDS-REPLY:TRUE
+X-MICROSOFT-CDO-APPT-SEQUENCE:0
+X-MICROSOFT-CDO-BUSYSTATUS:TENTATIVE
+X-MICROSOFT-CDO-IMPORTANCE:1
+X-MICROSOFT-CDO-INSTTYPE:0
+X-MICROSOFT-CDO-INTENDEDSTATUS:BUSY
+X-MICROSOFT-CDO-OWNERAPPTID:2123510775
+X-MICROSOFT-DISALLOW-COUNTER:FALSE
+X-MICROSOFT-DONOTFORWARDMEETING:FALSE
+X-MICROSOFT-ISRESPONSEREQUESTED:TRUE
+X-MICROSOFT-LOCATIONDISPLAYNAME:+1 831-331-1133
+X-MICROSOFT-LOCATIONS:[{"DisplayName":"+1 831-331-1133"\,"LocationAnnota
+ tion":""\,"LocationUri":""\,"LocationStreet":""\,"LocationCity":""\,"Loc
+ ationState":""\,"LocationCountry":""\,"LocationPostalCode":""\,"Location
+ FullAddress":""}]
+X-MICROSOFT-LOCATIONSOURCE:None
+X-MICROSOFT-REQUESTEDATTENDANCEMODE:DEFAULT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:6A260DB5-25AE-4A20-8C0D-F09BE98531EA
+X-WR-ALARMUID:6A260DB5-25AE-4A20-8C0D-F09BE98531EA
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="Jazmine Smith";CUTYPE=INDIVIDUAL;EMAIL="jazmine.smith@actio
+ nlink.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-NUM-GUESTS=0:mailto:
+ jazmine.smith@actionlink.com
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT
+ ;X-NUM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CREATED:20250211T010041Z
+DESCRIPTION:Please be sure to have the two forms of Id with you for me t
+ o verify them on this call should only take us 2-3 minutes.\n\n\n\n_____
+ ________________________________________________________________________
+ ___\nMicrosoft Teams Need help?<https://aka.ms/JoinTeamsMeeting?omkt=en-
+ US>\nJoin the meeting now<https://teams.microsoft.com/l/meetup-join/19%3
+ ameeting_NzNkMzJhNDYtYWQ4NS00YmMzLTk0MmYtNmE3Y2MxNzkzMDQ4%40thread.v2/0?
+ context=%7b%22Tid%22%3a%22d2230df2-b78e-453f-a296-3e49ab3e72d9%22%2c%22O
+ id%22%3a%2223f15178-225a-4f30-844f-339586c9476c%22%7d>\nMeeting ID: 293 
+ 873 201 854\nPasscode: ah6hS6jo\n________________________________\nFor o
+ rganizers: Meeting options<https://teams.microsoft.com/meetingOptions/?o
+ rganizerId=23f15178-225a-4f30-844f-339586c9476c&tenantId=d2230df2-b78e-4
+ 53f-a296-3e49ab3e72d9&threadId=19_meeting_NzNkMzJhNDYtYWQ4NS00YmMzLTk0Mm
+ YtNmE3Y2MxNzkzMDQ4@thread.v2&messageId=0&language=en-US>\n[https://actio
+ nlink.com/images/Actionlink_logo.png]\nOrg help<https://helpdesk.actionl
+ ink.com>\n______________________________________________________________
+ __________________\n--\n\nCONFIDENTIALITY NOTICE: This e-mail message\, 
+ including any attachments\, is for the sole use of the intended recipien
+ t(s) and may contain confidential and privileged information or is other
+ wise protected by law. Any unauthorized review\, use\, disclosure or dis
+ tribution is prohibited. If you are not the intended recipient\, please 
+ contact the sender by reply e-mail and destroy all copies of the origina
+ l message.\n\n
+DTEND;TZID=America/Los_Angeles:20250211T090000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20250211T083000
+LAST-MODIFIED:20250211T162551Z
+LOCATION:Microsoft Teams Meeting
+ORGANIZER;CN="Jazmine Smith";EMAIL="jazmine.smith@actionlink.com":mailto
+ :jazmine.smith@actionlink.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:ID verification for I9 
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E008000000008466B758207CDB01000000000000
+ 00001000000018EEC325F08A8C41ADB9174C2911BDEA
+X-APPLE-NEEDS-REPLY:TRUE
+X-MICROSOFT-CDO-APPT-SEQUENCE:0
+X-MICROSOFT-CDO-BUSYSTATUS:TENTATIVE
+X-MICROSOFT-CDO-IMPORTANCE:1
+X-MICROSOFT-CDO-INSTTYPE:0
+X-MICROSOFT-CDO-INTENDEDSTATUS:BUSY
+X-MICROSOFT-CDO-OWNERAPPTID:2123518852
+X-MICROSOFT-DISALLOW-COUNTER:FALSE
+X-MICROSOFT-DONOTFORWARDMEETING:FALSE
+X-MICROSOFT-ISRESPONSEREQUESTED:TRUE
+X-MICROSOFT-LOCATIONDISPLAYNAME:Microsoft Teams Meeting
+X-MICROSOFT-LOCATIONS:[{"DisplayName":"Microsoft Teams Meeting"\,"Locati
+ onAnnotation":""\,"LocationUri":""\,"LocationStreet":""\,"LocationCity":
+ ""\,"LocationState":""\,"LocationCountry":""\,"LocationPostalCode":""\,"
+ LocationFullAddress":""}]
+X-MICROSOFT-LOCATIONSOURCE:None
+X-MICROSOFT-ONLINEMEETINGINFORMATION:{"OnlineMeetingChannelId":null\,"On
+ lineMeetingProvider":3}
+X-MICROSOFT-REQUESTEDATTENDANCEMODE:DEFAULT
+X-MICROSOFT-SCHEDULINGSERVICEUPDATEURL:https://api.scheduler.teams.micro
+ soft.com/teams/d2230df2-b78e-453f-a296-3e49ab3e72d9/23f15178-225a-4f30-8
+ 44f-339586c9476c/19_meeting_NzNkMzJhNDYtYWQ4NS00YmMzLTk0MmYtNmE3Y2MxNzkz
+ MDQ4@thread.v2/0
+X-MICROSOFT-SKYPETEAMSMEETINGURL:https://teams.microsoft.com/l/meetup-jo
+ in/19%3ameeting_NzNkMzJhNDYtYWQ4NS00YmMzLTk0MmYtNmE3Y2MxNzkzMDQ4%40threa
+ d.v2/0?context=%7b%22Tid%22%3a%22d2230df2-b78e-453f-a296-3e49ab3e72d9%22
+ %2c%22Oid%22%3a%2223f15178-225a-4f30-844f-339586c9476c%22%7d
+X-MICROSOFT-SKYPETEAMSPROPERTIES:{"cid":"19:meeting_NzNkMzJhNDYtYWQ4NS00
+ YmMzLTk0MmYtNmE3Y2MxNzkzMDQ4@thread.v2"\,"rid":0\,"mid":0\,"uid":null\,"
+ private":true\,"type":0\,"ct":null\,"btid":null}
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:6E5795EC-6D03-41D8-9ED0-706C641FE3A1
+X-WR-ALARMUID:6E5795EC-6D03-41D8-9ED0-706C641FE3A1
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20250815T174950Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DOHIxzoBdqRhTVtUAUHJ5tnhA_
+ QwO4tjl4\n
+DTEND;TZID=America/Los_Angeles:20250815T161000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20250815T151000
+LAST-MODIFIED:20250815T180620Z
+LOCATION:Quest Diagnostics\, 4340 Scotts Valley Dr\, Ste F\, Scotts Vall
+ ey\, CA 95066-4541
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Quest Diagnostics appointment
+TRANSP:TRANSPARENT
+UID:qi336k25cmusdu7fnjl272kfk4@google.com
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:D47AD8DA-1C7E-410F-A2AD-B4B26EB7CC1B
+X-WR-ALARMUID:D47AD8DA-1C7E-410F-A2AD-B4B26EB7CC1B
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20250829T010417Z
+DTEND;TZID=America/Los_Angeles:20250915T190000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20250915T180000
+LAST-MODIFIED:20250829T010417Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Casey chamberlain accu 8:30 at scch 
+TRANSP:OPAQUE
+UID:8F6BDE64-E61A-4211-BA3B-045F49C1CC74
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:B86165BC-0E64-43E3-81F1-54DF84712ECE
+X-WR-ALARMUID:B86165BC-0E64-43E3-81F1-54DF84712ECE
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20250829T010217Z
+DTEND;TZID=America/Los_Angeles:20250929T190000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20250929T180000
+LAST-MODIFIED:20250829T010217Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:5pm karagiannis 
+TRANSP:OPAQUE
+UID:F073A4EA-633D-4B03-84FF-E3B09AA55082
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:E91BB8E5-1C2B-48B3-8AE1-A8E4E55BE502
+X-WR-ALARMUID:E91BB8E5-1C2B-48B3-8AE1-A8E4E55BE502
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20250902T204809Z
+DTEND;TZID=America/Los_Angeles:20250908T140000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20250908T130000
+LAST-MODIFIED:20250902T204810Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:SSI 9am
+TRANSP:OPAQUE
+UID:B242AA01-CA20-46FC-BD79-BFCA283A31E3
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:C1F1D8CC-BA9A-4783-BB8D-EA8DE26F1987
+X-WR-ALARMUID:C1F1D8CC-BA9A-4783-BB8D-EA8DE26F1987
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20250902T204342Z
+DTEND;TZID=America/Los_Angeles:20250811T140000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20250811T130000
+LAST-MODIFIED:20250902T204343Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:9am SSI 
+TRANSP:OPAQUE
+UID:414EAD88-78B9-48C6-BB9C-E78A2E2ED61D
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:B265BB49-FF3B-49F4-B3CF-4E037A2D4DF3
+X-WR-ALARMUID:B265BB49-FF3B-49F4-B3CF-4E037A2D4DF3
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20250904T172755Z
+DTEND;TZID=America/Los_Angeles:20250916T110000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20250916T100000
+LAST-MODIFIED:20250904T172756Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Dav by Thursday 
+TRANSP:OPAQUE
+UID:A7E7624B-4CF2-4226-AB82-4E6DE628E89E
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:33BD394E-A1FB-4B45-A79E-5C8527D50265
+X-WR-ALARMUID:33BD394E-A1FB-4B45-A79E-5C8527D50265
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20250905T025236Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DPkhejcZTQAC_Gz5pY99UBlexi
+ -kaLmJJg\n
+DTEND;TZID=America/Los_Angeles:20250905T163000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20250905T153000
+LAST-MODIFIED:20250905T025236Z
+LOCATION:Quest Diagnostics\, 1595 Soquel Drive\, Suite 100\, Santa Cruz\
+ , CA 95065-1720
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Quest Diagnostics appointment
+TRANSP:TRANSPARENT
+UID:f26e2t65rffl97rgd5akasm7qo@google.com
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:6A2B99A3-50D9-4433-8218-17F8480D332B
+X-WR-ALARMUID:6A2B99A3-50D9-4433-8218-17F8480D332B
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20250906T161732Z
+DTEND;TZID=America/Los_Angeles:20250923T100000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20250923T090000
+LAST-MODIFIED:20250906T161733Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Edd phone 10-12
+TRANSP:OPAQUE
+UID:9D447281-0278-415D-9FEE-AFF75E4BBCDE
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:F7BCEB1C-ECAC-4C5D-900F-450EB708FE59
+X-WR-ALARMUID:F7BCEB1C-ECAC-4C5D-900F-450EB708FE59
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20250911T212244Z
+DTEND;TZID=America/Los_Angeles:20250922T150000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20250922T140000
+LAST-MODIFIED:20250911T212244Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Dr appt 4:20
+TRANSP:OPAQUE
+UID:5A87E9E3-0F9D-4AE3-8AAF-FF8B09E4D6AC
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:1BB90D3F-1B36-4CC3-8DD9-96D4C26C00DC
+X-WR-ALARMUID:1BB90D3F-1B36-4CC3-8DD9-96D4C26C00DC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+ATTENDEE;CN="simplewindowcleaning@gmail.com";CUTYPE=INDIVIDUAL;EMAIL="si
+ mplewindowcleaning@gmail.com";PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT;X-N
+ UM-GUESTS=0:mailto:simplewindowcleaning@gmail.com
+CLASS:PRIVATE
+CREATED:20250926T203712Z
+DESCRIPTION:To see detailed information for automatically created events
+  like this one\, use the official Google Calendar app. https://g.co/cale
+ ndar\n\nThis event was created from an email you received in Gmail. http
+ s://mail.google.com/mail?extsrc=cal&plid=ACUX6DOW_TnfK38ZMQsFpvBnDBeMSHu
+ Fe43jJ2M\n
+DTEND;TZID=America/Los_Angeles:20250926T152000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20250926T142000
+LAST-MODIFIED:20250926T203712Z
+LOCATION:Quest Diagnostics\, 4340 Scotts Valley Dr\, Ste F\, Scotts Vall
+ ey\, CA 95066-4541
+ORGANIZER;CN="Unknown Organizer";EMAIL="unknownorganizer@calendar.google
+ .com":mailto:unknownorganizer@calendar.google.com
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Quest Diagnostics appointment
+TRANSP:TRANSPARENT
+UID:plas62rngmatupcsbmklchm2p8@google.com
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:57FF7F82-008D-4BC2-A3AD-ABEE9E0A14EC
+X-WR-ALARMUID:57FF7F82-008D-4BC2-A3AD-ABEE9E0A14EC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20250930T013854Z
+DTEND;TZID=America/Los_Angeles:20251001T190000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20251001T180000
+LAST-MODIFIED:20250930T013854Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:10 eyes 
+TRANSP:OPAQUE
+UID:098A8952-7CA1-4C57-BFA0-DD34EAB86DB6
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:E2EDB2F2-3992-478A-860B-AA4D6D00DC02
+X-WR-ALARMUID:E2EDB2F2-3992-478A-860B-AA4D6D00DC02
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20250930T013759Z
+DTEND;TZID=America/Los_Angeles:20251003T190000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20251003T180000
+LAST-MODIFIED:20250930T013759Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:2pm ultrasound 
+TRANSP:OPAQUE
+UID:77ADD221-D5AD-4042-9172-56CFEEA68660
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:43F4F641-998C-4928-A564-C4D1F4785763
+X-WR-ALARMUID:43F4F641-998C-4928-A564-C4D1F4785763
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20250930T013924Z
+DTEND;TZID=America/Los_Angeles:20251106T190000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20251106T180000
+LAST-MODIFIED:20250930T013925Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:5:40 Dr phone 
+TRANSP:OPAQUE
+UID:A31A5E10-60B5-4254-A26F-1152B9CAFCEF
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:A8B4DBBC-C971-4827-98E4-1708E7764FD9
+X-WR-ALARMUID:A8B4DBBC-C971-4827-98E4-1708E7764FD9
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20251007T182058Z
+DTEND;TZID=America/Los_Angeles:20251016T120000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20251016T110000
+LAST-MODIFIED:20251007T182059Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Yates gutters 23420 sunlit Dr noon 
+TRANSP:OPAQUE
+UID:332BAFAA-41B3-4C8E-AAE6-8DCCF0DA9DDC
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:FFD771C7-5D50-440F-B5AD-E45ABE679A53
+X-WR-ALARMUID:FFD771C7-5D50-440F-B5AD-E45ABE679A53
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20251009T212928Z
+DTEND;TZID=America/Los_Angeles:20251106T150000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20251106T140000
+LAST-MODIFIED:20251009T212929Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Gigi
+TRANSP:OPAQUE
+UID:25861561-DE5F-4450-BE19-4B7674CDC00B
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:4BD6D098-612C-4550-ACC3-53B724A18CEF
+X-WR-ALARMUID:4BD6D098-612C-4550-ACC3-53B724A18CEF
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20251016T224924Z
+DTEND;TZID=America/Los_Angeles:20251020T160000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20251020T150000
+LAST-MODIFIED:20251016T224924Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Noon Yates 2 Santa Ana 
+TRANSP:OPAQUE
+UID:59247B82-BD1E-410A-A6B7-BF1F19CE3EC5
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:D1D027B7-B91A-4739-B1D3-F323716E3552
+X-WR-ALARMUID:D1D027B7-B91A-4739-B1D3-F323716E3552
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20251020T152348Z
+DTEND;TZID=America/Los_Angeles:20251029T090000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20251029T080000
+LAST-MODIFIED:20251020T152349Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Zoom mont and dav 
+TRANSP:OPAQUE
+UID:1228AE2D-45F8-4F20-AA44-6E18AB1FE905
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:61D3B665-43D0-4A41-9E35-A703239D2636
+X-WR-ALARMUID:61D3B665-43D0-4A41-9E35-A703239D2636
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20251106T210423Z
+DTEND;TZID=America/Los_Angeles:20251117T140000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20251117T130000
+LAST-MODIFIED:20251117T203022Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:11am emeline in person calfresh 
+TRANSP:OPAQUE
+UID:847B870F-BF19-4E3C-883C-64323AEF9685
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:840E6392-96EB-4A0B-A3E2-787624562159
+X-WR-ALARMUID:840E6392-96EB-4A0B-A3E2-787624562159
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20251107T185332Z
+DTEND;TZID=America/Los_Angeles:20251121T110000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20251121T100000
+LAST-MODIFIED:20251121T173250Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:2pm scch tracy 
+TRANSP:OPAQUE
+UID:92C3595F-9203-487D-B5AE-F4B80542DFEA
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:45B00495-24E9-466F-AEF4-2C791C143D0E
+X-WR-ALARMUID:45B00495-24E9-466F-AEF4-2C791C143D0E
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20251121T221759Z
+DTEND;TZID=America/Los_Angeles:20251205T150000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20251205T140000
+LAST-MODIFIED:20251121T221759Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:10am Tracy 
+TRANSP:OPAQUE
+UID:9A018D00-36B4-431B-BB6E-1840F9A7B9D0
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:A42C4FBD-6204-4481-AAC3-215F551D0C36
+X-WR-ALARMUID:A42C4FBD-6204-4481-AAC3-215F551D0C36
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20251205T182209Z
+DTEND;TZID=America/Los_Angeles:20251223T110000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20251223T100000
+LAST-MODIFIED:20251205T182209Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:30 minute Tracy 
+TRANSP:OPAQUE
+UID:3A2A36FC-6A29-4C19-801F-C959A4E94082
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:67ECD830-34E6-42BD-855B-C4B63641A217
+X-WR-ALARMUID:67ECD830-34E6-42BD-855B-C4B63641A217
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20251205T183450Z
+DTEND;TZID=America/Los_Angeles:20251217T110000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20251217T100000
+LAST-MODIFIED:20251205T183450Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:2:40 phone Garza 
+TRANSP:OPAQUE
+UID:95E9AC39-7256-4651-8DB9-3987EAEBF3B6
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:037305DA-4352-4685-9703-DF109DAF7CFA
+X-WR-ALARMUID:037305DA-4352-4685-9703-DF109DAF7CFA
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20251209T021221Z
+DTEND;TZID=America/Los_Angeles:20251218T190000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20251218T180000
+LAST-MODIFIED:20251209T021221Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Dav
+TRANSP:OPAQUE
+UID:F876D69D-FA4B-44B0-B6EC-BA119D5C5FB0
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:9A6476CC-F691-4602-AD8D-1B1B85E8DDD8
+X-WR-ALARMUID:9A6476CC-F691-4602-AD8D-1B1B85E8DDD8
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20251218T001841Z
+DTEND;TZID=America/Los_Angeles:20260119T170000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260119T160000
+LAST-MODIFIED:20251218T001841Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:12:20 Dr k
+TRANSP:OPAQUE
+UID:699AF766-7BA9-47BA-A877-EF1101792C82
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:79FC401E-8EA2-45BD-9E83-57DDFAC0D589
+X-WR-ALARMUID:79FC401E-8EA2-45BD-9E83-57DDFAC0D589
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20251222T190722Z
+DTEND;TZID=America/Los_Angeles:20251223T123000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20251223T113000
+LAST-MODIFIED:20251222T190749Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Dentist 
+TRANSP:OPAQUE
+UID:89DCF729-89E5-4898-A439-CD016E6F6BB8
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:489FAF1B-3292-4B43-8ECD-4849EE248FFA
+X-WR-ALARMUID:489FAF1B-3292-4B43-8ECD-4849EE248FFA
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20251223T182843Z
+DTEND;TZID=America/Los_Angeles:20260113T110000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260113T100000
+LAST-MODIFIED:20251223T182844Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:10am live oak Tracy 
+TRANSP:OPAQUE
+UID:A91BCE2B-D3DD-41F7-AB96-2078629898BC
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:ABC1D15A-4850-4BCB-A487-A5F6A820DE94
+X-WR-ALARMUID:ABC1D15A-4850-4BCB-A487-A5F6A820DE94
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260127T211621Z
+DTEND;TZID=America/Los_Angeles:20260203T140000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260203T130000
+LAST-MODIFIED:20260127T211621Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:10am downstairs Tracy 
+TRANSP:OPAQUE
+UID:0E978660-FE0F-48FF-A226-4726B84DA2FB
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:49A6F539-0999-4519-855B-5DA7F480DEC7
+X-WR-ALARMUID:49A6F539-0999-4519-855B-5DA7F480DEC7
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260126T165741Z
+DTEND;TZID=America/Los_Angeles:20260209T090000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260209T080000
+LAST-MODIFIED:20260126T165742Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:2:30 wah 
+TRANSP:OPAQUE
+UID:9D45E2BF-6D01-4D39-968F-228C402448BE
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:EFA9EDDC-459E-4997-9519-05D4EEF162CD
+X-WR-ALARMUID:EFA9EDDC-459E-4997-9519-05D4EEF162CD
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260113T163551Z
+DTEND;TZID=America/Los_Angeles:20260116T090000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260116T080000
+LAST-MODIFIED:20260113T163551Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Tracy 2 pm 
+TRANSP:OPAQUE
+UID:47ED5ED5-84EA-4C78-8A6C-3F51D5008BD3
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:EA47B8F2-A5EA-41EA-979E-AC631D12104D
+X-WR-ALARMUID:EA47B8F2-A5EA-41EA-979E-AC631D12104D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260120T180553Z
+DTEND;TZID=America/Los_Angeles:20260127T110000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260127T100000
+LAST-MODIFIED:20260120T180553Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Coffeetopia 1pm 
+TRANSP:OPAQUE
+UID:5422D641-843A-46F8-BFAB-11B65F7FBD3A
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:1A0783FF-EAD2-4D7F-A3D3-20475F0D6EAC
+X-WR-ALARMUID:1A0783FF-EAD2-4D7F-A3D3-20475F0D6EAC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260203T180522Z
+DTEND;TZID=America/Los_Angeles:20260205T150000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260205T140000
+LAST-MODIFIED:20260203T180522Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:10am downstairs Tracy 
+TRANSP:OPAQUE
+UID:F176899C-51BE-4988-9176-EC5FBEEA5B23
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:34B55FCA-8AFB-452F-A5B9-D63635999A5A
+X-WR-ALARMUID:34B55FCA-8AFB-452F-A5B9-D63635999A5A
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260208T034120Z
+DTEND;TZID=America/Los_Angeles:20260219T200000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260219T190000
+LAST-MODIFIED:20260208T034120Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Doc
+TRANSP:OPAQUE
+UID:6D7CC411-2400-4B7A-85B7-689241439D00
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:14518F61-2680-4F04-B430-6914533AD577
+X-WR-ALARMUID:14518F61-2680-4F04-B430-6914533AD577
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260209T222824Z
+DTEND;TZID=America/Los_Angeles:20260212T150000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260212T140000
+LAST-MODIFIED:20260209T222825Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Ken dav 
+TRANSP:OPAQUE
+UID:02F21786-B0AD-45B9-A9B6-82FDDB2919E2
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:91E4C27B-3D8E-477F-9464-100767196FBC
+X-WR-ALARMUID:91E4C27B-3D8E-477F-9464-100767196FBC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260209T224414Z
+DTEND;TZID=America/Los_Angeles:20260216T150000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260216T140000
+LAST-MODIFIED:20260209T224414Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Flynn 2:30 about $160?
+TRANSP:OPAQUE
+UID:2E14673A-7D52-4BD7-8989-76E29293B7F9
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:399D3172-06C0-4EAC-925C-06AC99C1817E
+X-WR-ALARMUID:399D3172-06C0-4EAC-925C-06AC99C1817E
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260219T210624Z
+DTEND;TZID=America/Los_Angeles:20260513T140000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260513T130000
+LAST-MODIFIED:20260513T193304Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:10am General check Dr 
+TRANSP:OPAQUE
+UID:1EDB6864-563F-42EF-BD41-6263F71E78F7
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:6194B20A-05ED-4BAA-B15E-B0BFD4999937
+X-WR-ALARMUID:6194B20A-05ED-4BAA-B15E-B0BFD4999937
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260224T190901Z
+DTEND;TZID=America/Los_Angeles:20260324T120000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260324T110000
+LAST-MODIFIED:20260224T190902Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Phone 11am 
+TRANSP:OPAQUE
+UID:B6EB724F-3991-4B18-AD36-D7692723FDC6
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:C93E2A72-CE9F-41DF-B85F-B2EBEB30BABD
+X-WR-ALARMUID:C93E2A72-CE9F-41DF-B85F-B2EBEB30BABD
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260304T185024Z
+DTEND;TZID=America/Los_Angeles:20260401T110000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260401T100000
+LAST-MODIFIED:20260401T163500Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Sleep study phone 7:30 AM 1/2 hour 
+TRANSP:OPAQUE
+UID:3EC4D457-1A22-4F91-8411-A8638E76D542
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACKNOWLEDGED:20260401T163500Z
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:C6E256AD-2B5F-4FC1-82FE-B7D7B6712055
+X-WR-ALARMUID:C6E256AD-2B5F-4FC1-82FE-B7D7B6712055
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260219T210651Z
+DTEND;TZID=America/Los_Angeles:20260323T140000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260323T130000
+LAST-MODIFIED:20260219T210651Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Accu 10:20
+TRANSP:OPAQUE
+UID:6D661423-7DF3-45B1-998F-033E18B1F9D7
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:31768C0B-65D7-4C6C-A819-93E7ABB92B26
+X-WR-ALARMUID:31768C0B-65D7-4C6C-A819-93E7ABB92B26
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260224T190759Z
+DTEND;TZID=America/Los_Angeles:20260311T120000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260311T110000
+LAST-MODIFIED:20260224T190800Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:10:30 womens health center 
+TRANSP:OPAQUE
+UID:415592E3-AE64-4A83-9FBA-5C30B6377427
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:053D36D0-0751-4D0A-9ED2-423FFE6FEA14
+X-WR-ALARMUID:053D36D0-0751-4D0A-9ED2-423FFE6FEA14
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260221T033729Z
+DTEND;TZID=America/Los_Angeles:20260224T200000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260224T190000
+LAST-MODIFIED:20260221T033729Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:11 Tracy 
+TRANSP:OPAQUE
+UID:A8214B6A-7398-465D-AFFE-88739F1BA3DB
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:B573ED55-73C4-4146-8CF3-253B76D51A79
+X-WR-ALARMUID:B573ED55-73C4-4146-8CF3-253B76D51A79
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260306T152855Z
+DTEND;TZID=America/Los_Angeles:20260325T080000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260325T070000
+LAST-MODIFIED:20260325T134236Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Last day for johndeb 
+TRANSP:OPAQUE
+UID:133EE839-158E-4FD2-8671-089FF776C66D
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACKNOWLEDGED:20260325T134236Z
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:3F76B341-E932-4A99-9D3F-5AB5AD9E0BBD
+X-WR-ALARMUID:3F76B341-E932-4A99-9D3F-5AB5AD9E0BBD
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260313T181442Z
+DTEND;TZID=America/Los_Angeles:20260323T120000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260323T110000
+LAST-MODIFIED:20260323T173145Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:250 in WCCB for miss lane 
+TRANSP:OPAQUE
+UID:D6D6206B-B9CE-4BCB-889E-A3C134F431D0
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACKNOWLEDGED:20260323T173145Z
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:D8EB1DA3-BD0C-46CA-96F6-4E9CBA0C99CB
+X-WR-ALARMUID:D8EB1DA3-BD0C-46CA-96F6-4E9CBA0C99CB
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260311T164133Z
+DTEND;TZID=America/Los_Angeles:20260417T100000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260417T090000
+LAST-MODIFIED:20260417T153025Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Last check? 
+TRANSP:OPAQUE
+UID:C4930FE7-810A-4EA8-80E7-A16E4C83B2A4
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:1B31DA7F-1D49-4ACD-ADB2-B2AEBD6CF4F7
+X-WR-ALARMUID:1B31DA7F-1D49-4ACD-ADB2-B2AEBD6CF4F7
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260324T181339Z
+DTEND;TZID=America/Los_Angeles:20260401T120000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260401T110000
+LAST-MODIFIED:20260401T173402Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:1:30 Tracy at locust 
+TRANSP:OPAQUE
+UID:DA79B757-8EFB-4308-AD94-262B393D2AE1
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACKNOWLEDGED:20260401T173402Z
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:70C917EA-830A-4559-9940-F73DC6BC6E56
+X-WR-ALARMUID:70C917EA-830A-4559-9940-F73DC6BC6E56
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260401T154319Z
+DTEND;TZID=America/Los_Angeles:20260508T090000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260508T080000
+LAST-MODIFIED:20260508T143318Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:9:15 am zoom sleep Dr
+TRANSP:OPAQUE
+UID:95C7F99D-0AEA-4E21-8EB4-9C6863A34782
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:C705DCA2-2969-4486-9268-BE82965EA77A
+X-WR-ALARMUID:C705DCA2-2969-4486-9268-BE82965EA77A
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260401T154232Z
+DTEND;TZID=America/Los_Angeles:20260420T090000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260420T080000
+LAST-MODIFIED:20260420T151935Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:7:30pm sleep 
+TRANSP:OPAQUE
+UID:3823D25E-C0F5-416B-825D-A481B9D77D60
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:7B495717-0C67-4024-B6AA-5846421DB46C
+X-WR-ALARMUID:7B495717-0C67-4024-B6AA-5846421DB46C
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260408T153502Z
+DTEND;TZID=America/Los_Angeles:20260424T090000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260424T080000
+LAST-MODIFIED:20260408T153502Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Dav last day 
+TRANSP:OPAQUE
+UID:CE931FC2-87F8-4F31-99D2-E337C90B36E8
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:30778C46-18C5-4404-82D2-B753702C36F3
+X-WR-ALARMUID:30778C46-18C5-4404-82D2-B753702C36F3
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260408T222904Z
+DTEND;TZID=America/Los_Angeles:20260520T160000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260520T150000
+LAST-MODIFIED:20260408T222904Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:1:30 accu live oak 
+TRANSP:OPAQUE
+UID:21A9ADB9-3513-4555-A9C6-A1706937754F
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:D38AAB08-14B0-4225-9E1A-911EDD41AA52
+X-WR-ALARMUID:D38AAB08-14B0-4225-9E1A-911EDD41AA52
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260414T191338Z
+DTEND;TZID=America/Los_Angeles:20260608T130000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260608T120000
+LAST-MODIFIED:20260414T191338Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:10:45 Dr Ochoa 1595 Soquel Dr 220 by Dominican 
+TRANSP:OPAQUE
+UID:5F2A9AFC-114F-4A20-8156-3B131E124537
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:E09AAB77-1325-49C9-8401-F02279955CE0
+X-WR-ALARMUID:E09AAB77-1325-49C9-8401-F02279955CE0
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260420T150944Z
+DTEND;TZID=America/Los_Angeles:20260622T090000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260622T080000
+LAST-MODIFIED:20260420T151003Z
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Sleep study 7:30
+TRANSP:OPAQUE
+UID:43565FF5-E214-4FF6-87EB-2E560A558C11
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:0426F03C-33BE-440E-8F37-18220ACEB89E
+X-WR-ALARMUID:0426F03C-33BE-440E-8F37-18220ACEB89E
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260420T151023Z
+DTEND;TZID=America/Los_Angeles:20260707T090000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260707T080000
+LAST-MODIFIED:20260420T151023Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Zoom 9am
+TRANSP:OPAQUE
+UID:10E58923-3B76-4120-8B69-4961BB5EBEB4
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:67228731-CF8A-4DEC-9DEE-0A1BBC523EA2
+X-WR-ALARMUID:67228731-CF8A-4DEC-9DEE-0A1BBC523EA2
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260424T153329Z
+DTEND;TZID=America/Los_Angeles:20260427T090000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260427T080000
+LAST-MODIFIED:20260424T153330Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Dr 6:40pm
+TRANSP:OPAQUE
+UID:26D5A3A0-1D4C-4E9A-B8B4-0D124F546AE6
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:66A95318-3C72-42BA-8F3F-267ACA347A33
+X-WR-ALARMUID:66A95318-3C72-42BA-8F3F-267ACA347A33
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260427T232349Z
+DTEND;TZID=America/Los_Angeles:20260519T170000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260519T160000
+LAST-MODIFIED:20260519T224110Z
+SEQUENCE:2
+STATUS:CONFIRMED
+SUMMARY:1115 intake call 15m
+TRANSP:OPAQUE
+UID:807F45EB-396C-4EE8-A44F-10AD899A404B
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:2BA74961-8010-4A93-B122-61B425501D9C
+X-WR-ALARMUID:2BA74961-8010-4A93-B122-61B425501D9C
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260428T024355Z
+DTEND;TZID=America/Los_Angeles:20260625T200000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260625T190000
+LAST-MODIFIED:20260428T024356Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:4:40 phone Dr 
+TRANSP:OPAQUE
+UID:25B160B4-532A-43C7-A065-E7DE7C8D300F
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:003F984F-72DB-4DFD-B314-985A5AB54318
+X-WR-ALARMUID:003F984F-72DB-4DFD-B314-985A5AB54318
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260501T232823Z
+DTEND;TZID=America/Los_Angeles:20260508T170000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260508T160000
+LAST-MODIFIED:20260508T224900Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:10:30 1595 Soquel suite 220 
+TRANSP:OPAQUE
+UID:EA747D41-660A-406D-9A09-D85D6D7D32F7
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACKNOWLEDGED:20260508T224900Z
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:148CC740-5D0C-4EDD-AF84-069E8BAD6D62
+X-WR-ALARMUID:148CC740-5D0C-4EDD-AF84-069E8BAD6D62
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260515T022340Z
+DTEND;TZID=America/Los_Angeles:20260520T200000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260520T190000
+LAST-MODIFIED:20260515T022340Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Cancel philo
+TRANSP:OPAQUE
+UID:E10D7414-B2E4-4D29-80AE-1987836F678C
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:4BA001FE-E75B-4A6A-9FD3-340CD22FA92F
+X-WR-ALARMUID:4BA001FE-E75B-4A6A-9FD3-340CD22FA92F
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260515T033547Z
+DTEND;TZID=America/Los_Angeles:20260517T210000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260517T200000
+LAST-MODIFIED:20260515T033548Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Cancel Hulu
+TRANSP:OPAQUE
+UID:A8FEA150-8DA1-48E6-8EEF-9DE9500F61B8
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:7CA8FC7C-3F5B-4FA7-86E0-BBB4BF705E12
+X-WR-ALARMUID:7CA8FC7C-3F5B-4FA7-86E0-BBB4BF705E12
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260521T201510Z
+DTEND;TZID=America/Los_Angeles:20260820T140000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260820T130000
+LAST-MODIFIED:20260521T201510Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:1:50
+TRANSP:OPAQUE
+UID:3974195F-99DE-4716-B606-C65BE4A5034B
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:51D12020-EDD6-427B-AA1A-53836D8ED743
+X-WR-ALARMUID:51D12020-EDD6-427B-AA1A-53836D8ED743
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CREATED:20260606T164736Z
+DTEND;TZID=America/Los_Angeles:20260612T100000
+DTSTAMP:20260606T232641Z
+DTSTART;TZID=America/Los_Angeles:20260612T090000
+LAST-MODIFIED:20260606T164736Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Dianne front 
+TRANSP:OPAQUE
+UID:2DFFCB0A-A9E6-4324-BAFE-FE4160571AE2
+X-APPLE-CREATOR-IDENTITY:com.apple.mobilecal
+X-APPLE-CREATOR-TEAM-IDENTITY:0000000000
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-PT30M
+UID:F74F7872-0F46-401E-A3AE-CD6C969F00CA
+X-WR-ALARMUID:F74F7872-0F46-401E-A3AE-CD6C969F00CA
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -3,6 +3,8 @@
   "private": true,
   "scripts": {
     "dev": "npm run dev --prefix landing",
+    "dev:landing": "npm run dev --prefix landing",
+    "dev:app": "npm run start --prefix ladderless-provider-app",
     "build": "npm run build --prefix landing",
     "start": "npm run start --prefix landing",
     "lint": "npm run lint --prefix landing"

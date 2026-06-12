@@ -3,16 +3,17 @@
 /.pnp
 .pnp.*
 landing/node_modules/
-
+ladderless-provider-app/node_modules/
 
 # Next.js
 .next/
 landing/.next/
 out/
 
-# Expo (legacy provider app artifacts)
+# Expo
 .expo/
 landing/.expo/
+ladderless-provider-app/.expo/
 
 # Build outputs
 build/
@@ -42,8 +43,10 @@ yarn-error.log*
 tsconfig.tsbuildinfo
 
 # LARGE FILES - NEVER COMMIT
-assets/
 landing/assets/
+ladderless-provider-app/assets/*.MP4
+ladderless-provider-app/assets/*.mp4
+ladderless-provider-app/assets/template64x.png
 landing/public/*.jpg
 !landing/public/ll.jpg
 !landing/public/template*.jpg
