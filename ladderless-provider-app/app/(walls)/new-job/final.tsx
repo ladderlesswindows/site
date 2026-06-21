@@ -10,6 +10,7 @@ import { BrandingHeader } from "@/core/ui-components/BrandingHeader";
 
 const MAX_FINAL_PHOTOS = 4;
 const MAX_NOTES_LENGTH = 2000;
+const MAX_REVIEW_PREFILL_LENGTH = 500;
 
 export default function FinalStep() {
   const {
@@ -23,6 +24,7 @@ export default function FinalStep() {
   } = useJobDraft();
 
   const [notes, setNotes] = useState(currentJob?.final_notes || "");
+  const [reviewPrefill, setReviewPrefill] = useState("");
   const [isCompleting, setIsCompleting] = useState(false);
 
   // New optional customer / contact details (collected before Complete)
@@ -112,24 +114,18 @@ export default function FinalStep() {
 
       const completedJob = await completeJob();
 
-      // Send test post-job notification (complete) to sharksoftwash@outlook.com
-      // This triggers the customer exit path: tip + review + recurring sequence
-      // NOTE: Change localhost to your Mac's IP (e.g. http://192.168.x.x:3000) when testing on device/simulator
+      const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "https://ladderlesswindows.com";
       try {
-        await fetch('http://localhost:3000/api/send-booking-email', {
+        await fetch(`${apiUrl}/api/worker/end-gig`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            type: 'complete',
-            customer_email: 'sharksoftwash@outlook.com',
-            customer_name: contactPerson || currentJob?.customer_name || 'Test Customer',
-            address: currentJob?.address,
-            booking_id: completedJob.id,
+            booking_id: null,  // will be linked manually in admin until booking association is built
+            worker_notes: reviewPrefill.trim() || "Gig completed.",
           }),
         });
-        console.log('📧 Test complete notification sent to sharksoftwash@outlook.com');
-      } catch (notifyErr) {
-        console.log('Notification send skipped (demo):', notifyErr);
+      } catch (endGigErr) {
+        console.log('End-gig sync skipped:', endGigErr);
       }
 
       router.replace({
@@ -196,6 +192,29 @@ export default function FinalStep() {
               Maximum of {MAX_FINAL_PHOTOS} final photos reached.
             </Text>
           )}
+        </View>
+
+        {/* How'd it go? Section */}
+        <View className="mb-8">
+          <Text className="text-lg font-semibold text-slate-800 mb-2 px-1">
+            How'd it go?
+          </Text>
+          <TextInput
+            value={reviewPrefill}
+            onChangeText={(text) => {
+              if (text.length <= MAX_REVIEW_PREFILL_LENGTH) setReviewPrefill(text);
+            }}
+            placeholder="Great job — super friendly customer, dogs were well-behaved, second story had tricky screens but we got them perfect."
+            placeholderTextColor="#94a3b8"
+            multiline
+            numberOfLines={6}
+            maxLength={MAX_REVIEW_PREFILL_LENGTH}
+            className="bg-white border-2 border-slate-300 rounded-2xl p-4 text-lg text-slate-900 min-h-[112px]"
+            textAlignVertical="top"
+          />
+          <Text className="text-right text-xs text-slate-400 mt-1 pr-1">
+            {reviewPrefill.length} / {MAX_REVIEW_PREFILL_LENGTH}
+          </Text>
         </View>
 
         {/* Notes Section */}
@@ -374,8 +393,6 @@ export default function FinalStep() {
         >
           Mark Job Complete
         </BigButton>
-        {/* Test: sends 'complete' notification to sharksoftwash@outlook.com 
-            which links to /booking/post-job for tip/review/recurring */}
       </View>
     </View>
   );
