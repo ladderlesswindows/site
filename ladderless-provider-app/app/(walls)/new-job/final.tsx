@@ -114,19 +114,16 @@ export default function FinalStep() {
 
       const completedJob = await completeJob();
 
+      // Fire-and-forget — don't block navigation on network
       const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "https://ladderlesswindows.com";
-      try {
-        await fetch(`${apiUrl}/api/worker/end-gig`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            booking_id: null,  // will be linked manually in admin until booking association is built
-            worker_notes: reviewPrefill.trim() || "Gig completed.",
-          }),
-        });
-      } catch (endGigErr) {
-        console.log('End-gig sync skipped:', endGigErr);
-      }
+      fetch(`${apiUrl}/api/worker/end-gig`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          booking_id: null,
+          worker_notes: reviewPrefill.trim() || "Gig completed.",
+        }),
+      }).catch(e => console.log('End-gig sync:', e));
 
       router.replace({
         pathname: "/new-job/summary",
