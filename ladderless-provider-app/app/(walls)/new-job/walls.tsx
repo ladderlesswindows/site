@@ -30,6 +30,7 @@ export default function WallsScreen() {
 
   const [windows, setWindows] = useState(0);
   const [screens, setScreens] = useState(0);
+  const [beginningGig, setBeginningGig] = useState(false);
 
   // Live stopwatch for working time (since Begin Gig was tapped)
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
@@ -41,27 +42,28 @@ export default function WallsScreen() {
     }
   }, [isLoading, currentJob, createDraft]);
 
-  // Live working time stopwatch (updates every second once Begin Gig is tapped)
+  // Gig timer (work_start → now)
   useEffect(() => {
     const workStart = currentJob?.work_start;
-    if (!workStart) {
-      setElapsedSeconds(0);
-      return;
-    }
-
+    if (!workStart) { setElapsedSeconds(0); return; }
     const startTime = new Date(workStart).getTime();
-
-    const tick = () => {
-      const now = Date.now();
-      const seconds = Math.floor((now - startTime) / 1000);
-      setElapsedSeconds(Math.max(0, seconds));
-    };
-
-    tick(); // run immediately
+    const tick = () => setElapsedSeconds(Math.max(0, Math.floor((Date.now() - startTime) / 1000)));
+    tick();
     const interval = setInterval(tick, 1000);
-
     return () => clearInterval(interval);
   }, [currentJob?.work_start]);
+
+  // Shift timer (engaged_start → now) — subtle, runs all day
+  const [shiftSeconds, setShiftSeconds] = useState(0);
+  useEffect(() => {
+    const engagedStart = currentJob?.engaged_start;
+    if (!engagedStart) { setShiftSeconds(0); return; }
+    const startTime = new Date(engagedStart).getTime();
+    const tick = () => setShiftSeconds(Math.max(0, Math.floor((Date.now() - startTime) / 1000)));
+    tick();
+    const interval = setInterval(tick, 1000);
+    return () => clearInterval(interval);
+  }, [currentJob?.engaged_start]);
 
   const wallCount = sections.length;
 
@@ -143,24 +145,40 @@ export default function WallsScreen() {
         {/* Gig timer / Begin Gig - always visible near top for time accuracy */}
         {!currentJob?.work_start ? (
           <Pressable
+            disabled={beginningGig}
             onPress={async () => {
+              setBeginningGig(true);
               try {
+                if (!currentJob) await createDraft();
                 await startWorkTime();
               } catch (e) {
                 console.error("Failed to start work time", e);
+                Alert.alert("Error", "Could not start gig timer — please try again.");
+              } finally {
+                setBeginningGig(false);
               }
             }}
             className="bg-emerald-600 active:bg-emerald-700 rounded-3xl py-4 items-center mb-6"
+            style={{ opacity: beginningGig ? 0.6 : 1 }}
           >
-            <Text className="text-white text-xl font-semibold tracking-wide">Begin Gig</Text>
+            <Text className="text-white text-xl font-semibold tracking-wide">
+              {beginningGig ? "Starting…" : "Begin Gig"}
+            </Text>
           </Pressable>
         ) : (
-          <View className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-900 rounded-2xl p-4 mb-6 items-center">
+          <View className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-900 rounded-2xl p-4 mb-2 items-center">
             <Text className="text-xs font-medium text-emerald-600 dark:text-emerald-400 tracking-widest">GIG TIME</Text>
             <Text className={`text-4xl font-bold tabular-nums tracking-tighter mt-1 ${isDark ? 'text-white' : 'text-emerald-900'}`}>
               {formatElapsedTime(elapsedSeconds)}
             </Text>
           </View>
+        )}
+
+        {/* Subtle shift timer — always visible once clocked in */}
+        {!!currentJob?.engaged_start && (
+          <Text className="text-center text-xs text-slate-400 dark:text-slate-600 tabular-nums mb-4">
+            shift {formatElapsedTime(shiftSeconds)}
+          </Text>
         )}
 
         {/* === EXACT REQUESTED ENTRY: Quick fields + small red button + big green button === */}
