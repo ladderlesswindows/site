@@ -24,9 +24,11 @@ export default function GigSafetyScreen() {
     phone?: string;
     customerName?: string;
     notes?: string;
+    email?: string;
   }>();
 
   const { bookingId, address, phone, customerName, notes } = params;
+  const API_URL = process.env.EXPO_PUBLIC_API_URL ?? "https://www.ladderlesswindows.com";
 
   const [selectedChecks, setSelectedChecks] = useState<string[]>([]);
   const [starting, setStarting] = useState(false);
@@ -56,6 +58,15 @@ export default function GigSafetyScreen() {
       }
 
       await setSafetyChecks(selectedChecks);
+
+      if (phone) {
+        fetch(`${API_URL}/api/worker/notify`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phone, first_name: customerName ?? null, address, type: "arrival" }),
+        }).catch(() => {});
+      }
+
       router.replace("/new-job/walls");
     } catch (err) {
       console.error("Failed to start gig:", err);

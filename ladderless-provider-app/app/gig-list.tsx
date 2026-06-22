@@ -85,9 +85,8 @@ export default function GigListScreen() {
     setFWindows(""); setFRate(""); setFFlat(""); setFNotes(""); setFDate("");
   };
 
-  const navigate = (address: string) => {
-    const url = `https://maps.apple.com/?daddr=${encodeURIComponent(address)}`;
-    Linking.openURL(url).catch(() =>
+  const openMaps = (address: string) => {
+    Linking.openURL(`https://maps.apple.com/?daddr=${encodeURIComponent(address)}`).catch(() =>
       Linking.openURL(`https://maps.google.com/?daddr=${encodeURIComponent(address)}`)
     );
   };
@@ -98,6 +97,26 @@ export default function GigListScreen() {
     if (notes) p.set("notes", notes);
     if (email) p.set("email", email);
     router.push(`/gig-safety?${p.toString()}`);
+  };
+
+  const handleStartGig = async (gig: Gig, name: string | null) => {
+    if (gig.phone) {
+      fetch(`${API_URL}/api/worker/notify`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone: gig.phone, first_name: gig.first_name ?? null, address: gig.address }),
+      }).catch(() => {});
+    }
+    openMaps(gig.address);
+    goToSafety(gig.id, gig.address, gig.phone ?? "", name ?? undefined, gig.notes ?? undefined, gig.email ?? undefined);
+  };
+
+  const goToPlan = (gig: Gig, name: string | null) => {
+    const p = new URLSearchParams({ gigId: gig.id, address: gig.address, phone: gig.phone ?? "" });
+    if (name) p.set("customerName", name);
+    if (gig.notes) p.set("notes", gig.notes);
+    if (gig.email) p.set("email", gig.email);
+    router.push(`/gig-plan?${p.toString()}`);
   };
 
   const createGig = async (status: "pending" | "lead", thenStart = false) => {
@@ -296,16 +315,16 @@ export default function GigListScreen() {
               {/* Actions */}
               <View style={{ gap: 6, alignItems: "flex-end" }}>
                 <Pressable
-                  onPress={() => goToSafety(gig.id, gig.address, gig.phone ?? "", name ?? undefined, gig.notes ?? undefined, gig.email ?? undefined)}
+                  onPress={() => handleStartGig(gig, name)}
                   style={{ backgroundColor: "#10b981", borderRadius: 10, paddingVertical: 8, paddingHorizontal: 12 }}
                 >
-                  <Text style={{ color: "white", fontWeight: "700", fontSize: 13 }}>▶ Start</Text>
+                  <Text style={{ color: "white", fontWeight: "700", fontSize: 12 }}>Start Gig →</Text>
                 </Pressable>
                 <Pressable
-                  onPress={() => navigate(gig.address)}
-                  style={{ backgroundColor: "#059669", borderRadius: 10, paddingVertical: 6, paddingHorizontal: 12 }}
+                  onPress={() => goToPlan(gig, name)}
+                  style={{ borderWidth: 1, borderColor: "#3b82f6", borderRadius: 10, paddingVertical: 6, paddingHorizontal: 12, backgroundColor: isDark ? "rgba(59,130,246,0.1)" : "#eff6ff" }}
                 >
-                  <Text style={{ color: "white", fontWeight: "700", fontSize: 12 }}>Navigate</Text>
+                  <Text style={{ color: "#3b82f6", fontWeight: "700", fontSize: 12 }}>Plan</Text>
                 </Pressable>
                 {!isLead && (
                   <Pressable onPress={() => markLead(gig)}
