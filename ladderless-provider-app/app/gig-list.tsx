@@ -116,6 +116,10 @@ export default function GigListScreen() {
     if (name) p.set("customerName", name);
     if (gig.notes) p.set("notes", gig.notes);
     if (gig.email) p.set("email", gig.email);
+    if (gig.window_count > 0) p.set("windowCount", String(gig.window_count));
+    if (gig.total_price > 0) p.set("totalPrice", String(gig.total_price));
+    p.set("serviceDate", gig.service_date);
+    p.set("serviceTime", gig.service_time);
     router.push(`/gig-plan?${p.toString()}`);
   };
 
@@ -324,7 +328,7 @@ export default function GigListScreen() {
                   onPress={() => goToPlan(gig, name)}
                   style={{ borderWidth: 1, borderColor: "#3b82f6", borderRadius: 10, paddingVertical: 6, paddingHorizontal: 12, backgroundColor: isDark ? "rgba(59,130,246,0.1)" : "#eff6ff" }}
                 >
-                  <Text style={{ color: "#3b82f6", fontWeight: "700", fontSize: 12 }}>Plan</Text>
+                  <Text style={{ color: "#3b82f6", fontWeight: "700", fontSize: 12 }}>Details</Text>
                 </Pressable>
                 {!isLead && (
                   <Pressable onPress={() => markLead(gig)}
