@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import {
   View, Text, ScrollView, TextInput, Pressable,
-  RefreshControl, Alert, ActivityIndicator, Linking,
+  RefreshControl, Alert, ActivityIndicator,
 } from "react-native";
 import { router } from "expo-router";
 import { useTheme } from "@/core/theme-context";
@@ -85,30 +85,12 @@ export default function GigListScreen() {
     setFWindows(""); setFRate(""); setFFlat(""); setFNotes(""); setFDate("");
   };
 
-  const openMaps = (address: string) => {
-    Linking.openURL(`https://maps.apple.com/?daddr=${encodeURIComponent(address)}`).catch(() =>
-      Linking.openURL(`https://maps.google.com/?daddr=${encodeURIComponent(address)}`)
-    );
-  };
-
   const goToSafety = (bookingId: string, address: string, phone: string, customerName?: string, notes?: string, email?: string) => {
     const p = new URLSearchParams({ bookingId, address, phone });
     if (customerName) p.set("customerName", customerName);
     if (notes) p.set("notes", notes);
     if (email) p.set("email", email);
     router.push(`/gig-safety?${p.toString()}`);
-  };
-
-  const handleStartGig = async (gig: Gig, name: string | null) => {
-    if (gig.phone) {
-      fetch(`${API_URL}/api/worker/notify`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone: gig.phone, first_name: gig.first_name ?? null, address: gig.address }),
-      }).catch(() => {});
-    }
-    openMaps(gig.address);
-    goToSafety(gig.id, gig.address, gig.phone ?? "", name ?? undefined, gig.notes ?? undefined, gig.email ?? undefined);
   };
 
   const goToPlan = (gig: Gig, name: string | null) => {
@@ -291,11 +273,15 @@ export default function GigListScreen() {
           const isLead = gig.status === "lead";
 
           return (
-            <View key={gig.id} style={{
-              backgroundColor: card, borderRadius: 14, borderWidth: 1,
-              borderColor: isLead ? "rgba(251,191,36,0.35)" : cardBorder,
-              padding: 14, marginBottom: 10, flexDirection: "row", gap: 12, alignItems: "flex-start",
-            }}>
+            <Pressable
+              key={gig.id}
+              onPress={() => goToPlan(gig, name)}
+              style={{
+                backgroundColor: card, borderRadius: 14, borderWidth: 1,
+                borderColor: isLead ? "rgba(251,191,36,0.35)" : cardBorder,
+                padding: 14, marginBottom: 10, flexDirection: "row", gap: 12, alignItems: "flex-start",
+              }}
+            >
               {/* Date badge */}
               <View style={{ alignItems: "center", minWidth: 52, paddingTop: 2 }}>
                 <Text style={{ color: dateColor, fontSize: 13, fontWeight: "800" }}>{dateText}</Text>
@@ -316,28 +302,21 @@ export default function GigListScreen() {
                 )}
               </View>
 
-              {/* Actions */}
-              <View style={{ gap: 6, alignItems: "flex-end" }}>
-                <Pressable
-                  onPress={() => handleStartGig(gig, name)}
-                  style={{ backgroundColor: "#10b981", borderRadius: 10, paddingVertical: 8, paddingHorizontal: 12 }}
-                >
-                  <Text style={{ color: "white", fontWeight: "700", fontSize: 12 }}>Start Gig →</Text>
-                </Pressable>
-                <Pressable
-                  onPress={() => goToPlan(gig, name)}
-                  style={{ borderWidth: 1, borderColor: "#3b82f6", borderRadius: 10, paddingVertical: 6, paddingHorizontal: 12, backgroundColor: isDark ? "rgba(59,130,246,0.1)" : "#eff6ff" }}
-                >
-                  <Text style={{ color: "#3b82f6", fontWeight: "700", fontSize: 12 }}>Details</Text>
-                </Pressable>
-                {!isLead && (
-                  <Pressable onPress={() => markLead(gig)}
-                    style={{ borderWidth: 1, borderColor: "rgba(251,191,36,0.4)", borderRadius: 10, paddingVertical: 5, paddingHorizontal: 10, backgroundColor: isDark ? "rgba(251,191,36,0.08)" : "#fffbeb" }}>
+              {/* Right side: Lead toggle + chevron */}
+              <View style={{ alignItems: "flex-end", justifyContent: "space-between", alignSelf: "stretch" }}>
+                {!isLead ? (
+                  <Pressable
+                    onPress={(e) => { e.stopPropagation?.(); markLead(gig); }}
+                    style={{ borderWidth: 1, borderColor: "rgba(251,191,36,0.4)", borderRadius: 8, paddingVertical: 4, paddingHorizontal: 8, backgroundColor: isDark ? "rgba(251,191,36,0.08)" : "#fffbeb" }}
+                  >
                     <Text style={{ color: "#f59e0b", fontWeight: "600", fontSize: 11 }}>Lead</Text>
                   </Pressable>
+                ) : (
+                  <View style={{ width: 8 }} />
                 )}
+                <Text style={{ color: textSub, fontSize: 18, lineHeight: 18 }}>›</Text>
               </View>
-            </View>
+            </Pressable>
           );
         })
       )}

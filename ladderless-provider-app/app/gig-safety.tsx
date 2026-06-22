@@ -25,9 +25,10 @@ export default function GigSafetyScreen() {
     customerName?: string;
     notes?: string;
     email?: string;
+    smsAlreadySent?: string;
   }>();
 
-  const { bookingId, address, phone, customerName, notes } = params;
+  const { bookingId, address, phone, customerName, notes, smsAlreadySent } = params;
   const API_URL = process.env.EXPO_PUBLIC_API_URL ?? "https://www.ladderlesswindows.com";
 
   const [selectedChecks, setSelectedChecks] = useState<string[]>([]);
@@ -59,7 +60,7 @@ export default function GigSafetyScreen() {
 
       await setSafetyChecks(selectedChecks);
 
-      if (phone) {
+      if (phone && smsAlreadySent !== "true") {
         fetch(`${API_URL}/api/worker/notify`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
