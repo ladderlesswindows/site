@@ -8,7 +8,7 @@ import { useTheme } from "@/core/theme-context";
 import { BrandingHeader } from "@/core/ui-components/BrandingHeader";
 import { WeatherWidget } from "@/features/weather";
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL ?? "https://ladderlesswindows.com";
+const API_URL = process.env.EXPO_PUBLIC_API_URL ?? "https://www.ladderlesswindows.com";
 
 interface Gig {
   id: string;
