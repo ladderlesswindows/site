@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import {
   View, Text, ScrollView, TextInput, Pressable,
-  RefreshControl, Alert, ActivityIndicator,
+  RefreshControl, Alert, ActivityIndicator, Linking,
 } from "react-native";
 import { router } from "expo-router";
 import { useTheme } from "@/core/theme-context";
@@ -83,6 +83,13 @@ export default function GigListScreen() {
   const resetForm = () => {
     setFName(""); setFAddress(""); setFPhone(""); setFEmail("");
     setFWindows(""); setFRate(""); setFFlat(""); setFNotes(""); setFDate("");
+  };
+
+  const navigate = (address: string) => {
+    const url = `https://maps.apple.com/?daddr=${encodeURIComponent(address)}`;
+    Linking.openURL(url).catch(() =>
+      Linking.openURL(`https://maps.google.com/?daddr=${encodeURIComponent(address)}`)
+    );
   };
 
   const goToSafety = (bookingId: string, address: string, phone: string, customerName?: string, notes?: string, email?: string) => {
@@ -293,6 +300,12 @@ export default function GigListScreen() {
                   style={{ backgroundColor: "#10b981", borderRadius: 10, paddingVertical: 8, paddingHorizontal: 12 }}
                 >
                   <Text style={{ color: "white", fontWeight: "700", fontSize: 13 }}>▶ Start</Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => navigate(gig.address)}
+                  style={{ backgroundColor: "#059669", borderRadius: 10, paddingVertical: 6, paddingHorizontal: 12 }}
+                >
+                  <Text style={{ color: "white", fontWeight: "700", fontSize: 12 }}>Navigate</Text>
                 </Pressable>
                 {!isLead && (
                   <Pressable onPress={() => markLead(gig)}
