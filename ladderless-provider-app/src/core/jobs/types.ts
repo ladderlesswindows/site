@@ -33,6 +33,9 @@ export interface Job {
   mailing_list: number | null;   // 1 = yes, 0 = no, null = unspecified
   how_find: string | null;
   customer_rating: number | null; // 1-5 rating (shown as "Internal" in UI, "Client Rating" in spreadsheets)
+
+  // Linked Supabase booking (set when starting a gig from the gig list)
+  supabase_booking_id: string | null;
 }
 
 export interface Section {

@@ -120,7 +120,7 @@ export default function FinalStep() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          booking_id: null,
+          booking_id: completedJob.supabase_booking_id ?? null,
           worker_notes: reviewPrefill.trim() || "Gig completed.",
         }),
       }).catch(e => console.log('End-gig sync:', e));

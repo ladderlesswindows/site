@@ -105,6 +105,7 @@ async function migrateDbIfNeeded(db: any) {
   try { await db.execAsync(`ALTER TABLE jobs ADD COLUMN mailing_list INTEGER;`); } catch {}
   try { await db.execAsync(`ALTER TABLE jobs ADD COLUMN how_find TEXT;`); } catch {}
   try { await db.execAsync(`ALTER TABLE jobs ADD COLUMN customer_rating INTEGER;`); } catch {}
+  try { await db.execAsync(`ALTER TABLE jobs ADD COLUMN supabase_booking_id TEXT;`); } catch {}
 }
 
 export default function RootLayout() {
