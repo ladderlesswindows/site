@@ -115,7 +115,7 @@ export default function FinalStep() {
       const completedJob = await completeJob();
 
       // Fire-and-forget — don't block navigation on network
-      const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "https://ladderlesswindows.com";
+      const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "https://www.ladderlesswindows.com";
       fetch(`${apiUrl}/api/worker/end-gig`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -123,7 +123,7 @@ export default function FinalStep() {
           booking_id: completedJob.supabase_booking_id ?? null,
           worker_notes: reviewPrefill.trim() || "Gig completed.",
         }),
-      }).catch(e => console.log('End-gig sync:', e));
+      }).catch(() => {});
 
       router.replace({
         pathname: "/new-job/summary",
