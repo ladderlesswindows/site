@@ -46,6 +46,10 @@ export default function GigListScreen() {
   const [fName, setFName] = useState("");
   const [fAddress, setFAddress] = useState("");
   const [fPhone, setFPhone] = useState("");
+  const [fEmail, setFEmail] = useState("");
+  const [fWindows, setFWindows] = useState("");
+  const [fRate, setFRate] = useState("");
+  const [fFlat, setFFlat] = useState("");
   const [fNotes, setFNotes] = useState("");
   const [fDate, setFDate] = useState("");
 
@@ -72,7 +76,14 @@ export default function GigListScreen() {
 
   useEffect(() => { fetchGigs(); }, [fetchGigs]);
 
-  const resetForm = () => { setFName(""); setFAddress(""); setFPhone(""); setFNotes(""); setFDate(""); };
+  const windowSubtotal = (parseFloat(fWindows) || 0) * (parseFloat(fRate) || 0);
+  const flatAmount = parseFloat(fFlat) || 0;
+  const totalPrice = Math.round((windowSubtotal + flatAmount) * 100) / 100;
+
+  const resetForm = () => {
+    setFName(""); setFAddress(""); setFPhone(""); setFEmail("");
+    setFWindows(""); setFRate(""); setFFlat(""); setFNotes(""); setFDate("");
+  };
 
   const goToSafety = (bookingId: string, address: string, phone: string, customerName?: string, notes?: string, email?: string) => {
     const p = new URLSearchParams({ bookingId, address, phone });
@@ -94,9 +105,12 @@ export default function GigListScreen() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           address: fAddress.trim(), phone: fPhone.trim(),
+          email: fEmail.trim() || null,
           customer_name: fName.trim() || null,
           notes: fNotes.trim() || null,
           service_date: fDate || new Date().toISOString().slice(0, 10),
+          window_count: parseInt(fWindows) || 0,
+          total_price: totalPrice,
           status,
         }),
       });
@@ -104,7 +118,7 @@ export default function GigListScreen() {
       if (!res.ok) throw new Error(json.error);
 
       if (thenStart) {
-        goToSafety(json.id, fAddress.trim(), fPhone.trim(), fName.trim() || undefined, fNotes.trim() || undefined, undefined);
+        goToSafety(json.id, fAddress.trim(), fPhone.trim(), fName.trim() || undefined, fNotes.trim() || undefined, fEmail.trim() || undefined);
       } else {
         setShowForm(false);
         resetForm();
@@ -170,6 +184,38 @@ export default function GigListScreen() {
             <Text style={labelStyle}>Phone *</Text>
             <TextInput value={fPhone} onChangeText={setFPhone} placeholder="(831) 555-0100" placeholderTextColor={textSub} keyboardType="phone-pad" style={fieldStyle} />
           </View>
+          <View style={{ marginBottom: 10 }}>
+            <Text style={labelStyle}>Email (optional)</Text>
+            <TextInput value={fEmail} onChangeText={setFEmail} placeholder="jane@email.com" placeholderTextColor={textSub} keyboardType="email-address" autoCapitalize="none" style={fieldStyle} />
+          </View>
+
+          {/* Pricing */}
+          <View style={{ marginBottom: 4 }}>
+            <Text style={labelStyle}>Pricing</Text>
+            <View style={{ flexDirection: "row", gap: 8, marginBottom: 8 }}>
+              <View style={{ flex: 1 }}>
+                <Text style={{ color: textSub, fontSize: 10, marginBottom: 3 }}>Windows</Text>
+                <TextInput value={fWindows} onChangeText={setFWindows} placeholder="0" placeholderTextColor={textSub} keyboardType="number-pad" style={fieldStyle} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={{ color: textSub, fontSize: 10, marginBottom: 3 }}>$/window</Text>
+                <TextInput value={fRate} onChangeText={setFRate} placeholder="0.00" placeholderTextColor={textSub} keyboardType="decimal-pad" style={fieldStyle} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={{ color: textSub, fontSize: 10, marginBottom: 3 }}>Flat rate</Text>
+                <TextInput value={fFlat} onChangeText={setFFlat} placeholder="0.00" placeholderTextColor={textSub} keyboardType="decimal-pad" style={fieldStyle} />
+              </View>
+            </View>
+            {totalPrice > 0 && (
+              <View style={{ flexDirection: "row", justifyContent: "flex-end", alignItems: "center", gap: 6, marginBottom: 6 }}>
+                {windowSubtotal > 0 && flatAmount > 0 && (
+                  <Text style={{ color: textSub, fontSize: 11 }}>${windowSubtotal.toFixed(2)} + ${flatAmount.toFixed(2)} =</Text>
+                )}
+                <Text style={{ color: "#10b981", fontSize: 15, fontWeight: "700" }}>Total ${totalPrice.toFixed(2)}</Text>
+              </View>
+            )}
+          </View>
+
           <View style={{ marginBottom: 10 }}>
             <Text style={labelStyle}>Access Notes</Text>
             <TextInput
