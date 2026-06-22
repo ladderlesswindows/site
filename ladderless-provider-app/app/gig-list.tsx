@@ -18,6 +18,7 @@ interface Gig {
   first_name: string | null;
   last_name: string | null;
   phone: string | null;
+  email: string | null;
   notes: string | null;
   status: string;
   window_count: number;
@@ -73,10 +74,11 @@ export default function GigListScreen() {
 
   const resetForm = () => { setFName(""); setFAddress(""); setFPhone(""); setFNotes(""); setFDate(""); };
 
-  const goToSafety = (bookingId: string, address: string, phone: string, customerName?: string, notes?: string) => {
+  const goToSafety = (bookingId: string, address: string, phone: string, customerName?: string, notes?: string, email?: string) => {
     const p = new URLSearchParams({ bookingId, address, phone });
     if (customerName) p.set("customerName", customerName);
     if (notes) p.set("notes", notes);
+    if (email) p.set("email", email);
     router.push(`/gig-safety?${p.toString()}`);
   };
 
@@ -102,7 +104,7 @@ export default function GigListScreen() {
       if (!res.ok) throw new Error(json.error);
 
       if (thenStart) {
-        goToSafety(json.id, fAddress.trim(), fPhone.trim(), fName.trim() || undefined, fNotes.trim() || undefined);
+        goToSafety(json.id, fAddress.trim(), fPhone.trim(), fName.trim() || undefined, fNotes.trim() || undefined, undefined);
       } else {
         setShowForm(false);
         resetForm();
@@ -232,6 +234,7 @@ export default function GigListScreen() {
                 {name && <Text style={{ color: textMain, fontSize: 15, fontWeight: "600", marginBottom: 2 }}>{name}</Text>}
                 <Text style={{ color: name ? textSub : textMain, fontSize: name ? 12 : 14, fontWeight: name ? "400" : "600" }}>{gig.address}</Text>
                 {gig.phone && <Text style={{ color: textSub, fontSize: 11, marginTop: 2 }}>{gig.phone}</Text>}
+                {gig.email && <Text style={{ color: textSub, fontSize: 11, marginTop: 1 }}>{gig.email}</Text>}
                 {gig.notes && (
                   <Text style={{ color: textSub, fontSize: 11, fontStyle: "italic", marginTop: 4 }} numberOfLines={2}>{gig.notes}</Text>
                 )}
@@ -240,7 +243,7 @@ export default function GigListScreen() {
               {/* Actions */}
               <View style={{ gap: 6, alignItems: "flex-end" }}>
                 <Pressable
-                  onPress={() => goToSafety(gig.id, gig.address, gig.phone ?? "", name ?? undefined, gig.notes ?? undefined)}
+                  onPress={() => goToSafety(gig.id, gig.address, gig.phone ?? "", name ?? undefined, gig.notes ?? undefined, gig.email ?? undefined)}
                   style={{ backgroundColor: "#10b981", borderRadius: 10, paddingVertical: 8, paddingHorizontal: 12 }}
                 >
                   <Text style={{ color: "white", fontWeight: "700", fontSize: 13 }}>▶ Start</Text>
