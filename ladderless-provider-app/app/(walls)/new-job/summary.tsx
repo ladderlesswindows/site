@@ -12,7 +12,8 @@ interface CompletedJobData {
   total_windows: number;
   total_screens: number;
   wallCount: number;
-  // New optional details (no rating per request)
+  avgWindowSeconds: number | null;
+  windowTimingCount: number;
   contact_person: string | null;
   address_notes: string | null;
   phone: string | null;
@@ -57,12 +58,19 @@ export default function JobSummary() {
             [jobRow.id]
           );
 
+          const timingRow = await db.getFirstAsync<{ count: number; avg: number | null }>(
+            `SELECT COUNT(*) as count, AVG(duration_seconds) as avg FROM window_timings WHERE job_id = ?`,
+            [jobRow.id]
+          );
+
           setJobData({
             id: jobRow.id,
             address: jobRow.address,
             total_windows: jobRow.total_windows || 0,
             total_screens: jobRow.total_screens || 0,
             wallCount: wallCountRow?.count || 0,
+            avgWindowSeconds: timingRow?.avg ?? null,
+            windowTimingCount: timingRow?.count ?? 0,
             contact_person: jobRow.contact_person || null,
             address_notes: jobRow.address_notes || null,
             phone: jobRow.phone || null,
@@ -128,6 +136,26 @@ export default function JobSummary() {
               <Text className="text-4xl font-bold text-emerald-600 mt-1">{totalScreens}</Text>
             </View>
           </View>
+
+          {(jobData?.windowTimingCount ?? 0) > 0 && (
+            <>
+              <View className="h-px bg-slate-200 my-5" />
+              <View className="flex-row justify-between items-end">
+                <View>
+                  <Text className="text-sm text-slate-500">AVG / WINDOW</Text>
+                  <Text className="text-3xl font-bold text-amber-500 mt-1">
+                    {(() => {
+                      const s = Math.round(jobData!.avgWindowSeconds!);
+                      const m = Math.floor(s / 60);
+                      const sec = s % 60;
+                      return m > 0 ? `${m}m ${sec}s` : `${sec}s`;
+                    })()}
+                  </Text>
+                </View>
+                <Text className="text-sm text-slate-400">{jobData!.windowTimingCount} timed</Text>
+              </View>
+            </>
+          )}
         </View>
 
         {/* Contact & follow-up details (from final step; excludes the Internal 1-5 rating) */}

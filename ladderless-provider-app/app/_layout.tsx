@@ -19,10 +19,12 @@ import "../global.css";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { SQLiteProvider } from "expo-sqlite";
+import { View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { JobDraftProvider } from "@/core/jobs/job-draft-context";
 import { applyReactNativeCssPatches } from "@/core/utils/patch-react-native-css";
 import { ThemeProvider } from "@/core/theme-context";
+import { WindowTimerBar } from "@/features/time-tracking/window/WindowTimerBar";
 
 // Apply defensive patches for react-native-css / NativeWind v5 preview early
 applyReactNativeCssPatches();
@@ -106,6 +108,18 @@ async function migrateDbIfNeeded(db: any) {
   try { await db.execAsync(`ALTER TABLE jobs ADD COLUMN how_find TEXT;`); } catch {}
   try { await db.execAsync(`ALTER TABLE jobs ADD COLUMN customer_rating INTEGER;`); } catch {}
   try { await db.execAsync(`ALTER TABLE jobs ADD COLUMN supabase_booking_id TEXT;`); } catch {}
+
+  await db.execAsync(`
+    CREATE TABLE IF NOT EXISTS window_timings (
+      id TEXT PRIMARY KEY NOT NULL,
+      job_id TEXT,
+      started_at TEXT NOT NULL,
+      ended_at TEXT NOT NULL,
+      duration_seconds INTEGER NOT NULL,
+      FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE SET NULL
+    );
+    CREATE INDEX IF NOT EXISTS idx_window_timings_job_id ON window_timings(job_id);
+  `);
 }
 
 export default function RootLayout() {
@@ -118,6 +132,7 @@ export default function RootLayout() {
       >
         <JobDraftProvider>
           <ThemeProvider>
+          <View style={{ flex: 1 }}>
           <Stack
             screenOptions={{
               headerStyle: {
@@ -164,6 +179,8 @@ export default function RootLayout() {
             {/* Note: native headers are hidden by default in screenOptions for post-address pages (walls, screens, previous-jobs, etc.).
                 They use custom <BrandingHeader /> or inline titles + bottom "Back" links instead. */}
           </Stack>
+          <WindowTimerBar />
+          </View>
           <StatusBar style="light" />
           </ThemeProvider>
         </JobDraftProvider>
